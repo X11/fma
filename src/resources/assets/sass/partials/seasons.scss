@@ -1,0 +1,19 @@
+
+.seasons {
+    .watched {
+        color: $red;
+
+        &.is-watched {
+            color: $green;
+        }
+    }
+
+    .is-success {
+        color: $green;
+    }
+
+    .is-danger {
+        color: $red;
+    }
+}
+

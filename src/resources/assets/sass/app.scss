@@ -1,0 +1,56 @@
+@import '../../../node_modules/bulma/bulma/base/base';
+@import '../../../node_modules/bulma/bulma/elements/elements';
+@import '../../../node_modules/bulma/bulma/components/components';
+@import '../../../node_modules/bulma/bulma/layout/layout';
+
+body {
+    font-family: 'Lato';
+}
+
+.fa-btn {
+    margin-right: 6px;
+}
+
+.scroll-row {
+    overflow: auto;
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.tabs-content .tab:not(.is-active) {
+    display:none;
+}
+
+.section.small {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.is-paddingless {
+    padding: 0;
+}
+
+.columns.is-gapless {
+    margin: 0;
+}
+
+header .fma {
+    color: white;
+}
+
+footer .menu-list a {
+    border-bottom: none !important;
+}
+
+@import 'partials/home';
+@import 'partials/series';
+@import 'partials/poster';
+@import 'partials/video-player';
+@import 'partials/banner';
+@import 'partials/breadcrumbs';
+@import 'partials/calender';
+@import 'partials/seasons';
+@import 'partials/profile';

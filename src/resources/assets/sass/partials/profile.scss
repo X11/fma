@@ -1,0 +1,18 @@
+.profile {
+ 
+    .profile-image {
+        position: relative;
+        top: -150px;
+
+        img {
+            border-radius: 50%;
+            border: 2px solid white;
+            background: white;
+        }
+
+        @media screen and (max-width: $tablet){
+            top: 0px;
+        }
+    }
+}
+

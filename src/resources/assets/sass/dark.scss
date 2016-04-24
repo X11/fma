@@ -1,0 +1,60 @@
+@import '../../../node_modules/bulma/bulma/config/variables';
+@import '../../../node_modules/bulma/bulma/utilities/utilities';
+
+$grey-darker: invert(#222324);
+$grey-dark: invert(#69707a);
+$grey: invert(#aeb1b5);
+$grey-light: invert(#d3d6db);
+$grey-lighter: invert(#f5f7fa);
+
+$primary: #333;
+$green: #0a0;
+
+@import '../../../node_modules/bulma/bulma/config/generated-variables';
+
+$border: #000;
+
+@import 'app';
+
+a {
+    color: #ddd;
+}
+
+section.hero {
+    background: #000 !important;
+}
+
+.input {
+    background: #111;
+}
+
+.section + .section {
+    border-top: 1px solid #111;
+}
+
+.section,
+.box,
+.tabs.is-boxed li.is-active a { 
+    background: #222 !important;
+    color: invert(#222) !important;
+}
+
+.tag.is-dark {
+    background: #000;
+}
+
+.pagination a {
+    background: $grey-lighter;
+}
+
+.pagination span {
+    color: $grey-dark;
+}
+
+.table {
+    background: #222;
+}
+
+nav.header {
+    background: #222;
+}

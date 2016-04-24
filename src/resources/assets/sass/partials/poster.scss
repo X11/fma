@@ -1,0 +1,33 @@
+
+.poster {
+    position: relative;
+    padding: 0;
+    border-radius: 0;
+
+    & > a {
+        display: inherit;
+
+        &:hover {
+            .subtitle {
+                padding-right: 30px;
+            }
+        }
+    }
+
+    img {
+        display: inherit;
+    }
+
+
+    .subtitle {
+        position: absolute;
+        bottom: 10%;
+        right: 0;
+        padding: 5px 10px;
+        background: $primary;
+        color: white;
+        font-size: 16px;
+        transition: .4s all;
+        font-weight: normal;
+    }
+}

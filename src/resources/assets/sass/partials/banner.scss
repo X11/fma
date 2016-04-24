@@ -1,0 +1,50 @@
+
+.banner {
+    position: relative;
+    overflow: hidden;
+    border: 0 solid black;
+    margin: 0;
+    padding: 0;
+    background: black;
+    width: 330px;
+    height: 60px;
+
+    img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    p {
+        position: absolute;
+        bottom: -100%;
+        left: 0;
+        width: 100%;
+        padding: 10px 0;
+        color: white;
+        transition: all.4s;
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transition: all.4s;
+    }
+
+    &:hover {
+        .overlay {
+            background: rgba(0, 0, 0, 0.6);
+        }
+        
+        p {
+            bottom: 0;
+        }
+    }
+}

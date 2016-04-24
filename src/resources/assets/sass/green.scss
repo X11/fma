@@ -1,0 +1,7 @@
+@import '../../../node_modules/bulma/bulma/config/variables';
+@import '../../../node_modules/bulma/bulma/utilities/utilities';
+
+$primary: #48cfad;
+@import '../../../node_modules/bulma/bulma/config/generated-variables';
+
+@import 'app'

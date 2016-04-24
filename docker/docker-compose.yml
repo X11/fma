@@ -1,0 +1,36 @@
+data:
+    build: ./data/
+    volumes: 
+        - ../src:/data
+php:
+    build: ./phpfpm/
+    volumes_from:
+        - data
+    links:
+        - mysql
+#       - redis
+queue:
+    build: ./queueworker/
+    volumes_from:
+        - data
+    links:
+        - mysql
+#       - redis
+nginx:
+    build: ./nginx/
+    volumes_from:
+        - data
+    ports: 
+        - "127.0.0.1:80:80"
+    links:
+        - php
+mysql:
+    build: ./mysql/
+    volumes:
+        - ./database/mysql:/var/lib/mysql
+#redis:
+#    build: ./redis/
+#    volumes:
+#        - ./database/redis:/var/lib/redis
+#    ports: 
+#        - "6379:6379"

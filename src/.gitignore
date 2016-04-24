@@ -1,0 +1,12 @@
+/vendor
+/node_modules
+Homestead.yaml
+Homestead.json
+.env
+composer.lock
+composer.phar
+phpunit.xml
+tags
+tags.vendors
+public/data/*
+public/build/*

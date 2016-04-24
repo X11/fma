@@ -1,0 +1,48 @@
+.calender {
+    
+    table {
+        th {
+            color: black;
+            font-weight: normal;
+            
+            &.is-active {
+                color: white;
+                background: #1fc8db;
+           }
+        }
+
+        td {
+            position: relative;
+
+            a {
+                border-left: 4px solid transparent;
+            }
+
+            &.is-first-episode a{
+                border-left: 4px solid $green;
+            }
+
+            &.is-watching a {
+                border-left: 4px solid $primary;
+            }
+
+            &.is-first-episode a {
+                background: $green;
+                color: white;
+            }
+
+            &.is-first-episode.is-first-season a {
+                background: $red;
+            }
+
+            &.table-link a:hover {
+                background: $primary !important;
+            }
+        }
+
+        a {
+            color: inherit;
+            text-decoration: underline;
+        }
+    }
+}
