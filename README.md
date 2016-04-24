@@ -1,5 +1,4 @@
 ![Banner](banner.png)
-# FMA
 
 Serie tracker & calender. Keep track of what you are watching and what episodes you already watched.
 
@@ -30,5 +29,5 @@ $ cd docker
 # docker-compose run php php /data/artisan migrate --seed
 ```
 
-Default username is `admin` and password `feedingmyaddiction`.  
-Head to /admin/seed to fetch all episodes from pre-added series.
+Default credentials (after seeding) are `admin` and `feedingmyaddiction`.  
+Head to `/admin/seed` after login to fetch all episodes from pre-added series.
