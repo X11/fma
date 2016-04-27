@@ -123,11 +123,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        $pass = $request->input('seedr_pass') != '' ? $request->input('seedr_pass'): $user->settings->seedr_pass;
-
         $user->settings = [
-            'seedr_user' => $request->input('seedr_user'),
-            'seedr_pass' => $pass,
             'theme' => $request->input('theme'),
         ];
         $user->save();
