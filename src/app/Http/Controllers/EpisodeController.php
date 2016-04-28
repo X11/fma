@@ -9,7 +9,6 @@ use App\Http\Controllers\Controller;
 use App\Episode;
 use TorrentSearch\TorrentSearch;
 use App\Serie;
-use App\EpisodeFile;
 use Seedr\Seedr;
 use Auth;
 use App\Jobs\DownloadEpisodeFile;
@@ -31,8 +30,6 @@ class EpisodeController extends Controller
         //@todo redirect to right url
         if ($serie->id != $episode->serie->id) throw new NotFoundHttpException;
 
-        $file = $episode->files()->where('user_id', Auth::user()->id)->first();
-
         $magnets = [];
 
         $ts = new TorrentSearch();
@@ -50,7 +47,6 @@ class EpisodeController extends Controller
             ->with('serie', $serie)
             ->with('magnets', $magnets)
             ->with('search_query', $search_query)
-            ->with('file', $file)
             ->with('breadcrumbs', [[
                 'name' => "Series",
                 'url' => action("SerieController@index")
