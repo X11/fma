@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<?php /*
 <section class="section">
     <div class="container">
         <div class="columns is-mobile is-multiline">
@@ -23,6 +24,7 @@
         </div>
     </div>
 </section>
+*/ ?>
 <section class="hero is-primary is-left is-medium is-bold">
     <div class="hero-content">
         <div class="container">
@@ -78,6 +80,7 @@
         </form>
     </div>
 </section>
+<?php /*
 <section class="section">
     <div class="container">
         <div class="columns is-mobile">
@@ -93,7 +96,6 @@
         </div>
     </div>
 </section>
-<?php /*
 <section class="section is-paddingless">
     <div class="container-fluid">
         <div class="columns is-multiline is-gapless is-mobile">

@@ -16,13 +16,13 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/', function () { 
         if (Auth::guest()){
             //$shows = App\Serie::orderBy(DB::raw('RAND()'))->take(6)->get();
-            $watched = DB::table('episodes_watched')->count();
-            $following = DB::table('watchlist')->count();
-            return view('welcome')
-                ->with('seriesCount', App\Serie::count()) 
-                ->with('episodesCount', App\Episode::count()) 
-                ->with('watchedCount', $watched) 
-                ->with('followingCount', $following);
+            //$watched = DB::table('episodes_watched')->count();
+            //$following = DB::table('watchlist')->count();
+            return view('welcome');
+                //->with('seriesCount', App\Serie::count()) 
+                //->with('episodesCount', App\Episode::count()) 
+                //->with('watchedCount', $watched) 
+                //->with('followingCount', $following)
                 //->with('randomSeries', $shows); 
         } else {
             return redirect('/home');
