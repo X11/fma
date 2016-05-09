@@ -9,13 +9,6 @@ php:
     links:
         - mysql
 #       - redis
-queue:
-    build: ./queueworker/
-    volumes_from:
-        - data
-    links:
-        - mysql
-#       - redis
 nginx:
     build: ./nginx/
     volumes_from:
@@ -28,6 +21,8 @@ mysql:
     build: ./mysql/
     volumes:
         - ./database/mysql:/var/lib/mysql
+    ports: 
+        - "127.0.0.1:3306:3306"
 #redis:
 #    build: ./redis/
 #    volumes:

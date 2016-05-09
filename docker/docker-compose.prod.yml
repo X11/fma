@@ -1,0 +1,6 @@
+queue:
+    build: ./queueworker/
+    volumes_from:
+        - data
+    links:
+        - mysql

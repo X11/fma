@@ -35,7 +35,13 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
         $info = \TVDB::getTvShowAndEpisodes($this->serie->tvdbid);
 
         $this->serie->overview = $info['tvshow']->getOverview();
-        $this->serie->poster = $info['tvshow']->getPosterUrl();
+        $this->serie->poster = str_replace([
+            'http://www.',
+            'banners/'
+        ], [
+            'https://',
+            'banners/_cache/'
+        ], $info['tvshow']->getPosterUrl());
         $this->serie->fanart = $info['tvshow']->getFanartUrl();
         //$this->serie->imdbid = $info['tvshow']->getImdbId();
 
