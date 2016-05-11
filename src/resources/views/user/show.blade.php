@@ -21,7 +21,7 @@
                         <p><strong>Email</strong><br>{{ $profile->email }}</p>
                     @endif
                     <p><strong>Last login</strong><br>{{ $profile->last_login }}</p>
-                    <p><strong>Registered</strong><br>{{ $profile->created_at->toDateString() }}</p>
+                    <p><strong>Registered</strong><br>{{ $profile->created_at ? $profile->created_at->toDateString() : 'N/A' }}</p>
                 </div>
                 <hr>
                 @if (Auth::user()->isAdmin() && $profile->role_index < Auth::user()->role_index)
