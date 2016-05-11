@@ -1,5 +1,0 @@
-alias fma-prod='sudo docker-compose -f docker/docker-compose.yml \
-                    -f docker/docker-compose.prod.yml'
-
-alias fma-dev='sudo docker-compose -f docker/docker-compose.yml \
-                    -f docker/docker-compose.dev.yml'

@@ -1,31 +1,38 @@
-data:
-    build: ./data/
-    volumes: 
-        - ../src:/data
-php:
-    build: ./phpfpm/
-    volumes_from:
-        - data
-    links:
-        - mysql
-#       - redis
-nginx:
-    build: ./nginx/
-    volumes_from:
-        - data
-    ports: 
-        - "127.0.0.1:80:80"
-    links:
-        - php
-mysql:
-    build: ./mysql/
-    volumes:
-        - ./database/mysql:/var/lib/mysql
-    ports: 
-        - "127.0.0.1:3306:3306"
-#redis:
-#    build: ./redis/
-#    volumes:
-#        - ./database/redis:/var/lib/redis
-#    ports: 
-#        - "6379:6379"
+version: '2'
+services:
+    data:
+        build: ./data/
+        volumes: 
+            - ../src:/data
+    php:
+        build: ./phpfpm/
+        volumes_from:
+            - data
+        links:
+            - mysql
+    #       - redis
+        depends_on:
+            - mysql
+    nginx:
+        build: ./nginx/
+        volumes_from:
+            - data
+        ports: 
+            - "127.0.0.1:80:80"
+        links:
+            - php
+        depends_on:
+            - php
+            - data
+    mysql:
+        build: ./mysql/
+        volumes:
+            - ./database/mysql:/var/lib/mysql
+        ports: 
+            - "127.0.0.1:3306:3306"
+    #redis:
+    #    build: ./redis/
+    #    volumes:
+    #        - ./database/redis:/var/lib/redis
+    #    ports: 
+    #        - "6379:6379"

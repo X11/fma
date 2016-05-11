@@ -1,6 +1,12 @@
-queue:
-    build: ./queueworker/
-    volumes_from:
-        - data
-    links:
-        - mysql
+version: '2'
+services:
+    queue:
+        build: ./queueworker/
+        volumes_from:
+            - data
+        links:
+            - mysql
+    npm:
+        build: ./npm/
+        volumes_from:
+            - data

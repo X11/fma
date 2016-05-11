@@ -54,8 +54,7 @@
             "php artisan clear-compiled"
         ],
         "post-update-cmd": [
-            "php artisan optimize",
-            "ctags -R --PHP-kinds=+cf -f tags.vendors vendor"
+            "php artisan optimize"
         ]
     },
     "config": {

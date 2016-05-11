@@ -1,6 +1,7 @@
 FROM gliderlabs/alpine:3.3
 
 RUN apk add --no-cache php \
+                        php-phar \
                         php-iconv \
                         php-pdo \
                         php-mcrypt \
@@ -22,6 +23,8 @@ RUN apk add --no-cache php \
                         ssmtp  \
                         php-fpm && \
     ln -sf /dev/stderr /var/log/php-fpm.log
+
+RUN php -r "copy('http://getcomposer.org/download/1.1.0/composer.phar', 'composer.phar');"
 
 RUN sed -i "s/;date.timezone =.*/date.timezone = UTC/" /etc/php/php.ini && \
     sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/php.ini && \
