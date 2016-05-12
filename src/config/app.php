@@ -156,7 +156,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\TvdbServiceProvider::class,
-        Kozz\Laravel\Providers\Guzzle::class
+        Kozz\Laravel\Providers\Guzzle::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
     ],
 
     /*
@@ -204,6 +205,7 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
         'Guzzle'    => Kozz\Laravel\Facades\Guzzle::class,
         'TVDB'      => App\Facades\Tvdb::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
 
 ];

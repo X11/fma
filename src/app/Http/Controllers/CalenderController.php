@@ -25,15 +25,18 @@ class CalenderController extends Controller
             $dates->put(Carbon::parse("$i days")->toDateString(), []);
         }
 
-        $episodes = Episode::whereBetween('aired', [Carbon::parse('monday a week ago')->toDateString(), Carbon::parse('27 days')->toDateString()])
+        $episodes = Episode::whereBetween('aired', [
+                Carbon::parse('monday a week ago')->toDateString(), 
+                Carbon::parse('27 days')->toDateString()
+            ])
+            ->with('serie')
             ->get()
             ->sortBy('aired')
             ->groupBy('air_date');
 
 
         $watching_ids = (Auth::user()) ? Auth::user()
-            ->watching()
-            ->get()
+            ->watching
             ->pluck('id')
             ->toArray() : [];
 

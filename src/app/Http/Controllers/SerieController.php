@@ -114,9 +114,11 @@ class SerieController extends Controller
      */
     public function show(Serie $serie)
     {
-        $seasons= $serie->episodes()->get()
-                                    ->groupBy('episodeSeason')
-                                    ->sortBy('episodeNumber');
+        $seasons= $serie->episodes()
+            ->with('serie')
+            ->get()
+            ->groupBy('episodeSeason')
+            ->sortBy('episodeNumber');
 
         return view('serie.show')
             ->with('serie', $serie)

@@ -40,7 +40,11 @@ class HomeController extends Controller
         }
 
         $episodes = Episode::whereIn('serie_id', $serie_ids)
-            ->whereBetween('aired', [ Carbon::parse('7 days ago')->toDateTimeString(), Carbon::parse('today')->toDateTimeString()])
+            ->whereBetween('aired', [ 
+                Carbon::parse('7 days ago')->toDateTimeString(), 
+                Carbon::parse('today')->toDateTimeString()
+            ])
+            ->with('serie')
             ->get()
             ->groupBy('air_date');
 

@@ -11,3 +11,4 @@ tags.vendors
 public/data/*
 public/build/*
 npm-debug.log
+storage/debugbar/

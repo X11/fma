@@ -60,7 +60,7 @@ class User extends Authenticatable
      * Check for existing relation
      */
     function have($relation_name, $id) {
-        return (bool) $this->$relation_name()->find($id);
+        return (bool) $this->$relation_name->find($id);
     }
 
     /**
