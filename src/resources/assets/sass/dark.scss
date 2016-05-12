@@ -1,5 +1,3 @@
-@import '../../../node_modules/bulma/bulma/config/variables';
-@import '../../../node_modules/bulma/bulma/utilities/utilities';
 
 $grey-darker: invert(#222324);
 $grey-dark: invert(#69707a);
@@ -9,11 +7,9 @@ $grey-lighter: invert(#f5f7fa);
 
 $primary: #333;
 $green: #0a0;
-
-@import '../../../node_modules/bulma/bulma/config/generated-variables';
-
 $border: #000;
 
+@import '../../../node_modules/bulma/bulma';
 @import 'app';
 
 a {

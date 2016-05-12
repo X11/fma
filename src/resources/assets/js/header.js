@@ -1,8 +1,8 @@
 (function() {
     "use strict";
 
-    $(".header-toggle").click(function(){
-        $(this).parent().find('.header-right').toggleClass('is-active');
+    $(".nav-toggle").click(function(){
+        $(this).parent().find('.nav-menu').toggleClass('is-active');
     });
 
 }());

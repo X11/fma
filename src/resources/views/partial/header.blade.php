@@ -1,42 +1,40 @@
-<section class="hero is-primary is-small is-left is-bold">
+<section class="hero is-primary is-small is-bold">
     <!-- Hero header: will stick at the top -->
-    <div class="hero-header">
-        <header class="header">
-            <div class="container">
+    <div class="hero-head">
+        <div class="container">
+            <nav class="nav fma">
                 <!-- Left side -->
-                <div class="header-left">
-                    <a class="header-item fma" href="{{ url('/') }}">FMA</a>
+                <div class="nav-left">
+                    <a class="nav-item" href="{{ url('/') }}" style="color:white !important;">FMA</a>
                 </div>
 
                 <!-- Hamburger menu (on mobile) -->
-                <span class="header-toggle">
+                <span class="nav-toggle">
                     <span></span>
                     <span></span>
                     <span></span>
                 </span>
 
                 <!-- Right side -->
-                <div class="header-right header-menu">
+                <div class="nav-right nav-menu">
                     @if (Auth::guest())
-                        <span class="header-item">
+                        <span class="nav-item">
                             <a class="button is-primary" href="{{ url('/login') }}">Login</a>
                         </span>
                     @else
-                        <span class="header-item"><a class="{{ Request::is('account*') ? 'is-active' : '' }}" href="{{ url('/account') }}">Account</a></span>
+                        <a class="nav-item {{ Request::is('account*') ? 'is-active' : '' }}" href="{{ url('/account') }}">Account</a>
                         @if (Auth::user()->isAdmin())
-                            <span class="header-item"><a class="{{ Request::is('admin*') ? 'is-active' : '' }}" href="{{ url('/admin') }}">Admin</a></span>
+                            <a class="nav-item {{ Request::is('admin*') ? 'is-active' : '' }}" href="{{ url('/admin') }}">Admin</a>
                         @endif
-                        <span class="header-item">
-                            <a href="{{ url('/logout') }}">Logout</a>
-                        </span>
+                        <a class="nav-item" href="{{ url('/logout') }}">Logout</a>
                     @endif
                 </div>
-            </div>
-        </header>
+            </nav>
+        </div>
     </div>
 
     <!-- Hero content: will be in the middle -->
-    <div class="hero-content">
+    <div class="hero-body">
         <div class="container">
             <div class="media">
                 <div class="media-left">
@@ -56,7 +54,7 @@
     </div>
 
     <!-- Hero footer: will stick at the bottom -->
-    <div class="hero-footer">
+    <div class="hero-foot">
         <nav class="tabs is-boxed">
             <div class="container">
                 <ul>

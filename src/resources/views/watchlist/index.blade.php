@@ -7,6 +7,7 @@
 @section('content')
 <section class="section">
     <div class="container">
+        @if( count($series) > 0 )
         <div class="columns">
             <div class="column" style="order: 2;">
                 <div class="table-responsive">
@@ -33,7 +34,7 @@
                     @include('partial.pagination', ['items' => $items])
                 </div>
             </div>
-            <div class="column is-quarter">
+            <div class="column is-one-quarter">
                 <aside class="menu">
                     <p class="menu-label">Series</p>
                     <ul class="menu-list">
@@ -44,6 +45,11 @@
                 </aside>
             </div>
         </div>
+        @else
+        <div class="notification is-primary">
+            No series on your watchlist, Discover some on the calender!
+        </div>
+        @endif
     </div>
 </section>
 @endsection

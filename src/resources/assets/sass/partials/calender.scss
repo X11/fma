@@ -14,28 +14,25 @@
         td {
             position: relative;
 
-            a {
-                border-left: 4px solid transparent;
-            }
-
-            &.is-first-episode a{
+            &.is-first-episode {
                 border-left: 4px solid $green;
             }
 
-            &.is-watching a {
+            &.is-watching {
                 border-left: 4px solid $primary;
             }
 
-            &.is-first-episode a {
+            &.is-first-episode {
                 background: $green;
                 color: white;
             }
 
-            &.is-first-episode.is-first-season a {
+            &.is-first-episode.is-first-season {
                 background: $red;
             }
 
-            &.table-link a:hover {
+            &.table-link:hover {
+                color: $white;
                 background: $primary !important;
             }
         }

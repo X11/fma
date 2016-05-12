@@ -27,7 +27,7 @@
         <div class="columns is-gapless is-multiline is-mobile">
         @foreach($series->chunk(2) as $chunk)
             @foreach ($chunk as $serie)
-                <div class="column is-quarter-tablet is-half-mobile serie">
+                <div class="column is-one-quarter-tablet is-half-mobile serie">
                     <a href="{{ url($serie->url) }}" class="media">
                         <img src="{{ asset('img/poster_black.png') }}" data-src="{{ $serie->poster }}" alt="" style="width:100%;"/>
                         <div class="content">

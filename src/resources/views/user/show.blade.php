@@ -8,7 +8,7 @@
 <section class="section profile">
     <div class="container">
         <div class="columns">
-            <div class="column is-quarter profile-image" style="order: 2;">
+            <div class="column is-one-quarter profile-image" style="order: 2;">
                 <div class="has-text-centered">
                     <img style="width: 100%; max-width: 300px;" src="http://www.gravatar.com/avatar/{{ md5(strtolower(trim($profile->email))) }}?s=300&default=mm" alt="Image">
                     <div class="column has-text-centered">
@@ -55,11 +55,11 @@
                 </div>
                 <hr>
                 @foreach ($series as $serie)
-                    <div class="media">
+                    <div class="media serie">
                         <figure class="media-image">
                             <img width="100%" src="{{ asset('img/poster.png') }}"  data-src="{{ $serie->poster }}" alt="" style="max-height:124px; padding-right:10px;"/>
                         </figure>
-                        <div class="media-content content">
+                        <div class="media-content">
                             <h2><a href="{{ url('/serie', [$serie->id]) }}">{{ $serie->name }}</a></h2>
                             <p>{{ $serie->overview }}</p>
                         </div>

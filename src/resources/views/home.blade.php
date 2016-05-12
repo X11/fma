@@ -27,14 +27,12 @@
             @foreach($days as $day => $episodes)
                 <div class="columns is-gapless">
                     <div class="column">
-                        <div class="heading">
-                            <h2 class="title"><span class="tag is-primary is-large is-fullwidth" style="border-radius: 0;">{{ $day }}</span></h2>
-                        </div>
+                        <h2><span class="tag is-primary is-large" style="justify-content:left;width:100%;border-radius: 0;">{{ $day }}</span></h2>
                     </div>
                     <div class="column is-10-tablet">
                         <div class="columns is-multiline is-gapless is-mobile">
                             @foreach ($episodes as $episode)
-                            <div class="column is-quarter-desktop is-third-tablet is-half-mobile {{ $episode->watched ? 'is-watched' : '' }}">
+                            <div class="column is-one-quarter-desktop is-one-third-tablet is-half-mobile {{ $episode->watched ? 'is-watched' : '' }}">
                                 <div class="poster">
                                     <a href="{{ url($episode->url) }}">
                                         <img width="100%" src="{{ asset('img/poster.png') }}" data-src="{{ $episode->serie->poster }}" alt=""/>

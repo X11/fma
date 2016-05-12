@@ -35,4 +35,6 @@ RUN sed -i "s/;date.timezone =.*/date.timezone = UTC/" /etc/php/php.ini && \
     sed -i '/^listen.allowed_clients/c;listen.allowed_clients =' /etc/php/php-fpm.conf && \
     sed -i '/^;catch_workers_output/ccatch_workers_output = yes' /etc/php/php-fpm.conf
 
+WORKDIR /data
+
 CMD ["php-fpm", "-O"]

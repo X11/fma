@@ -5,7 +5,7 @@
   },
   "dependencies": {
     "bootstrap-sass": "^3.0.0",
-    "bulma": "0.0.18",
-    "laravel-elixir": "^4.0.0"
+    "bulma": "0.0.26",
+    "laravel-elixir": "6.0.0-1"
   }
 }

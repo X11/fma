@@ -8,7 +8,7 @@
 <section class="section">
     <div class="container">
         <div class="columns">
-            <div class="column is-quarter">
+            <div class="column is-one-quarter">
                 <figure>
                     <img src="{{ $serie->poster }}" alt=""/>
                 </figure>

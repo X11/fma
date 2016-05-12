@@ -44,7 +44,7 @@
                 </table>
                 @include('partial.pagination', ['items' => $users])
             </div>
-            <div class="column is-third">
+            <div class="column is-one-third">
                 <div class="heading">
                     <h2 class="subtitle">Invite</h2>
                 </div>

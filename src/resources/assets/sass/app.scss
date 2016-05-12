@@ -1,10 +1,10 @@
-@import '../../../node_modules/bulma/bulma/base/base';
-@import '../../../node_modules/bulma/bulma/elements/elements';
-@import '../../../node_modules/bulma/bulma/components/components';
-@import '../../../node_modules/bulma/bulma/layout/layout';
 
 body {
     font-family: 'Lato';
+}
+
+.container {
+    width: 100%;
 }
 
 .fa-btn {
@@ -37,8 +37,12 @@ body {
     margin: 0;
 }
 
-header .fma {
-    color: white;
+.fma a {
+    color: darken($white, 5%) !important;
+
+    &:hover {
+        color: $white !important;
+    }
 }
 
 footer .menu-list a {
