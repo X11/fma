@@ -26,13 +26,13 @@
 </section>
 */ ?>
 <section class="hero is-primary is-left is-medium is-bold">
-    <div class="hero-content">
+    <div class="hero-body">
         <div class="container">
             <h1 class="title">FMA</h1>
             <p class="subtitle">Feeding my addiction</p>
         </div>
     </div>
-    <div class="hero-footer">
+    <div class="hero-foot">
         <nav class="tabs is-boxed">
             <div class="container">
                 <ul>
