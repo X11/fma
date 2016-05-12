@@ -7,8 +7,8 @@
 @section('content')
 <section class="section">
     <div class="container">
-        <nav class="navbar">
-            <div class="navbar-item has-text-centered">
+        <nav class="level">
+            <div class="level-item has-text-centered">
                 <p class="heading">Hide watched</p>
                 <p class="title"><input type="checkbox" id="hide-watched"></p>
             </div>
