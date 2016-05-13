@@ -7,7 +7,7 @@
 @section('content')
 <section class="section">
     <div class="container">
-        <form role="form" method="GET" action="{{ url()->current() }}">
+        <form role="form" method="GET" action="{{ action('SerieController@index') }}">
             <p class="control has-addons">
                 <input class="input" type="text" value="{{ $query }}" name="q" id="name"/>
                 <button type="submit" class="button is-primary"> Search </button>

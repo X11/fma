@@ -30,13 +30,12 @@ class RouteServiceProvider extends ServiceProvider
 
         parent::boot($router);
 
-        $router->bind('Serie', function ($value){
+        $router->bind('SerieSlug', function ($value){
             return Serie::where('id', explode('-', $value)[0])
-                ->with('episodes')
                 ->first() ?: abort(404);
         });
 
-        $router->bind('Episode', function ($value){
+        $router->bind('EpisodeSlug', function ($value){
             return Episode::where('id', explode('-', $value)[0])
                 ->first() ?: abort(404);
         });

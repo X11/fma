@@ -20,6 +20,8 @@ class WatchlistController extends Controller
     public function index(Request $request)
     {
 
+        $filter = $request->input('_filter');
+
         $items = DB::table('watchlist')
             ->join('series','series.id', '=', 'watchlist.serie_id')
             ->join('episodes','episodes.serie_id', '=', 'series.id')
@@ -38,17 +40,18 @@ class WatchlistController extends Controller
                 ['episodes.episodeSeason', '>', 0],
                 ['watchlist.user_id', '=', Auth::user()->id]
             ])
+            ->when($filter, function($query) use ($filter){
+                return $query->whereIn('series.id', explode(',', $filter));
+            })
             ->whereNull('episodes_watched.episode_id')
             ->orderBy('episodes.aired', 'desc')
             ->paginate(50);
 
-        $series = DB::table('watchlist')
-            ->leftJoin('series', 'series.id', '=', 'watchlist.serie_id')
-            ->where('watchlist.user_id', '=', Auth::user()->id)
-            ->orderBy('name')
-            ->get();
+        $series = Auth::user()->watching->sortBy('name');
 
-        //dd($items);
+        if ($filter){
+            $items->appends(['_filter' => $filter]);
+        }
 
         return view('watchlist.index')
             ->with('series', $series)

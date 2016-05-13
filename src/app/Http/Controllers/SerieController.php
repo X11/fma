@@ -48,6 +48,7 @@ class SerieController extends Controller
         }
 
         $series->appends(['q' => $request->input('q')]);    
+
         return view('serie.index')
             ->with('query', $request->input('q'))
             ->with('series', $series)
@@ -114,7 +115,7 @@ class SerieController extends Controller
      */
     public function show(Serie $serie)
     {
-        $seasons= $serie->episodes()
+        $seasons = $serie->episodes()
             ->with('serie')
             ->get()
             ->groupBy('episodeSeason')

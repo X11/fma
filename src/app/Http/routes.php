@@ -46,7 +46,7 @@ Route::group(['middleware' => 'web'], function () {
 
     // SERIE 
     Route::get('/serie', 'SerieController@index');
-    Route::get('/serie/{Serie}', 'SerieController@show');
+    Route::get('/serie/{SerieSlug}', 'SerieController@show');
     Route::post('/serie', 'SerieController@store');
     Route::put('/serie/{id}', 'SerieController@update');
     Route::delete('/serie/{serie}', 'SerieController@destroy');
@@ -54,13 +54,16 @@ Route::group(['middleware' => 'web'], function () {
     // CALENDER
     Route::get('calender', 'CalenderController@index');
 
+    // User profile
+    Route::get('profile/{User}', 'UserController@show');
+
     Route::group(['middleware' => 'user'], function(){
 
         // HOME 
         Route::get('home', 'HomeController@index');
 
         // EPISODE
-        Route::get('serie/{Serie}/episode/{Episode}', 'EpisodeController@show');
+        Route::get('serie/{SerieSlug}/episode/{EpisodeSlug}', 'EpisodeController@show');
         Route::post('episode/{episodeId}/watched', 'EpisodeController@markWatched');
         Route::delete('episode/{episodeId}/watched', 'EpisodeController@unmarkWatched');
 
@@ -73,9 +76,6 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('account', function(){ return redirect()->action('UserController@getSettings'); });
         Route::get('account/setting', 'UserController@getSettings');
         Route::post('account/setting', 'UserController@setSettings');
-
-        // User profile
-        Route::get('profile/{User}', 'UserController@show');
     });
     
     Route::group([

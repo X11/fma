@@ -14,7 +14,8 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Name</th>
+                                <th>Serie</th>
+                                <th>Episode</th>
                                 <th>Season</th>
                                 <th>Episode</th>
                                 <th>Aired</th>
@@ -23,7 +24,8 @@
                         <tbody>
                             @foreach ($items as $item)
                                 <tr>
-                                    <td><a href="{{ url('/serie', [$item->serie_id, 'episode', $item->episode_id]) }}">{{ $item->serie_name }}</td>
+                                    <td><a href="{{ url('/serie', [$item->serie_id]) }}">{{ $item->serie_name }}</td>
+                                    <td><a href="{{ url('/serie', [$item->serie_id, 'episode', $item->episode_id]) }}">{{ $item->episode_name }}</td>
                                     <td>{{ $item->episode_season }}</td>
                                     <td>{{ $item->episode_number }}</td>
                                     <td>{{ Carbon\Carbon::parse($item->episode_aired)->toDateString() }}</td>
@@ -36,11 +38,12 @@
             </div>
             <div class="column is-one-quarter">
                 <aside class="menu">
-                    <p class="menu-label">Series</p>
+                    <p class="menu-label">Filters</p>
                     <ul class="menu-list">
-                    @foreach ($series as $id => $serie)
-                        <li><a href="{{ url('/serie', [$serie->id]) }}">{{ $serie->name }}</a></li>
-                    @endforeach
+                        <li><a href="{{ url('/watchlist') }}">None</a></li>
+                        @foreach ($series as $serie)
+                            <li><a href="{{ url('/watchlist') }}?_filter={{ $serie->id }}">{{ $serie->name }}</a></li>
+                        @endforeach
                     </ul>
                 </aside>
             </div>

@@ -29,7 +29,7 @@
                         </p>
                     </div>
                     <p>{{ $serie->overview }}</p>
-                    @if (!Auth::guest() && Auth::user()->isAdmin())
+                    @if (Auth::check() && Auth::user()->isAdmin())
                         <button class="button is-primary is-small" type="submit" form="updateSerie">update now</button>
                         <button class="button is-danger is-small" type="submit" form="deleteSerie">delete</button>
                     @endif

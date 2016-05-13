@@ -18,16 +18,17 @@ class CalenderController extends Controller
      */
     public function index(Request $request)
     {
-        $start_date = Carbon::parse("monday a week ago")->diffInDays(Carbon::now());
+        $start_date = Carbon::parse("monday a week ago");
+        $diffDays = $start_date->diffInDays(Carbon::now());
 
         $dates = collect();
-        for ($i = -$start_date; $i <= 26; $i++) {
+        for ($i = -$diffDays; $i <= 34-$diffDays; $i++) {
             $dates->put(Carbon::parse("$i days")->toDateString(), []);
         }
 
         $episodes = Episode::whereBetween('aired', [
-                Carbon::parse('monday a week ago')->toDateString(), 
-                Carbon::parse('27 days')->toDateString()
+                $start_date->toDateString(), 
+                Carbon::now()->addDays(35-$diffDays)->toDateString()
             ])
             ->with('serie')
             ->get()

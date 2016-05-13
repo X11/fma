@@ -44,6 +44,7 @@ class HomeController extends Controller
                 Carbon::parse('7 days ago')->toDateTimeString(), 
                 Carbon::parse('today')->toDateTimeString()
             ])
+            ->where('episodeSeason', '>', '0')
             ->with('serie')
             ->get()
             ->groupBy('air_date');
