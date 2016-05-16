@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -104,6 +105,15 @@ class UserController extends Controller
         $user = Auth::user();
 
         return view('account.setting.index')
+            ->with('user', $user)
+            ->with('role_tags', [
+                'User' => 'is-primary',
+                'Member' => 'is-info',
+                'Moderator' => 'is-success',
+                'SuperModerator' => 'is-warning',
+                'Admin' => 'is-danger',
+                'Owner' => 'is-dark'
+            ])
             ->with('settings', $user->settings)
             ->with('breadcrumbs', [[
                 'name' => "Account",
@@ -123,9 +133,11 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        $user->settings = [
+        
+        $user->settings = array_merge((array) $user->settings, [
             'theme' => $request->input('theme'),
-        ];
+        ]);
+
         $user->save();
 
         return back()->with('status', 'Settings updated');
@@ -150,5 +162,33 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * Change user password
+     *
+     * @return \Iluminate\Http\Response
+     */
+    /**
+     * undocumented function
+     *
+     * @return void
+     */
+    public function changeUserPassword(Request $request)
+    {
+        $this->validate($request, [
+            'old_password' => 'required',
+            'new_password' => 'required|confirmed|min:6',
+            'new_password_confirmation' => 'required|same:new_password',
+        ]);
+        $user = Auth::user();
+        if (Hash::check($request->input('old_password'), $user->password)){
+            $user->password = Hash::make($request->input('new_password'));
+            $user->save();
+            return back()->with('status', 'Password changed');
+        } else {
+            return back()->with('status', 'Incorrect password');
+        }
+
+    }
+    
 
 }

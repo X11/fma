@@ -59,6 +59,8 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::group(['middleware' => 'user'], function(){
 
+        Route::post('password/change', 'UserController@changeUserPassword');
+
         // HOME 
         Route::get('home', 'HomeController@index');
 

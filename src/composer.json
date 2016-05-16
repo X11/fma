@@ -23,9 +23,6 @@
         {
             "type": "vcs",
             "url": "git@github.com:X11/php-torrent-search.git"
-        }, {
-            "type": "vcs",
-            "url": "git@github.com:X11/php-seedr-api.git"
         }
     ],
     "autoload": {
