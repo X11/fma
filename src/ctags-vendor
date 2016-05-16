@@ -1,0 +1,1 @@
+ctags -R --PHP-kinds=+cf -f tags.vendors vendor

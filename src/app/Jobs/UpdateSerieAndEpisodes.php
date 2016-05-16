@@ -8,6 +8,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Episode;
 use App\Serie;
+use App;
 
 class UpdateSerieAndEpisodes extends Job implements ShouldQueue
 {
@@ -32,23 +33,35 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
      */
     public function handle()
     {
-        $info = \TVDB::getTvShowAndEpisodes($this->serie->tvdbid);
 
-        $this->serie->overview = $info['tvshow']->getOverview();
-        $this->serie->poster = $info['tvshow']->getPosterUrl();
-        $this->serie->fanart = $info['tvshow']->getFanartUrl();
-        //$this->serie->imdbid = $info['tvshow']->getImdbId();
+        $client = App::make('tvdb');
+
+        $serieExtension = $client->series();
+
+        $serie = $serieExtension->get($this->serie->tvdbid);
+        $serieImages = $serieExtension->getImages($this->serie->tvdbid)->getData();
+
+        $this->serie->overview = $serie->getOverview();;
+        $this->serie->imdbid = $serie->getImdbId();
+        $this->serie->fanart = $serieImages->getFanart();
+        $this->serie->rating = $serie->getSiteRating();
 
         $episodes = [];
-        foreach ($info['episodes'] as $episode) {
-            $episodes[] = $e = Episode::firstOrNew(['episodeid' => $episode->getId()]);
-            $e->name = $episode->getName();
-            $e->overview = $episode->getOverview();
-            $e->aired = $episode->getFirstAired();
-            $e->episodeNumber = $episode->getEpisodeNumber();
-            $e->episodeSeason = $episode->getSeasonNumber();
-            $e->episodeid = $episode->getId();
-        }
+        $page = 1;
+        do {
+            $serieEpisodes = $serieExtension->getEpisodes($this->serie->tvdbid, $page);
+
+            foreach ($serieEpisodes->getData() as $episode) {
+                $episodes[] = $e = Episode::firstOrNew(['episodeid' => $episode->getId()]);
+                $e->name = $episode->getEpisodeName();
+                $e->overview = $episode->getOverview();
+                $e->aired = $episode->getFirstAired();
+                $e->episodeNumber = $episode->getAiredEpisodeNumber();
+                $e->episodeSeason = $episode->getAiredSeason();
+                $e->episodeid = $episode->getId();
+            }
+        } while ($page = $serieEpisodes->getLinks()->getNext());
+
         $this->serie->episodes()->saveMany($episodes);
         $this->serie->touch();
         $this->serie->save();

@@ -10,6 +10,7 @@ use App\Serie;
 use App\Jobs\FetchSerieEpisodes;
 use App\Jobs\UpdateSerieAndEpisodes;
 use Carbon\Carbon;
+use App;
 
 class SerieController extends Controller
 {
@@ -36,12 +37,22 @@ class SerieController extends Controller
         if ($request->input('q')){
             $series = Serie::where('name', 'like', '%' . $request->input('q') . '%')->orderBy('name')->paginate($limit);
 
-            $series_imdbids = $series->pluck('tvdbid')->toArray();
+            $series_tvdbids = $series->pluck('tvdbid')->toArray();
 
-            $tvdbResults = \TVDB::searchTvShow($request->input('q'));
-            $tvdbResults = array_filter($tvdbResults, function($value) use ($series_imdbids){
-                return $value->getBannerUrl() && !in_array($value->getTheTvDbId(), $series_imdbids) && $value->getName() != "** 403: Series Not Permitted **" ? 1 : 0;
+            $client = App::make('tvdb');
+            try {
+                $tvdbResults = $client->search()->seriesByName($request->input('q'));
+                $tvdbResults = $tvdbResults->getData();
+            } catch (\Exception $e){
+                $tvdbResults = [];
+            }
+            /*
+            $tvdbResults = $tvdbResults->getData()->filter(function($value) use ($series_tvdbids){
+                return !in_array($value->getId(), $series_tvdbids) && 
+                    $value->getSeriesName() != "** 403: Series Not Permitted **" ? 1 : 0 &&
+                    Carbon::parse($value->firstAired)->year > 1999;
             });
+             */
 
         } else {
             $series = Serie::orderBy('name')->paginate($limit);
@@ -87,16 +98,25 @@ class SerieController extends Controller
             return redirect()->action('SerieController@show', ['id' => $show->id]);
 
         // Move this in a job so it doesn't block the request
-        $tvshow = \TVDB::getTvShow($request->input('tvdbid'));
-        if (!$tvshow)
+
+        $client = App::make('tvdb');
+
+        try {
+            $tvshow = $client->series()->get($request->input('tvdbid'));
+            $tvshowImages = $client->series()->getImages($request->input('tvdbid'))->getData();
+        } catch (\Exception $e){
+            dd($e);
             return back()->with('status', 'Bad tvdbid');
+        }
 
         $show = Serie::firstOrNew(['tvdbid' => $request->input('tvdbid')]);
-        $show->name = $tvshow->getName();
+        $show->name = $tvshow->getSeriesName();
         $show->overview = $tvshow->getOverview();
         $show->tvdbid = $request->input('tvdbid');
-        $show->poster = $tvshow->getPosterUrl();
-        $show->fanart = $tvshow->getFanartUrl();
+        $show->imdbid = $tvshow->getImdbId();
+        $show->poster = 1;
+        $show->fanart = $tvshowImages->getFanart();
+        $show->rating = $tvshow->getSiteRating();
         $show->save();
 
         dispatch(new FetchSerieEpisodes($show));

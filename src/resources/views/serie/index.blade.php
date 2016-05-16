@@ -67,17 +67,17 @@
                     </div>
                 </div>
             @endif
-            @foreach(array_chunk($tvdbResults, 2) as $chunk)
+            @foreach($tvdbResults->chunk(2) as $chunk)
             <div class="columns">
                 @foreach ($chunk as $serie)
                     <div class="column is-half has-text-centered">
                         <form class=""role="form" method="POST" action="{{ url('/serie') }}">
                             {!! csrf_field() !!}
-                            <input class="input" type="hidden" value="{{ $serie->getTheTvDbId() }}" name="tvdbid" id="tvdbid"/>
-                            <button type="submit" class="box banner">
-                                <img src="{{ $serie->getBannerUrl() }}" alt=""/>
+                            <input class="input" type="hidden" value="{{ $serie->getId() }}" name="tvdbid" id="tvdbid"/>
+                            <button style="margin:auto;" type="submit" class="box banner">
+                                <img src="https://thetvdb.com/banners/_cache/{{ $serie->getBanner() }}" alt=""/>
                                 <div class="overlay"></div>
-                                <p>{{ $serie->getName() }}</p>
+                                <p>{{ $serie->getSeriesName() }}</p>
                             </button>
                         </form>
                     </div>

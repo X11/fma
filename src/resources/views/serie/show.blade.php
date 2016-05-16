@@ -9,15 +9,24 @@
     <div class="container">
         <div class="columns">
             <div class="column is-one-quarter">
-                <figure>
+                <figure class="has-text-centered">
                     <img src="{{ $serie->poster }}" alt=""/>
                 </figure>
             </div>
             <div class="column">
-                <div class="content">
-                    @if (!Auth::guest())
-                        <button class="button is-loading is-pulled-right mark-serie" data-mark-initial="{{ Auth::user()->have('watching', $serie->id) ? 1 : 0 }}" data-mark-content="Add to watchlist|Remove from watchlist" data-mark-class="is-success|is-danger" data-mark-serie="{{ $serie->id }}"></button>
-                    @endif
+                @if (Auth::check())
+                    <div class="is-pulled-right">
+                        <button class="button is-loading mark-serie" data-mark-initial="{{ Auth::user()->have('watching', $serie->id) ? 1 : 0 }}" data-mark-content="Add to watchlist|Remove from watchlist" data-mark-class="is-success|is-danger" data-mark-serie="{{ $serie->id }}"></button>
+                        @if (Auth::user()->isAdmin())
+                            <div>
+                                <small><strong>Admin:</strong></small><br>
+                                <button class="button is-primary is-small" type="submit" form="updateSerie">update now</button>
+                                <button class="button is-danger is-small" type="submit" form="deleteSerie">delete</button>
+                            </div>
+                        @endif
+                    </div>
+                @endif
+                <div class="content" style="max-width:700px">
                     <div class="heading">
                         <h2 class="title">{{ $serie->name }}</h2>
                         <p class="subtitle">
@@ -26,13 +35,14 @@
                                 <br>
                                 <small><strong>IMDB:</strong> {{ $serie->imdbid }}</small>
                             @endif
+                            <br>
+                            <small><strong>RATING:</strong> {{ $serie->rating}}/10</small>
                         </p>
                     </div>
-                    <p>{{ $serie->overview }}</p>
-                    @if (Auth::check() && Auth::user()->isAdmin())
-                        <button class="button is-primary is-small" type="submit" form="updateSerie">update now</button>
-                        <button class="button is-danger is-small" type="submit" form="deleteSerie">delete</button>
-                    @endif
+                    <p>
+                        <small><strong>OVERVIEW:</strong></small><br>
+                        {{ $serie->overview }}
+                    </p>
                     <p class="is-pulled-right"><small><strong>Last updated</strong>: {{ $serie->updated_at }}</small></p>
                 </div>
             </div>
@@ -100,7 +110,7 @@
 @section('scripts')
     @if (session('refresh'))
         <script type="text/javascript" charset="utf-8">
-            setTimeout(function(){location.reload()}, 4000);
+            setTimeout(function(){location.reload()}, 5000);
         </script>
     @endif
 @endsection

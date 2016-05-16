@@ -8,6 +8,11 @@
 <section class="section">
     <div class="container">
         <div class="columns">
+            <div style="order:2;" class="column is-one-quarter-tablet is-one-third">
+                <figure class="has-text-centered">
+                    <img src="{{ $serie->poster }}" alt=""/>
+                </figure>
+            </div>
             <div class="column">
                 <div class="content">
                     <h2 class="title">{{ $serie->name }}<br><br><em>{{ $episode->name }}</em></h2>
@@ -16,11 +21,6 @@
                         <button class="button is-loading is-pulled-right mark-episode" data-watched-initial="{{ $episode->watched ? 1 : 0 }}" data-watched-content="Mark as watched|Unmark as watched" data-watched-class="is-success|is-danger" data-watched-episode="{{ $episode->id }}"></button>
                     </div>
                 </div>
-            </div>
-            <div class="column is-one-quarter">
-                <figure>
-                    <img src="{{ $serie->poster }}" alt=""/>
-                </figure>
             </div>
         </div>
         @if (count($magnets) > 0)

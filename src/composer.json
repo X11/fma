@@ -9,14 +9,15 @@
         "kozz/laravel-guzzle-provider": "^6.0",
         "fpn/thetvdb": "^1.0",
         "x11/torrent-search": "dev-master",
-        "barryvdh/laravel-debugbar": "^2.2"
+        "adrenth/thetvdb2": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~4.0",
         "symfony/css-selector": "2.8.*|3.0.*",
-        "symfony/dom-crawler": "2.8.*|3.0.*"
+        "symfony/dom-crawler": "2.8.*|3.0.*",
+        "barryvdh/laravel-debugbar": "^2.2"
     },
     "repositories": [
         {

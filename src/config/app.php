@@ -204,7 +204,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
         'Guzzle'    => Kozz\Laravel\Facades\Guzzle::class,
-        'TVDB'      => App\Facades\Tvdb::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
 

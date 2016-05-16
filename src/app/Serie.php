@@ -48,4 +48,25 @@ class Serie extends Model
     {
         return '/serie/' . str_slug($this->id . ' ' . $this->name);
     }
+
+    /**
+     * Get poster URL
+     *
+     * @return void
+     */
+    public function getPosterAttribute($value)
+    {
+        return "https://thetvdb.com/banners/_cache/posters/" . $this->tvdbid . '-' . $value . '.jpg';
+    }
+
+    /**
+     * Get fanart URL
+     *
+     * @return void
+     */
+    public function getFanartAttribute($value)
+    {
+        return "https://thetvdb.com/banners/_cache/fanart/original/" . $this->tvdbid . '-' . $value . '.jpg';
+    }
+    
 }

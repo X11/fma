@@ -3,8 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use FPN\TheTVDB\Api;
-use FPN\TheTVDB\HttpClient\Buzz;
+use Adrenth\Thetvdb\Client;
+use Cache;
 
 class TvdbServiceProvider extends ServiceProvider
 {
@@ -25,9 +25,17 @@ class TvdbServiceProvider extends ServiceProvider
      */
     public function register()
     {
-         $this->app->bind('tvdb', function () {
-             $httpClient = new Buzz();
-             return new Api($httpClient, env('TVDB_KEY'));
+         $this->app->singleton('tvdb', function () {
+            $client = new Client();
+            $client->setLanguage('en');
+
+            $token = Cache::get('tvdb_token', function() use ($client){
+                return $client->authentication()->login(env('TVDB_KEY'), null, null);
+            }, 1200);
+
+            $client->setToken($token);
+
+            return $client;
         });
     }
 }
