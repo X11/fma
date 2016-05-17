@@ -66,7 +66,7 @@ class Serie extends Model
      */
     public function getPosterAttribute($value)
     {
-        return "https://thetvdb.com/banners/_cache/" . $value;
+        return "http://thetvdb.com/banners/_cache/" . $value;
     }
 
     /**
@@ -76,7 +76,7 @@ class Serie extends Model
      */
     public function getFanartAttribute($value)
     {
-        return "https://thetvdb.com/banners/_cache/" . $value;
+        return "http://thetvdb.com/banners/_cache/" . $value;
     }
     
 }
