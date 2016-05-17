@@ -103,7 +103,11 @@ class SerieController extends Controller
 
         try {
             $tvshow = $client->series()->get($request->input('tvdbid'));
-            $tvshowImages = $client->series()->getImages($request->input('tvdbid'))->getData();
+            $tvshowPoster = $client->series()->getImagesWithQuery($this->serie->tvdbid, [
+                'keyType' => 'poster'
+            ])->getData()->sortByDesc(function($a){
+                return $a->getRatingsInfo()["average"];
+            })->first()->getFileName();
         } catch (\Exception $e){
             dd($e);
             return back()->with('status', 'Bad tvdbid');
@@ -114,8 +118,7 @@ class SerieController extends Controller
         $show->overview = $tvshow->getOverview();
         $show->tvdbid = $request->input('tvdbid');
         $show->imdbid = $tvshow->getImdbId();
-        $show->poster = 1;
-        $show->fanart = $tvshowImages->getFanart();
+        $show->poster = $tvshowPoster;
         $show->rating = $tvshow->getSiteRating();
         $show->save();
 

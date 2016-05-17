@@ -39,12 +39,16 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
         $serieExtension = $client->series();
 
         $serie = $serieExtension->get($this->serie->tvdbid);
-        $serieImages = $serieExtension->getImages($this->serie->tvdbid)->getData();
+        $seriePoster = $serieExtension->getImagesWithQuery($this->serie->tvdbid, [
+            'keyType' => 'poster'
+        ])->getData()->sortByDesc(function($a){
+            return $a->getRatingsInfo()["average"];
+        })->first()->getFileName();
 
         $this->serie->overview = $serie->getOverview();;
         $this->serie->imdbid = $serie->getImdbId();
-        $this->serie->fanart = $serieImages->getFanart();
         $this->serie->rating = $serie->getSiteRating();
+        $this->serie->poster = $seriePoster;
 
         $episodes = [];
         $page = 1;

@@ -32,7 +32,6 @@ class TvdbServiceProvider extends ServiceProvider
             $token = Cache::get('tvdb_token', function() use ($client){
                 return $client->authentication()->login(env('TVDB_KEY'), null, null);
             }, 1200);
-            var_dump($token);
 
             $client->setToken($token);
 
