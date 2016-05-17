@@ -17,13 +17,6 @@
                 @if (Auth::check())
                     <div class="is-pulled-right">
                         <button class="button is-loading mark-serie" data-mark-initial="{{ Auth::user()->have('watching', $serie->id) ? 1 : 0 }}" data-mark-content="Add to watchlist|Remove from watchlist" data-mark-class="is-success|is-danger" data-mark-serie="{{ $serie->id }}"></button>
-                        @if (Auth::user()->isAdmin())
-                            <div>
-                                <small><strong>Admin:</strong></small><br>
-                                <button class="button is-primary is-small" type="submit" form="updateSerie">update now</button>
-                                <button class="button is-danger is-small" type="submit" form="deleteSerie">delete</button>
-                            </div>
-                        @endif
                     </div>
                 @endif
                 <div class="content" style="max-width:700px">
@@ -44,6 +37,22 @@
                         {{ $serie->overview }}
                     </p>
                     <p class="is-pulled-right"><small><strong>Last updated</strong>: {{ $serie->updated_at }}</small></p>
+                    @if (Auth::user()->isAdmin())
+                        <div>
+                            <small><strong>Admin:</strong></small><br>
+                            <button class="button is-primary is-small" type="submit" form="updateSerie">update now</button>
+                            <button class="button is-danger is-small" type="submit" form="deleteSerie">delete</button>
+                        </div>
+                        <form style="max-width:100px;" role="form" method="POST" action="{{ url('/serie', [$serie->id]) }}">
+                            {!! csrf_field() !!}
+                            {{ method_field('PUT') }}
+                            <small><strong>Change poster:</strong></small><br>
+                            <p class="control has-addons">
+                                <input class="input is-small" type="number" name="poster" value="{{ $serie->posterNumber }}" id="poster">
+                                <button class="button is-primary is-small" type="submit">Update</button>
+                            </p>
+                        </form>
+                    @endif
                 </div>
             </div>
         </div>

@@ -175,7 +175,12 @@ class SerieController extends Controller
     public function update(Request $request, $id)
     {
         $serie = Serie::findOrFail($id);
-        dispatch(new UpdateSerieAndEpisodes($serie));
+        if ($request->has('poster')){
+            $serie->poster = $request->input('poster');
+            $serie->save();
+        } else {
+            dispatch(new UpdateSerieAndEpisodes($serie));
+        }
         return back();
     }
 

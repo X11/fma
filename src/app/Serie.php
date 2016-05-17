@@ -50,6 +50,16 @@ class Serie extends Model
     }
 
     /**
+     * Get poster raw number
+     *
+     * @return void
+     */
+    public function getPosterNumberAttribute($value)
+    {
+        return $this->attributes['poster'];
+    }
+
+    /**
      * Get poster URL
      *
      * @return void
