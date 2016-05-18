@@ -103,13 +103,12 @@ class SerieController extends Controller
 
         try {
             $tvshow = $client->series()->get($request->input('tvdbid'));
-            $tvshowPoster = $client->series()->getImagesWithQuery($this->serie->tvdbid, [
+            $tvshowPoster = $client->series()->getImagesWithQuery($request->input('tvdbid'), [
                 'keyType' => 'poster'
             ])->getData()->sortByDesc(function($a){
                 return $a->getRatingsInfo()["average"];
             })->first()->getFileName();
         } catch (\Exception $e){
-            dd($e);
             return back()->with('status', 'Bad tvdbid');
         }
 
