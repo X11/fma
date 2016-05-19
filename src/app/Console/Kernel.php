@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\Inspire::class,
         Commands\CreateAdmin::class,
-        Commands\Convert::class,
+        Commands\tvdbtoken::class,
     ];
 
     /**
