@@ -36,6 +36,7 @@ class WatchlistController extends Controller
                 'episodes.aired as episode_aired'
             )
             ->where([
+                ['episodes.aired', '!=', ''],
                 ['episodes.aired', '<', Carbon::today()],
                 ['episodes.episodeSeason', '>', 0],
                 ['watchlist.user_id', '=', Auth::user()->id]
