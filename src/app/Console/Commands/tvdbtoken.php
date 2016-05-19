@@ -41,7 +41,6 @@ class tvdbtoken extends Command
     {
         $client = App::make('tvdb');
 
-        var_dump(Cache::get('tvdb_token'));
         $this->info(Cache::get('tvdb_token'));
     }
 }

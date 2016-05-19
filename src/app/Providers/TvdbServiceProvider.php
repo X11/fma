@@ -30,7 +30,9 @@ class TvdbServiceProvider extends ServiceProvider
             $client->setLanguage('en');
 
             $token = Cache::get('tvdb_token', function() use ($client){
-                return $client->authentication()->login(env('TVDB_KEY'), null, null);
+                $t = $client->authentication()->login(env('TVDB_KEY'), null, null);
+                Cache::put('tvdb_token', $t, 1200);
+                return $t;
             }, 1200);
 
             $client->setToken($token);
