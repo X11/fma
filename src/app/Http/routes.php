@@ -78,6 +78,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('account', function(){ return redirect()->action('UserController@getSettings'); });
         Route::get('account/setting', 'UserController@getSettings');
         Route::post('account/setting', 'UserController@setSettings');
+        Route::put('account/setting', 'UserController@setSettings');
     });
     
     Route::group([

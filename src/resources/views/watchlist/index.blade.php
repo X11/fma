@@ -9,7 +9,7 @@
     <div class="container">
         @if( count($series) > 0 )
         <div class="columns">
-            <div class="column" style="order: 2;">
+            <div class="column">
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
@@ -37,15 +37,21 @@
                 </div>
             </div>
             <div class="column is-one-quarter">
-                <aside class="menu">
-                    <p class="menu-label">Filters</p>
-                    <ul class="menu-list">
-                        <li><a href="{{ url('/watchlist') }}">None</a></li>
-                        @foreach ($series as $serie)
-                            <li><a href="{{ url('/watchlist') }}?_filter={{ $serie->id }}">{{ $serie->name }}</a></li>
-                        @endforeach
-                    </ul>
-                </aside>
+                <nav class="panel">
+                    <p class="panel-heading">Filters</p>
+                    @foreach ($series as $serie)
+                        <label class="panel-block">
+                            <span class="tag is-dark is-small">{{ str_pad($series_episode_count->get($serie->id, '0'), 2, '0', STR_PAD_LEFT) }}</span> 
+                            <input type="checkbox" watchlist-filter="{{ $serie->id }}" {{ in_array($serie->id, $filters->toArray()) ? '' : 'checked' }}>
+                            <a href="{{ $serie->url }}">{{ $serie->name }}</a>
+                        </label>
+                    @endforeach
+                    <div class="panel-block">
+                        <button watchlist-reset-filters class="button is-danger is-outlined is-fullwidth">
+                            Reset filters
+                        </button>
+                    </div>
+                </nav>
             </div>
         </div>
         @else

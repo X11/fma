@@ -13,7 +13,12 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'settings', "role", "last_login"
+        'name', 
+        'email', 
+        'password', 
+        'settings', 
+        'role', 
+        'last_login'
     ];
 
     /**
@@ -26,7 +31,8 @@ class User extends Authenticatable
     ];
 
     protected $BASE_SETTINGS = [
-        'theme' => "default",
+        'theme' => 'default',
+        'watchlist_filters' => []
     ];
 
     public $USER_ROLES = [

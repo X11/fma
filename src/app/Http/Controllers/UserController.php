@@ -133,14 +133,14 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        
-        $user->settings = array_merge((array) $user->settings, [
-            'theme' => $request->input('theme'),
-        ]);
-
+        $user->settings = array_merge((array) $user->settings, $request->except('_token')); 
         $user->save();
 
-        return back()->with('status', 'Settings updated');
+        if ($request->ajax()){
+            return response()->json(['status' => 'Settings updated']);
+        } else {
+            return back()->with('status', 'Settings updated');
+        }
     }
 
     /**
