@@ -75,7 +75,7 @@
                             {!! csrf_field() !!}
                             <input class="input" type="hidden" value="{{ $serie->getId() }}" name="tvdbid" id="tvdbid"/>
                             <button style="margin:auto;" type="submit" class="box banner">
-                                <img src="https://thetvdb.com/banners/_cache/{{ $serie->getBanner() }}" alt=""/>
+                                <img src="http://thetvdb.com/banners/_cache/{{ $serie->getBanner() }}" alt=""/>
                                 <div class="overlay"></div>
                                 <p>{{ $serie->getSeriesName() }}</p>
                             </button>

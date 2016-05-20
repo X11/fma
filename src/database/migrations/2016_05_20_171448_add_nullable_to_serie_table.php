@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddSerieFanart extends Migration
+class AddNullableToSerieTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddSerieFanart extends Migration
     public function up()
     {
         Schema::table('series', function (Blueprint $table) {
-            $table->string('fanart')->nullable()->after('poster');
+            $table->string('poster')->nullable()->change();
         });
     }
 
@@ -25,7 +25,7 @@ class AddSerieFanart extends Migration
     public function down()
     {
         Schema::table('series', function (Blueprint $table) {
-            $table->dropColumn('fanart');
+            $table->string('poster')->change();
         });
     }
 }

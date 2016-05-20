@@ -9,7 +9,8 @@
         "kozz/laravel-guzzle-provider": "^6.0",
         "fpn/thetvdb": "^1.0",
         "x11/torrent-search": "dev-master",
-        "adrenth/thetvdb2": "^1.0"
+        "adrenth/thetvdb2": "^1.0",
+        "doctrine/dbal": "^2.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

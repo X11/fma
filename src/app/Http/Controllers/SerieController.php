@@ -103,13 +103,26 @@ class SerieController extends Controller
 
         try {
             $tvshow = $client->series()->get($request->input('tvdbid'));
-            $tvshowPoster = $client->series()->getImagesWithQuery($request->input('tvdbid'), [
+        } catch (\Exception $e){
+            return back()->with('status', 'Bad tvdbid');
+        }
+
+        try { $tvshowPoster = $client->series()->getImagesWithQuery($request->input('tvdbid'), [
                 'keyType' => 'poster'
             ])->getData()->sortByDesc(function($a){
                 return $a->getRatingsInfo()["average"];
-            })->first()->getFileName();
-        } catch (\Exception $e){
-            return back()->with('status', 'Bad tvdbid');
+            })->first()->getFileName(); 
+        } catch (\Exception $e) {
+            $tvshowPoster = null;
+        }
+
+        try { $tvshowFanart = $client->series()->getImagesWithQuery($request->input('tvdbid'), [
+                'keyType' => 'fanart'
+            ])->getData()->sortByDesc(function($a){
+                return $a->getRatingsInfo()["average"];
+            })->first()->getFileName(); 
+        } catch (\Exception $e) {
+            $tvshowFanart = null;
         }
 
         $show = Serie::firstOrNew(['tvdbid' => $request->input('tvdbid')]);
@@ -118,6 +131,7 @@ class SerieController extends Controller
         $show->tvdbid = $request->input('tvdbid');
         $show->imdbid = $tvshow->getImdbId();
         $show->poster = $tvshowPoster;
+        $show->fanart = $tvshowFanart;
         $show->rating = $tvshow->getSiteRating();
         $show->save();
 
