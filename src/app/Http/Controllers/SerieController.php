@@ -32,7 +32,7 @@ class SerieController extends Controller
      */
     public function index(Request $request)
     {
-        $limit = 12;
+        $limit = 18;
         $tvdbResults = null;
 
         if ($request->input('q')){

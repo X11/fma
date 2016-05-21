@@ -45,11 +45,11 @@
                         <p class="has-text-right"><small><strong>Last updated</strong>: {{ $serie->updated_at }}</small></p>
                     </div>
                     @if (Auth::user()->isAdmin())
-                        <div>
-                            <small><strong>Admin:</strong></small><br>
+                        <small><strong>Admin:</strong></small><br>
+                        <p class="control has-addons">
                             <button class="button is-primary is-small" type="submit" form="updateSerie">update now</button>
                             <button class="button is-danger is-small" type="submit" form="deleteSerie">delete</button>
-                        </div>
+                        </p>
                     @endif
                 </div>
             </div>

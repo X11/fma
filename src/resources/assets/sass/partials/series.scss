@@ -7,10 +7,6 @@
         transition: opacity .5s;
     }
 
-    &.darken .serie:not(.selected) img {
-        opacity: 0.2 !important;
-    }
-
     .serie {
         position: relative;
         background: black;
@@ -21,47 +17,28 @@
             height: 100%;
         }
 
-        .content {
-            left: 100%;
-            top: 0;
-            height: 100%;
-            width: 100%;
+        .subtitle {
             position: absolute;
-            z-index: -1;
+            bottom: 10%;
+            left: 0;
+            padding: 5px 10px;
+            background: $primary;
             color: white;
-            background: rgba(0,0,0,0.5);
-
-            h2 {
-                padding: 10px;
-                background: $primary;
-                margin: 0;
-                font-size: 16px;
-                font-weight: normal;
-                color:inherit;
-            }
-            p {
-                margin: 0;
-                padding: 5px 10px;
-            }
-
-            a {
-                color:inherit;
-                outline: none;
-            }
+            font-size: 16px;
+            transition: .4s all;
+            font-weight: normal;
         }
 
-        &:nth-child(4n+4) .content {
-            left: -100%;
+    }
+
+    &.darken .serie:not(.selected) {
+        img,
+        .subtitle {
+            opacity: 0.4 !important;
         }
 
-        @media screen and (max-width: $tablet){
-            &:nth-child(2n+2) .content {
-                left: -100%;
-            }
-        }
-
-        img:hover ~ .content {
-            z-index: 10;
+        img {
+            filter: blur(2px);
         }
     }
 }

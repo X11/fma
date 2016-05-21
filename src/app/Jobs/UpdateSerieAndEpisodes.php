@@ -88,11 +88,15 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
         $this->serie->imdbid = $serie->getImdbId();
         $this->serie->rating = $serie->getSiteRating();
         $this->serie->poster = $seriePoster;
+        $this->serie->fanart = $serieFanart;
 
         $episodes = [];
         $page = 1;
         do {
-            $serieEpisodes = $serieExtension->getEpisodes($this->serie->tvdbid, $page);
+            try { $serieEpisodes = $serieExtension->getEpisodes($this->serie->tvdbid, $page);
+            } catch (\Exception $e) {
+                break;
+            }
 
             foreach ($serieEpisodes->getData() as $episode) {
                 $episodes[] = $e = Episode::firstOrNew(['episodeid' => $episode->getId()]);

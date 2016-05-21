@@ -40,7 +40,10 @@ class FetchSerieEpisodes extends Job implements ShouldQueue
         $episodes = [];
         $page = 1;
         do {
-            $serieEpisodes = $serieExtension->getEpisodes($this->serie->tvdbid, $page);
+            try { $serieEpisodes = $serieExtension->getEpisodes($this->serie->tvdbid, $page);
+            } catch (\Exception $e) {
+                break;
+            }
 
             foreach ($serieEpisodes->getData() as $episode) {
                 $episodes[] = $e = Episode::firstOrNew(['episodeid' => $episode->getId()]);

@@ -18,13 +18,14 @@
 <section class="section is-paddingless series">
     <div class="container">
         <div class="columns">
-            <div class="column is-2">
+            <div class="column is-2 is-hidden-mobile">
                 <aside>
-                    <p class="menu-label">Filters</p>
+                    <p class="menu-label">Sort</p>
                     <ul class="menu-list">
-                        <li><a href="">Popular</a></li>
+                        <li><a href="">Popularity</a></li>
+                        <li><a href="">Rating</a></li>
                         <li><a href="">Recently added</a></li>
-                        <li><a href="">Airing soon</a></li>
+                        <li><a href="">Upcoming</a></li>
                     </ul>
                     <p class="menu-label">Genres</p>
                     <ul class="menu-list">
@@ -45,13 +46,10 @@
                 <div class="columns is-gapless is-multiline is-mobile">
                     @foreach($series->chunk(2) as $chunk)
                         @foreach ($chunk as $serie)
-                            <div class="column is-one-quarter-tablet is-half-mobile serie">
+                            <div class="column is-one-third-desktop is-half-tablet is-half-mobile serie">
                                 <a href="{{ url($serie->url) }}" class="media">
-                                    <img src="{{ asset('img/poster_black.png') }}" data-src="{{ $serie->poster }}" alt="" style="width:100%;"/>
-                                    <div class="content">
-                                        <h2>{{ $serie->name }}</h2>
-                                        <p>{{ $serie->overview }}</p>
-                                    </div>
+                                    <img src="{{ asset('img/fanart.png') }}" data-src="{{ $serie->fanart or asset('img/fanart.png')}}" alt="" style="width:100%;"/>
+                                    <h3 class="subtitle">{{ $serie->name }}</h3>
                                 </a>
                             </div>
                         @endforeach
