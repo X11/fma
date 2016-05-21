@@ -9,6 +9,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Episode;
 use App\Serie;
 use App;
+use DB;
+use Cache;
 
 class UpdateSerieAndEpisodes extends Job implements ShouldQueue
 {
@@ -57,6 +59,30 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
         } catch (\Exception $e) {
             $serieFanart = null;
         }
+
+        $genre_lookup = Cache::get('genre_lookup', function(){
+
+            $lookup = [];
+            $genres = DB::table('genres')
+                                ->select('id', 'name')
+                                ->get();
+
+            foreach ($genres as $genre) {
+                $lookup[$genre->name] = $genre->id;
+            }
+
+            Cache::put('genre_lookup', $lookup, 600);
+            return $lookup;
+        });
+
+        $genre_ids = [];
+        foreach ($serie->getGenre() as $genre) {
+            if (isset($genre_lookup[$genre])){
+                $genre_ids[] = $genre_lookup[$genre];
+            }
+        }
+
+        $this->serie->genres()->sync($genre_ids);
 
         $this->serie->overview = $serie->getOverview();;
         $this->serie->imdbid = $serie->getImdbId();

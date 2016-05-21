@@ -4025,8 +4025,6 @@ footer .menu-list a {
 .series {
   -webkit-transition: background .4s;
   transition: background .4s; }
-  .series.darken {
-    background: black; }
   .series img {
     -webkit-transition: opacity .5s;
     transition: opacity .5s; }

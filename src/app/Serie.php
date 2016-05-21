@@ -38,6 +38,15 @@ class Serie extends Model
     {
         return $this->belongsToMany('App\User', 'watchlist');
     }
+
+    /**
+     * Get the serie genres
+     *
+     */
+    public function genres()
+    {
+        return $this->belongsToMany('App\Genre', 'serie_genre');
+    }
     
     /**
      * Get url

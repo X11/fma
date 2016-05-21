@@ -36,7 +36,14 @@
                         <small><strong>OVERVIEW:</strong></small><br>
                         {{ $serie->overview }}
                     </p>
-                    <p class="is-pulled-right"><small><strong>Last updated</strong>: {{ $serie->updated_at }}</small></p>
+                    <div class="is-pulled-right">
+                        <p>
+                            @foreach($serie->genres as $genre)
+                            <a href="{{ url('/serie') }}?_genre={{ $genre->id }}" class="tag is-small">{{ $genre->name }}</a>
+                            @endforeach
+                        </p>
+                        <p class="has-text-right"><small><strong>Last updated</strong>: {{ $serie->updated_at }}</small></p>
+                    </div>
                     @if (Auth::user()->isAdmin())
                         <div>
                             <small><strong>Admin:</strong></small><br>

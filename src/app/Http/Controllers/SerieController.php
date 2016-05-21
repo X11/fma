@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Serie;
+use App\Genre;
 use App\Jobs\FetchSerieEpisodes;
 use App\Jobs\UpdateSerieAndEpisodes;
 use Carbon\Carbon;
@@ -55,12 +56,19 @@ class SerieController extends Controller
              */
 
         } else {
-            $series = Serie::orderBy('name')->paginate($limit);
+            if ($request->input('_genre')){
+                $genre = Genre::findOrFail($request->input('_genre'));
+                $series = $genre->series()->orderBy('name')->paginate($limit);
+                $series->appends(['_genre' => $request->input('_genre')]);    
+            } else {
+                $series = Serie::orderBy('name')->paginate($limit);
+            }
         }
 
         $series->appends(['q' => $request->input('q')]);    
 
         return view('serie.index')
+            ->with('genres', Genre::all())
             ->with('query', $request->input('q'))
             ->with('series', $series)
             ->with('tvdbResults', $tvdbResults)

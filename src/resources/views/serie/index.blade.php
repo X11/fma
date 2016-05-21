@@ -17,45 +17,50 @@
 </section>
 <section class="section is-paddingless series">
     <div class="container">
-        @if (count($series) == 0)
-            <div class="message is-danger">
-                <div class="message-body">
-                    Nothing to display
-                </div>
+        <div class="columns">
+            <div class="column is-2">
+                <aside>
+                    <p class="menu-label">Filters</p>
+                    <ul class="menu-list">
+                        <li><a href="">Popular</a></li>
+                        <li><a href="">Recently added</a></li>
+                        <li><a href="">Airing soon</a></li>
+                    </ul>
+                    <p class="menu-label">Genres</p>
+                    <ul class="menu-list">
+                        @foreach($genres as $genre)
+                            <li><a href="{{ url('/serie') }}?_genre={{ $genre->id }}">{{ $genre->name }}</a></li>
+                        @endforeach
+                    </ul>
+                </aside>
             </div>
-        @endif
-        <div class="columns is-gapless is-multiline is-mobile">
-        @foreach($series->chunk(2) as $chunk)
-            @foreach ($chunk as $serie)
-                <div class="column is-one-quarter-tablet is-half-mobile serie">
-                    <a href="{{ url($serie->url) }}" class="media">
-                        <img src="{{ asset('img/poster_black.png') }}" data-src="{{ $serie->poster }}" alt="" style="width:100%;"/>
-                        <div class="content">
-                            <h2>{{ $serie->name }}</h2>
-                            <p>{{ $serie->overview }}</p>
-                        </div>
-<?php /*
-                    <div class="media">
-                        <figure class="media-image">
-                            <img src="{{ $serie->poster }}" alt="" style="max-height:124px; padding-right:10px;"/>
-                        </figure>
-                        <div class="media-content content">
-                            <h2><a href="{{ url('/serie', [$serie->id]) }}">{{ $serie->name }}</a></h2>
-                            <p>{{ $serie->overview }}</p>
+            <div class="column">
+                @if (count($series) == 0)
+                    <div class="message is-danger">
+                        <div class="message-body">
+                            Nothing to display
                         </div>
                     </div>
-*/ ?>
-                    </a>
+                @endif
+                <div class="columns is-gapless is-multiline is-mobile">
+                    @foreach($series->chunk(2) as $chunk)
+                        @foreach ($chunk as $serie)
+                            <div class="column is-one-quarter-tablet is-half-mobile serie">
+                                <a href="{{ url($serie->url) }}" class="media">
+                                    <img src="{{ asset('img/poster_black.png') }}" data-src="{{ $serie->poster }}" alt="" style="width:100%;"/>
+                                    <div class="content">
+                                        <h2>{{ $serie->name }}</h2>
+                                        <p>{{ $serie->overview }}</p>
+                                    </div>
+                                </a>
+                            </div>
+                        @endforeach
+                    @endforeach
                 </div>
-            @endforeach
-        @endforeach
+                @include('partial.pagination', ['items' => $series])
+            </div>
         </div>
     </div>   
-</section>
-<section class="section">
-    <div class="container">
-        @include('partial.pagination', ['items' => $series])
-    </div>
 </section>
 @if ($tvdbResults)
     <section class="section">
