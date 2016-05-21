@@ -87,8 +87,6 @@ Route::group(['middleware' => 'web'], function () {
     ], function () {
         Route::get('/', function(){ return redirect()->action('UserController@index'); });
 
-        Route::get('seed', 'HomeController@seed');
-
         Route::get('user', 'UserController@index');
         Route::post('user/invite', 'UserController@invite');
         Route::post('user/{user}/role', 'UserController@setRole');

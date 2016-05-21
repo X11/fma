@@ -65,13 +65,4 @@ class HomeController extends Controller
                 'url' => action("HomeController@index")
             ]]);
     }
-
-    public function seed()
-    {
-        $series = Serie::all();
-        foreach ($series as $serie) {
-            $this->dispatch(new FetchSerieEpisodes($serie));
-        }
-        return redirect('/home');
-    }
 }
