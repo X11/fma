@@ -28,7 +28,7 @@ class CalenderController extends Controller
 
         $episodes = Episode::whereBetween('aired', [
                 $start_date->toDateString(), 
-                Carbon::now()->addDays(35-$diffDays)->toDateString()
+                Carbon::now()->addDays(34-$diffDays)->toDateString()
             ])
             ->with('serie')
             ->get()
