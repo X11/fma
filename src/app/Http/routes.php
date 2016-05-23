@@ -51,12 +51,15 @@ Route::group(['middleware' => 'web'], function () {
     Route::put('/serie/{id}', 'SerieController@update');
     Route::delete('/serie/{serie}', 'SerieController@destroy');
 
+
     // CALENDER
     Route::get('calender', 'CalenderController@index');
 
     // User profile
     Route::get('profile/{User}', 'UserController@show');
 
+
+    // USER THINGS
     Route::group(['middleware' => 'user'], function(){
 
         Route::post('password/change', 'UserController@changeUserPassword');
@@ -68,6 +71,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('serie/{SerieSlug}/episode/{EpisodeSlug}', 'EpisodeController@show');
         Route::post('episode/{episodeId}/watched', 'EpisodeController@markWatched');
         Route::delete('episode/{episodeId}/watched', 'EpisodeController@unmarkWatched');
+        Route::delete('episode/{episode}', 'EpisodeController@destroy');
 
         // WATCHLIST
         Route::get('watchlist', 'WatchlistController@index');

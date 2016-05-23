@@ -17,6 +17,16 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class EpisodeController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('admin', ['only' => ['destroy']]);
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  Serie $serie
@@ -57,6 +67,19 @@ class EpisodeController extends Controller
                 'name' => $episode->season_episode,
                 'url' => url($episode->url)
             ]]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Episode $episode)
+    {
+        $episode->delete();
+
+        return redirect()->action('SerieController@show', ['id' => $episode->serie->id]);
     }
 
     /**

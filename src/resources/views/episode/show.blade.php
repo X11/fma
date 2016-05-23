@@ -14,6 +14,13 @@
                 </figure>
             </div>
             <div class="column">
+                @if (Auth::user()->isAdmin())
+                <div class="is-pulled-right">
+                    <p class="control has-addons">
+                        <button class="button is-danger is-small" type="submit" form="deleteEpisode">Delete</button>
+                    </p>
+                </div>
+                @endif
                 <div class="content">
                     <h2 class="title">{{ $serie->name }}<br><br><em>{{ $episode->name }}</em></h2>
                     <p>{{ $episode->overview }}</p>
@@ -55,4 +62,11 @@
         @endif
     </div>
 </section>
+@endsection
+
+@section('post-footer')
+    <form id="deleteEpisode" action="{{ url('/episode', [$episode->id]) }}" method="POST">
+        {{ method_field('DELETE') }}
+        {!! csrf_field() !!}
+    </form>
 @endsection
