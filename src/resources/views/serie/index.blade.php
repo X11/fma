@@ -56,6 +56,31 @@
                     @endforeach
                 </div>
                 @include('partial.pagination', ['items' => $series])
+                <hr>
+                @if ($tvdbResults)
+                    <div class="content">
+                        <p>Serie not in the above results? Find it here to add it to the system</p>
+                    </div>
+                    @foreach($tvdbResults->chunk(2) as $chunk)
+                    <div class="columns">
+                        @foreach ($chunk as $serie)
+                            <div class="column is-half has-text-centered">
+                                <form class=""role="form" method="POST" action="{{ url('/serie') }}">
+                                    {!! csrf_field() !!}
+                                    <input class="input" type="hidden" value="{{ $serie->getId() }}" name="tvdbid" id="tvdbid"/>
+                                    <button style="margin:auto;" type="submit" class="box banner {{ $serie->getBanner() != "" ? '' : 'no-banner' }}">
+                                        @if($serie->getBanner() != "")
+                                        <img data-src="http://thetvdb.com/banners/_cache/{{ $serie->getBanner() }}" alt=""/>
+                                        @endif
+                                        <div class="overlay"></div>
+                                        <p>{{ $serie->getSeriesName() }}</p>
+                                    </button>
+                                </form>
+                            </div>
+                        @endforeach
+                    </div>
+                    @endforeach
+                @endif
             </div>
         </div>
     </div>   
@@ -70,25 +95,6 @@
                     </div>
                 </div>
             @endif
-            @foreach($tvdbResults->chunk(2) as $chunk)
-            <div class="columns">
-                @foreach ($chunk as $serie)
-                    <div class="column is-half has-text-centered">
-                        <form class=""role="form" method="POST" action="{{ url('/serie') }}">
-                            {!! csrf_field() !!}
-                            <input class="input" type="hidden" value="{{ $serie->getId() }}" name="tvdbid" id="tvdbid"/>
-                            <button style="margin:auto;" type="submit" class="box banner {{ $serie->getBanner() != "" ? '' : 'no-banner' }}">
-                                @if($serie->getBanner() != "")
-                                <img src="http://thetvdb.com/banners/_cache/{{ $serie->getBanner() }}" alt=""/>
-                                @endif
-                                <div class="overlay"></div>
-                                <p>{{ $serie->getSeriesName() }}</p>
-                            </button>
-                        </form>
-                    </div>
-                @endforeach
-            </div>
-            @endforeach
         </div>   
     </section>
 @endif

@@ -1,6 +1,6 @@
 <section class="section small">
     <div class="container">
-        <ul class="breadcrumbs">
+        <ul class="crumbs">
             <li><a href="{{ url('/') }}">FMA</a></li>
             @foreach($breadcrumbs as $crumb)
                 <li><a href="{{ $crumb['url'] }}">{{ $crumb['name'] }}</a></li>

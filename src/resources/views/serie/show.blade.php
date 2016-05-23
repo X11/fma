@@ -5,20 +5,28 @@
 @section('hero.content', '#'.$serie->id)
 
 @section('content')
-<section class="section">
+<section class="section serie">
     <div class="container">
         <div class="columns">
-            <div class="column is-one-quarter">
+            <div class="serie-fanart column is-one-third is-hidden-mobile">
                 <figure class="has-text-centered">
-                    <img src="{{ $serie->poster }}" alt=""/>
+                    <img data-src="{{ $serie->fanart }}" alt=""/>
+                </figure>
+            </div>
+            <div class="column is-2 is-hidden-mobile">
+                <figure class="has-text-centered">
+                    <img data-src="{{ $serie->poster }}" alt=""/>
                 </figure>
             </div>
             <div class="column">
+
+                <?php /*
                 @if (Auth::check())
                     <div class="is-pulled-right">
                         <button class="button is-loading mark-serie" data-mark-initial="{{ Auth::user()->have('watching', $serie->id) ? 1 : 0 }}" data-mark-content="Add to watchlist|Remove from watchlist" data-mark-class="is-success|is-danger" data-mark-serie="{{ $serie->id }}"></button>
                     </div>
                 @endif
+                 */ ?>
                 <div class="content" style="max-width:700px">
                     <div class="heading">
                         <h2 class="title">{{ $serie->name }}</h2>

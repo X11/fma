@@ -4078,6 +4078,33 @@ footer .menu-list a {
     #aside-checkbox:checked ~ .push-content {
       left: 180px; } }
 
+.episode .serie-poster {
+  position: relative;
+  top: -150px; }
+  .episode .serie-poster img {
+    border: 2px solid white;
+    background: white; }
+  @media (max-width: 769px) {
+    .episode .serie-poster {
+      top: 0px; } }
+  .episode .serie-poster button {
+    width: 100%;
+    margin-bottom: 10px; }
+
+.serie {
+  position: relative; }
+  .serie .serie-fanart {
+    position: absolute;
+    right: 0;
+    top: -150px; }
+    @media (max-width: 769px) {
+      .serie .serie-fanart {
+        position: relative;
+        top: 0; } }
+    .serie .serie-fanart img {
+      border: 2px solid white;
+      background: white; }
+
 .poster {
   position: relative;
   padding: 0;
@@ -4194,15 +4221,15 @@ footer .menu-list a {
   .banner:hover p, .banner.no-banner p {
     bottom: 0; }
 
-.breadcrumbs {
+.crumbs {
   display: inline; }
-  .breadcrumbs li {
+  .crumbs li {
     display: inline-block;
     padding-right: 20px;
     position: relative; }
-    .breadcrumbs li:last-child a {
+    .crumbs li:last-child a {
       color: inherit; }
-    .breadcrumbs li:not(:last-child):after {
+    .crumbs li:not(:last-child):after {
       position: absolute;
       content: '>>';
       right: 0;

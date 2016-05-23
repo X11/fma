@@ -1,18 +1,13 @@
 @extends('layouts.app')
 
 @section('hero.icon', 'tv')
-@section('hero.title', $episode->season_episode)
+@section('hero.title', $episode->name)
 @section('hero.content', '#'.$episode->id)
 
 @section('content')
-<section class="section">
+<section class="section episode">
     <div class="container">
         <div class="columns">
-            <div style="order:2;" class="column is-one-quarter-tablet is-one-third">
-                <figure class="has-text-centered">
-                    <img src="{{ $serie->poster }}" alt=""/>
-                </figure>
-            </div>
             <div class="column">
                 @if (Auth::user()->isAdmin())
                 <div class="is-pulled-right">
@@ -21,13 +16,19 @@
                     </p>
                 </div>
                 @endif
-                <div class="content">
-                    <h2 class="title">{{ $serie->name }}<br><br><em>{{ $episode->name }}</em></h2>
-                    <p>{{ $episode->overview }}</p>
-                    <div class="is-clearfix">
-                        <button class="button is-loading is-pulled-right mark-episode" data-watched-initial="{{ $episode->watched ? 1 : 0 }}" data-watched-content="Mark as watched|Unmark as watched" data-watched-class="is-success|is-danger" data-watched-episode="{{ $episode->id }}"></button>
-                    </div>
+                <div class="heading">
+                    <h2 class="title">{{ $episode->name }}</h2>
+                    <p class="subtitle"><em>{{ $serie->name }}</em></p>
                 </div>
+                <div class="content">
+                    <p>{{ $episode->overview }}</p>
+                </div>
+            </div>
+            <div class="serie-poster column is-one-quarter-tablet is-one-third">
+                <figure class="has-text-centered is-hidden-mobile">
+                    <img data-src="{{ $serie->poster }}" alt=""/>
+                </figure>
+                <button class="button is-loading mark-episode" data-watched-initial="{{ $episode->watched ? 1 : 0 }}" data-watched-content="Mark as watched|Unmark as watched" data-watched-class="is-success|is-danger" data-watched-episode="{{ $episode->id }}"></button>
             </div>
         </div>
         @if (count($magnets) > 0)

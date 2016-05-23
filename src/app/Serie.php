@@ -93,5 +93,18 @@ class Serie extends Model
         else
             return null;
     }
+
+    /**
+     * Get fanart URL
+     *
+     * @return void
+     */
+    public function getFanarthdAttribute($value)
+    {
+        if ($this->attributes['fanart'])
+            return "http://thetvdb.com/banners/" . $this->attributes['fanart'];
+        else
+            return null;
+    }
     
 }

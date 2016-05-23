@@ -78,3 +78,44 @@
         }
     }
 }
+
+.episode {
+    .serie-poster {
+        position: relative;
+        top: -150px;
+
+        img {
+            border: 2px solid white;
+            background: white;
+        }
+
+        @media (max-width: $tablet){
+            top: 0px;
+        }
+
+        button {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    }
+}
+
+.serie {
+    position: relative;
+
+    .serie-fanart {
+        position: absolute;
+        right: 0;
+        top: -150px;
+
+        @media (max-width: $tablet){
+            position: relative;
+            top: 0;
+        }
+
+        img {
+            border: 2px solid white;
+            background: white;
+        }
+    }
+}
