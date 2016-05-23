@@ -34,7 +34,7 @@
                             <small><strong>TVDB:</strong> {{ $serie->tvdbid }}</small>
                             @if ($serie->imdbid)
                                 <br>
-                                <small><strong>IMDB:</strong> {{ $serie->imdbid }}</small>
+                                <small><strong>IMDB:</strong> <a href="http://www.imdb.com/title/{{ $serie->imdbid }}" target="_blank">{{ $serie->imdbid }}</a></small>
                             @endif
                             <br>
                             <small><strong>RATING:</strong> {{ $serie->rating}}/10</small>
