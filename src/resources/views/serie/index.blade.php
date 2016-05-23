@@ -15,7 +15,7 @@
         </form>
     </div>
 </section>
-<section class="section is-paddingless series">
+<section class="section is-paddingless series" style="overflow:hidden;">
     <div class="container">
         <label id="aside-label" for="aside-checkbox"><i class="fa fa-bars"></i> Options</label>
         <div class="columns is-mobile">
