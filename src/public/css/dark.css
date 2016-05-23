@@ -4047,10 +4047,36 @@ footer .menu-list a {
       font-weight: normal; }
   .series.darken .serie:not(.selected) img,
   .series.darken .serie:not(.selected) .subtitle {
-    opacity: 0.4 !important; }
+    opacity: 0.8 !important; }
   .series.darken .serie:not(.selected) img {
     -webkit-filter: blur(2px);
     filter: blur(2px); }
+
+#aside-label {
+  display: none;
+  padding: 20px; }
+  @media (max-width: 769px) {
+    #aside-label {
+      display: table; } }
+
+#aside-checkbox {
+  display: none; }
+  @media (max-width: 769px) {
+    #aside-checkbox ~ aside {
+      position: absolute;
+      left: -100%;
+      width: auto;
+      -webkit-transition: left .4s ease-in;
+      transition: left .4s ease-in; }
+    #aside-checkbox:checked ~ aside {
+      left: 0; }
+    #aside-checkbox ~ .push-content {
+      position: relative;
+      left: 0;
+      -webkit-transition: left .4s ease-in;
+      transition: left .4s ease-in; }
+    #aside-checkbox:checked ~ .push-content {
+      left: 180px; } }
 
 .poster {
   position: relative;
