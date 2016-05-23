@@ -38,7 +38,8 @@
         transition: all.4s;
     }
 
-    &:hover {
+    &:hover,
+    &.no-banner {
         .overlay {
             background: rgba(0, 0, 0, 0.6);
         }

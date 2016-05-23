@@ -23,15 +23,15 @@
             <aside class="column is-2">
                 <p class="menu-label">Sort</p>
                 <ul class="menu-list">
-                    <li><a href="">Popularity</a></li>
-                    <li><a href="">Rating</a></li>
-                    <li><a href="">Recently added</a></li>
-                    <li><a href="">Upcoming</a></li>
+                    <li><a href="{{ action('SerieController@index') }}?_sort=popular">Popularity</a></li>
+                    <li><a href="{{ action('SerieController@index') }}?_sort=rating">Rating</a></li>
+                    <li><a href="{{ action('SerieController@index') }}?_sort=recent">Recently added</a></li>
+                    <li><a href="{{ action('SerieController@index') }}?_sort=upcoming">Upcoming</a></li>
                 </ul>
                 <p class="menu-label">Genres</p>
                 <ul class="menu-list">
                     @foreach($genres as $genre)
-                        <li><a href="{{ url('/serie') }}?_genre={{ $genre->id }}">{{ $genre->name }}</a></li>
+                        <li><a href="{{ action('SerieController@index') }}?_genre={{ $genre->id }}">{{ $genre->name }}</a></li>
                     @endforeach
                 </ul>
             </aside>
@@ -77,8 +77,10 @@
                         <form class=""role="form" method="POST" action="{{ url('/serie') }}">
                             {!! csrf_field() !!}
                             <input class="input" type="hidden" value="{{ $serie->getId() }}" name="tvdbid" id="tvdbid"/>
-                            <button style="margin:auto;" type="submit" class="box banner">
+                            <button style="margin:auto;" type="submit" class="box banner {{ $serie->getBanner() != "" ? '' : 'no-banner' }}">
+                                @if($serie->getBanner() != "")
                                 <img src="http://thetvdb.com/banners/_cache/{{ $serie->getBanner() }}" alt=""/>
+                                @endif
                                 <div class="overlay"></div>
                                 <p>{{ $serie->getSeriesName() }}</p>
                             </button>

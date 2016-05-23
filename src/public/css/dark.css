@@ -4189,9 +4189,9 @@ footer .menu-list a {
     height: 100%;
     -webkit-transition: all 0.4s;
     transition: all 0.4s; }
-  .banner:hover .overlay {
+  .banner:hover .overlay, .banner.no-banner .overlay {
     background: rgba(0, 0, 0, 0.6); }
-  .banner:hover p {
+  .banner:hover p, .banner.no-banner p {
     bottom: 0; }
 
 .breadcrumbs {

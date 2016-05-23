@@ -47,22 +47,38 @@ class SerieController extends Controller
             } catch (\Exception $e){
                 $tvdbResults = [];
             }
-            /*
-            $tvdbResults = $tvdbResults->getData()->filter(function($value) use ($series_tvdbids){
-                return !in_array($value->getId(), $series_tvdbids) && 
-                    $value->getSeriesName() != "** 403: Series Not Permitted **" ? 1 : 0 &&
-                    Carbon::parse($value->firstAired)->year > 1999;
+            $tvdbResults = $tvdbResults->filter(function($value) use ($series_tvdbids){
+                if (Carbon::parse($value->getFirstAired())->year < 2000) return false;
+                if (in_array($value->getId(), $series_tvdbids)) return false;
+                if (substr($value->getSeriesName(), 0, 2) == '**') return false;
+                return true;
+            })->sort(function($value){
+                return $value->getId();
             });
-             */
 
-        } else {
-            if ($request->input('_genre')){
+        } else if ($request->input('_genre')){
                 $genre = Genre::findOrFail($request->input('_genre'));
-                $series = $genre->series()->orderBy('name')->paginate($limit);
+                $series = $genre->series()
+                                ->orderBy('name')
+                                ->paginate($limit);
                 $series->appends(['_genre' => $request->input('_genre')]);    
-            } else {
-                $series = Serie::orderBy('name')->paginate($limit);
+        } else if ($request->input('_sort')){
+            switch ($request->input('_sort')){
+                case 'rating':
+                    $series = Serie::orderBy('rating', 'desc')
+                                    ->orderBy('name', 'asc')
+                                    ->paginate($limit);
+                    break;
+                case 'recent':
+                    $series = Serie::orderBy('created_at', 'desc')
+                                    ->orderBy('name', 'asc')
+                                    ->paginate($limit);
+                    break;
+                default:
+                    return redirect()->action('SerieController@index');
             }
+        } else {
+            $series = Serie::orderBy('name')->paginate($limit);
         }
 
         $series->appends(['q' => $request->input('q')]);    
