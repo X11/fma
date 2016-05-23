@@ -41,7 +41,7 @@
                     <p class="panel-heading">Filters</p>
                     @foreach ($series as $serie)
                         <label class="panel-block">
-                            <span class="tag is-dark is-small">{{ str_pad($series_episode_count->get($serie->id, '0'), 2, '0', STR_PAD_LEFT) }}</span> 
+                            <span class="tag {{ $series_episode_count->get($serie->id, 0) > 0 ? '' : 'is-dark' }} is-small">{{ str_pad($series_episode_count->get($serie->id, '0'), 2, '0', STR_PAD_LEFT) }}</span> 
                             <input type="checkbox" watchlist-filter="{{ $serie->id }}" {{ in_array($serie->id, $filters->toArray()) ? '' : 'checked' }}>
                             <a href="{{ $serie->url }}">{{ $serie->name }}</a>
                         </label>
