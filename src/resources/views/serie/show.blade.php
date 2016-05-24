@@ -13,12 +13,7 @@
                     <img data-src="{{ $serie->fanart }}" alt=""/>
                 </figure>
             </div>
-            <div class="column is-2 is-hidden-mobile">
-                <figure class="has-text-centered">
-                    <img data-src="{{ $serie->poster }}" alt=""/>
-                </figure>
-            </div>
-            <div class="column">
+            <div class="column" style="order: 2;">
                 <div class="content" style="max-width:700px">
                     <div class="heading">
                         <h2 class="title">{{ $serie->name }}</h2>
@@ -50,17 +45,18 @@
                         <div style="margin-top: 10px;">
                             <button style="width:100%;" class="button is-loading mark-serie" data-mark-initial="{{ Auth::user()->have('watching', $serie->id) ? 1 : 0 }}" data-mark-content="Add to watchlist|Remove from watchlist" data-mark-class="is-success|is-danger" data-mark-serie="{{ $serie->id }}"></button>
                         </div>
-                        @if (Auth::user()->isAdmin())
-                            <div style="margin-top: 10px;">
-                                <small><strong>ADMIN:</strong></small><br>
-                                <p class="control has-addons">
-                                    <button style="width:50%" class="button is-primary" type="submit" form="updateSerie">Update</button>
-                                    <button style="width:50%" class="button is-danger" type="submit" form="deleteSerie">Delete</button>
-                                </p>
-                            </div>
-                        @endif
                     @endif
                 </div>
+            </div>
+            <div class="column is-2">
+                <figure class="has-text-centered is-hidden-mobile">
+                    <img data-src="{{ $serie->poster }}" alt=""/>
+                </figure>
+                @if (Auth::check() && Auth::user()->isAdmin())
+                    <small class="is-hidden-tablet-only is-hidden-desktop-only is-hidden-widescreen"><strong>ADMIN:</strong></small>
+                    <button style="margin-bottom:5px;width:100%" class="button is-primary" type="submit" form="updateSerie">Update</button>
+                    <button style="margin-bottom:5px;width:100%" class="button is-danger" type="submit" form="deleteSerie">Delete</button>
+                @endif
             </div>
         </div>
         <div class="seasons box">
