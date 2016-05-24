@@ -19,14 +19,6 @@
                 </figure>
             </div>
             <div class="column">
-
-                <?php /*
-                @if (Auth::check())
-                    <div class="is-pulled-right">
-                        <button class="button is-loading mark-serie" data-mark-initial="{{ Auth::user()->have('watching', $serie->id) ? 1 : 0 }}" data-mark-content="Add to watchlist|Remove from watchlist" data-mark-class="is-success|is-danger" data-mark-serie="{{ $serie->id }}"></button>
-                    </div>
-                @endif
-                 */ ?>
                 <div class="content" style="max-width:700px">
                     <div class="heading">
                         <h2 class="title">{{ $serie->name }}</h2>
@@ -44,20 +36,29 @@
                         <small><strong>OVERVIEW:</strong></small><br>
                         {{ $serie->overview }}
                     </p>
-                    <div class="is-pulled-right">
-                        <p>
-                            @foreach($serie->genres as $genre)
-                            <a href="{{ url('/serie') }}?_genre={{ $genre->id }}" class="tag is-small">{{ $genre->name }}</a>
-                            @endforeach
-                        </p>
-                        <p class="has-text-right"><small><strong>Last updated</strong>: {{ $serie->updated_at }}</small></p>
+                    <div class="is-clearfix">
+                        <div class="is-pulled-right">
+                            <p>
+                                @foreach($serie->genres as $genre)
+                                <a href="{{ url('/serie') }}?_genre={{ $genre->id }}" class="tag is-small">{{ $genre->name }}</a>
+                                @endforeach
+                            </p>
+                            <p class="has-text-right"><small><strong>Last updated</strong>: {{ $serie->updated_at }}</small></p>
+                        </div>
                     </div>
-                    @if (Auth::user()->isAdmin())
-                        <small><strong>Admin:</strong></small><br>
-                        <p class="control has-addons">
-                            <button class="button is-primary is-small" type="submit" form="updateSerie">update now</button>
-                            <button class="button is-danger is-small" type="submit" form="deleteSerie">delete</button>
-                        </p>
+                    @if (Auth::check())
+                        <div style="margin-top: 10px;">
+                            <button style="width:100%;" class="button is-loading mark-serie" data-mark-initial="{{ Auth::user()->have('watching', $serie->id) ? 1 : 0 }}" data-mark-content="Add to watchlist|Remove from watchlist" data-mark-class="is-success|is-danger" data-mark-serie="{{ $serie->id }}"></button>
+                        </div>
+                        @if (Auth::user()->isAdmin())
+                            <div style="margin-top: 10px;">
+                                <small><strong>ADMIN:</strong></small><br>
+                                <p class="control has-addons">
+                                    <button style="width:50%" class="button is-primary" type="submit" form="updateSerie">Update</button>
+                                    <button style="width:50%" class="button is-danger" type="submit" form="deleteSerie">Delete</button>
+                                </p>
+                            </div>
+                        @endif
                     @endif
                 </div>
             </div>
