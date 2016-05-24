@@ -35,6 +35,18 @@
                         </div>
                     </div>
                 @endif
+            @else 
+                <div class="column is-2">
+                    <div class="menu">
+                        <p class="menu-label">Account</p>
+                        <ul class="menu-list">
+                            <li><a href="{{ url('/login') }}">Login</a></li>
+                            @if (env('ALLOW_REGISTER'))
+                            <li><a href="{{ url('/register') }}">Register</a></li>
+                            @endif (env('ALLOW_REGISTER'))
+                        </ul>
+                    </div>
+                </div>
             @endif
             <div class="column">
                 <div class="content has-text-right">

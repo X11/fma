@@ -4019,6 +4019,33 @@ body {
 footer .menu-list a {
   border-bottom: none !important; }
 
+.landing-info {
+  position: relative;
+  background-size: 100% auto;
+  background-position: center center;
+  width: 100%;
+  padding-top: 40%; }
+  @media (max-width: 700px) {
+    .landing-info {
+      background-size: auto 100%;
+      background-position: center top;
+      padding: 0;
+      height: 400px; } }
+  .landing-info .info {
+    position: absolute;
+    bottom: 10%;
+    max-width: 300px;
+    width: 100%; }
+    .landing-info .info:not(.is-right) {
+      left: 5%; }
+    .landing-info .info.is-right {
+      right: 5%; }
+    .landing-info .info .heading h2, .landing-info .info .heading p {
+      padding: 10px 20px;
+      color: #fff;
+      font-weight: bold;
+      background: rgba(51, 51, 51, 0.6); }
+
 .home .heading .tag {
   display: block; }
 

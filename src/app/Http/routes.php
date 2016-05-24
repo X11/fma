@@ -15,15 +15,12 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::get('/', function () { 
         if (Auth::guest()){
-            //$shows = App\Serie::orderBy(DB::raw('RAND()'))->take(6)->get();
-            //$watched = DB::table('episodes_watched')->count();
-            //$following = DB::table('watchlist')->count();
-            return view('welcome');
-                //->with('seriesCount', App\Serie::count()) 
-                //->with('episodesCount', App\Episode::count()) 
-                //->with('watchedCount', $watched) 
-                //->with('followingCount', $following)
-                //->with('randomSeries', $shows); 
+            $fanarts = [
+                //'http://thetvdb.com/banners/fanart/original/259765-12.jpg',
+                'http://thetvdb.com/banners/fanart/original/248742-8.jpg'
+            ];
+            return view('welcome')
+                ->with('fanart', $fanarts[array_rand($fanarts)]);
         } else {
             return redirect('/home');
         }

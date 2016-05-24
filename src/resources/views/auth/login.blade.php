@@ -33,7 +33,7 @@
                     @endif
                 </div>
             </div>
-            <p class="controler">
+            <p class="control">
                 <label class="checkbox">
                     <input type="checkbox" name="remember">
                     Remember me
