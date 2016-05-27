@@ -8,10 +8,13 @@
 <section class="section serie">
     <div class="container">
         <div class="columns">
-            <div class="serie-fanart column is-one-third is-hidden-mobile">
-                <figure class="has-text-centered">
+            <div class="serie-fanart column is-one-third">
+                <figure class="has-text-centered is-hidden-mobile">
                     <img data-src="{{ $serie->fanart }}" alt=""/>
                 </figure>
+                @if (Auth::check())
+                    <button style="width:100%;" class="button is-loading mark-serie" data-mark-initial="{{ Auth::user()->have('watching', $serie->id) ? 1 : 0 }}" data-mark-content="Add to watchlist|Remove from watchlist" data-mark-class="is-success|is-danger" data-mark-serie="{{ $serie->id }}"></button>
+                @endif
             </div>
             <div class="column" style="order: 2;">
                 <div class="content" style="max-width:700px">
@@ -25,6 +28,10 @@
                             @endif
                             <br>
                             <small><strong>RATING:</strong> {{ $serie->rating}}/10</small>
+                            @if ($serie->status)
+                                <br>
+                                <small><strong>STATUS:</strong> {{ $serie->status }}</small>
+                            @endif
                         </p>
                     </div>
                     <p>
@@ -32,20 +39,14 @@
                         {{ $serie->overview }}
                     </p>
                     <div class="is-clearfix">
-                        <div class="is-pulled-right">
-                            <p>
-                                @foreach($serie->genres as $genre)
-                                <a href="{{ url('/serie') }}?_genre={{ $genre->id }}" class="tag is-small">{{ $genre->name }}</a>
-                                @endforeach
-                            </p>
-                            <p class="has-text-right"><small><strong>Last updated</strong>: {{ $serie->updated_at }}</small></p>
-                        </div>
+                        <p>
+                            <small><strong>GENRE:</strong></small><br>
+                            @foreach($serie->genres as $genre)
+                            <a href="{{ url('/serie') }}?_genre={{ $genre->id }}" class="tag is-small">{{ $genre->name }}</a>
+                            @endforeach
+                        </p>
+                        <p class="has-text-right"><small><strong>Last updated</strong>: {{ $serie->updated_at }}</small></p>
                     </div>
-                    @if (Auth::check())
-                        <div style="margin-top: 10px;">
-                            <button style="width:100%;" class="button is-loading mark-serie" data-mark-initial="{{ Auth::user()->have('watching', $serie->id) ? 1 : 0 }}" data-mark-content="Add to watchlist|Remove from watchlist" data-mark-class="is-success|is-danger" data-mark-serie="{{ $serie->id }}"></button>
-                        </div>
-                    @endif
                 </div>
             </div>
             <div class="column is-2">

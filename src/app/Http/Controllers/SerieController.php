@@ -157,6 +157,7 @@ class SerieController extends Controller
         $show->poster = $tvshowPoster;
         $show->fanart = $tvshowFanart;
         $show->rating = $tvshow->getSiteRating();
+        $show->status = $tvshow->getStatus();
         $show->save();
 
         dispatch(new FetchSerieEpisodes($show));

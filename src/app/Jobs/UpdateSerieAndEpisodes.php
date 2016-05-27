@@ -89,6 +89,7 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
         $this->serie->rating = $serie->getSiteRating();
         $this->serie->poster = $seriePoster;
         $this->serie->fanart = $serieFanart;
+        $this->serie->status = $serie->getStatus();
 
         $episodes = [];
         $page = 1;
