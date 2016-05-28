@@ -38,7 +38,7 @@
         }
 
         img {
-            filter: blur(2px);
+            filter: blur(1px);
         }
     }
 }
@@ -106,7 +106,7 @@
     .serie-fanart {
         position: absolute;
         right: 0;
-        top: -150px;
+        top: -100px;
 
         @media (max-width: $tablet){
             position: relative;
@@ -116,6 +116,7 @@
         img {
             border: 2px solid white;
             background: white;
+            border-radius: 5px;
         }
     }
 }

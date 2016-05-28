@@ -7,22 +7,14 @@
 @section('content')
 <section class="section">
     <div class="container">
-        <nav class="level">
-            <div class="level-item has-text-centered">
-                <p class="heading">Hide watched</p>
-                <p class="title"><input type="checkbox" id="hide-watched"></p>
-            </div>
-            <?php /*
-            <div class="navbar-item has-text-centered">
-                <p class="heading">Hide posters</p>
-                <p class="title"><input type="checkbox" id="hide-posters"></p>
-            </div>
-            <div class="navbar-item has-text-centered">
-                <p class="heading">Hide more</p>
-                <p class="title"><input type="checkbox" id="hide-more"></p>
-            </div>
-            */ ?>
-        </nav>
+        <div class="is-clearfix">
+            <p class="control heading is-pulled-right">
+                <label class="checkbox">
+                    Hide watched
+                    <input class="checkbox" type="checkbox" id="hide-watched">
+                </label>
+            </p>
+        </div>
         <div class="home">
             @foreach($days as $day => $episodes)
                 <div class="columns is-gapless">

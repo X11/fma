@@ -35,12 +35,12 @@
         </form>
     </div>
 </section>
-<section class="section is-paddingless">
-    <div style="background-image: url({{ $fanart }});" class="container is-fluid is-marginless landing-info">
+<section style="background-image: url({{ $fanart }});" class="section is-paddingless landing-info">
+    <div class="container">
         <div class="info">
             <div class="heading">
                 <h2 class="title">Keeping track</h2>
-                <p>Never forget what you are watching or when a new season airs.</p>
+                <p>Never forget what you are watching</p>
             </div>
         </div>
     </div>

@@ -1,11 +1,11 @@
-<section class="hero is-primary is-small is-bold">
+<section class="hero is-{{ $header_background }} is-small">
     <!-- Hero header: will stick at the top -->
     <div class="hero-head">
         <div class="container">
-            <nav class="nav fma">
+            <nav class="nav">
                 <!-- Left side -->
                 <div class="nav-left">
-                    <a class="nav-item" href="{{ url('/') }}" style="color:white !important;">FMA</a>
+                    <a class="nav-item is-tab" href="{{ url('/') }}">FMA</a>
                 </div>
 
                 <!-- Hamburger menu (on mobile) -->
@@ -22,11 +22,17 @@
                             <a class="button is-primary" href="{{ url('/login') }}">Login</a>
                         </span>
                     @else
-                        <a class="nav-item {{ Request::is('account*') ? 'is-active' : '' }}" href="{{ url('/account') }}">Account</a>
+                        <a class="nav-item is-tab {{ Request::is('home') ? 'is-active' : '' }}" href="{{ url('/home') }}">Home</a>
+                        <a class="nav-item is-tab {{ Request::is('serie*') ? 'is-active' : '' }}" href="{{ url('/serie') }}">Series</a>
+                        <a class="nav-item is-tab {{ Request::is('calender*') ? 'is-active' : '' }}" href="{{ url('/calender') }}">Calender</a>
+                        <a class="nav-item is-tab {{ Request::is('watchlist*') ? 'is-active' : '' }}" href="{{ url('/watchlist') }}">Watchlist</a>
                         @if (Auth::user()->isAdmin())
-                            <a class="nav-item {{ Request::is('admin*') ? 'is-active' : '' }}" href="{{ url('/admin') }}">Admin</a>
+                            <a class="nav-item is-tab {{ Request::is('admin*') ? 'is-active' : '' }}" href="{{ url('/admin') }}">Admin</a>
                         @endif
-                        <a class="nav-item" href="{{ url('/logout') }}">Logout</a>
+                        <span class="nav-item is-paddingless">
+                            <a class="nav-item is-tab {{ Request::is('account*') ? 'is-active' : '' }}" href="{{ url('/account') }}">Account</a>
+                            <a class="nav-item" href="{{ url('/logout') }}">Logout</a>
+                        </span>
                     @endif
                 </div>
             </nav>
@@ -51,25 +57,5 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- Hero footer: will stick at the bottom -->
-    <div class="hero-foot">
-        <nav class="tabs is-boxed">
-            <div class="container">
-                <ul>
-                    @if (!Auth::guest())
-                        <li class="{{ Request::is('home') ? 'is-active' : '' }}"><a href="{{ url('/home') }}">Home</a></li>
-                        <li class="{{ Request::is('serie*') ? 'is-active' : '' }}"><a href="{{ url('/serie') }}">Series</a></li>
-                        <li class="{{ Request::is('calender*') ? 'is-active' : '' }}"><a href="{{ url('/calender') }}">Calender</a></li>
-                        <li class="{{ Request::is('watchlist*') ? 'is-active' : '' }}"><a href="{{ url('/watchlist') }}">Watchlist</a></li>
-                        <?php /*
-                        <li class="{{ Request::is('account*') ? 'is-active' : '' }}"><a href="{{ url('/account') }}">Account</a></li>
-                        <li class="{{ Request::is('admin*') ? 'is-active' : '' }}"><a href="{{ url('/admin') }}">Admin</a></li>
-                        */ ?>
-                    @endif
-                </ul>
-            </div>
-        </nav>
     </div>
 </section>

@@ -84,7 +84,7 @@ class SerieController extends Controller
         $series->appends(['q' => $request->input('q')]);    
 
         return view('serie.index')
-            ->with('genres', Genre::all())
+            ->with('genres', Genre::has('series')->get())
             ->with('query', $request->input('q'))
             ->with('series', $series)
             ->with('tvdbResults', $tvdbResults)

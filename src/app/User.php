@@ -7,6 +7,13 @@ use Crypt;
 
 class User extends Authenticatable
 {
+
+    static $BASE_SETTINGS = [
+        'theme' => 'default',
+        'header' => 'primary',
+        'watchlist_filters' => []
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -28,11 +35,6 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
-    ];
-
-    protected $BASE_SETTINGS = [
-        'theme' => 'default',
-        'watchlist_filters' => []
     ];
 
     public $USER_ROLES = [
@@ -81,7 +83,7 @@ class User extends Authenticatable
             $settings = [];
         }
 
-        return (object) array_merge($this->BASE_SETTINGS, $settings);
+        return (object) array_merge(self::$BASE_SETTINGS, $settings);
     }
 
     /**

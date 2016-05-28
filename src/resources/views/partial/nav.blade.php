@@ -1,4 +1,4 @@
-<nav class="nav has-shadow">
+<nav class="nav">
     <div class="container">
         <div class="nav-left">
             @if (Request::is('admin*'))

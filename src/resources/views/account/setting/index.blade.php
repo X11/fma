@@ -90,26 +90,25 @@
                         <p class="control">
                             <label class="label">Themes</label>
                         </p>
+                        @foreach(['default', 'green', 'inverted'] as $option)
                         <p class="control">
                             <label class="radio">
-                                <input type="radio" value="default" name="theme" {{ $settings->theme == "default" ? 'checked' : '' }} > Default
+                                <input type="radio" value="{{ $option }}" name="theme" {{ $settings->theme == $option ? 'checked' : '' }} > {{ ucfirst($option) }}
                             </label>
                         </p>
+                        @endforeach
+
+                        <p class="control">
+                            <label class="label">Header</label>
+                        </p>
+                        @foreach(['default', 'primary', 'light', 'dark'] as $option)
                         <p class="control">
                             <label class="radio">
-                                <input type="radio" value="dark" name="theme" {{ $settings->theme == "dark" ? 'checked' : '' }}> Dark
+                                <input type="radio" value="{{ $option }}" name="header" {{ $settings->header == $option ? 'checked' : '' }} > {{ ucfirst($option) }}
                             </label>
                         </p>
-                        <p class="control">
-                            <label class="radio">
-                                <input type="radio" value="green" name="theme" {{ $settings->theme == "green" ? 'checked' : '' }}> Green
-                            </label>
-                        </p>
-                        <p class="control">
-                            <label class="radio">
-                                <input type="radio" value="inverted" name="theme" {{ $settings->theme == "inverted" ? 'checked' : '' }}> Inverted
-                            </label>
-                        </p>
+                        @endforeach
+
                         <div class="is-clearfix">
                             <button type="submit" class="button is-success is-pulled-right is-small"><span class="icon is-small"><i class="fa fa-pencil"></i></span></button>
                         </div>

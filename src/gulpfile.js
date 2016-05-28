@@ -14,7 +14,6 @@ var elixir = require('laravel-elixir');
 elixir(function(mix) {
     mix.sass('default.scss', 'public/css/default.css');
     mix.sass('green.scss', 'public/css/green.css');
-    mix.sass('dark.scss', 'public/css/dark.css');
     mix.scripts([
         '*.js',
     ]);
@@ -22,7 +21,6 @@ elixir(function(mix) {
     mix.version([
         'css/default.css',
         'css/green.css',
-        'css/dark.css',
         'js/all.js',
     ]);
 });

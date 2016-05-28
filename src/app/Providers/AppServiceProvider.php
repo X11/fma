@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Auth;
+use App\User;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +15,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        view()->creator('layouts/app', function($view){
+            $view->with('theme', Auth::check()
+                                    ? Auth::user()->settings->theme
+                                    : User::$BASE_SETTINGS['theme']);
+        });
+
+        view()->creator('partial/header', function($view){
+            $view->with('header_background', Auth::check()
+                                    ? Auth::user()->settings->header
+                                    : User::$BASE_SETTINGS['header']);
+        });
     }
 
     /**

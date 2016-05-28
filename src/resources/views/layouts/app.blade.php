@@ -13,16 +13,14 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel='stylesheet' type='text/css'>
 
     <!-- Styles -->
-    @if (!Auth::guest() && Auth::user()->settings->theme =="green")
+    @if ($theme =="green")
         <link href="{{ elixir('css/green.css') }}" rel="stylesheet">
-    @elseif (!Auth::guest() && Auth::user()->settings->theme =="dark")
-        <link href="{{ elixir('css/dark.css') }}" rel="stylesheet">
     @else 
         <link href="{{ elixir('css/default.css') }}" rel="stylesheet">
     @endif
     @yield('styles')
 
-    @if (!Auth::guest() && Auth::user()->settings->theme == "inverted")
+    @if ($theme == "inverted")
         <style type="text/css" media="screen">
             html {
                 -webkit-filter: invert(100%);
@@ -60,16 +58,19 @@
 
     @include('partial.footer')
     @yield('post-footer')
+
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://rawgit.com/notifyjs/notifyjs/master/dist/notify.js"></script>
     <script src="{{ elixir('js/all.js') }}"></script>
+
     <style type="text/css" media="screen">
-    img[data-src] {
-        opacity: 0;
-        transition: opacity .3s ease-in;
-    }
+        img[data-src] {
+            opacity: 0;
+            transition: opacity .3s ease-in;
+        }
     </style>
+
     <script type="text/javascript" charset="utf-8">
     $("img[data-src]").unveil(null, function(){
         $(this).load(function(){

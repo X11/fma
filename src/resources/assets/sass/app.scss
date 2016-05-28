@@ -3,6 +3,10 @@ body {
     font-family: 'Lato', sans-serif;
 }
 
+input[class="checkbox"] {
+    vertical-align:bottom;
+}
+
 .container {
     width: 100%;
 }
@@ -13,6 +17,14 @@ body {
 
 .scroll-row {
     overflow: auto;
+}
+
+.nav {
+    z-index: initial;
+}
+
+.nav-menu {
+    z-index: 3;
 }
 
 .table-responsive {
@@ -29,32 +41,18 @@ body {
     padding-bottom: 10px;
 }
 
-.is-paddingless {
-    padding: 0;
-}
-
 .columns.is-gapless {
     margin: 0;
 }
 
-.fma a {
-    color: darken($white, 5%) !important;
-
-    &:hover {
-        color: $white !important;
-    }
-}
-
-footer .menu-list a {
-    border-bottom: none !important;
+.has-shadow {
+    box-shadow: 0 2px 3px rgba($black, 0.1)
 }
 
 .landing-info {
     position: relative;
     background-size: 100% auto;
     background-position: center center;
-    width: 100%;
-    padding-top: 40%;
 
     @media (max-width: 700px){
         background-size: auto 100%;
@@ -62,28 +60,52 @@ footer .menu-list a {
         padding: 0;
         height: 400px;
     }
-    
-    .info {
-        position: absolute;
-        bottom: 10%;
-        max-width: 300px;
-        width: 100%;
 
-        &:not(.is-right) {
-            left: 5%;
-        }
+    .container {
+        position: relative;
+        padding-top: 40%;
+        
+        .info {
+            position: absolute;
+            bottom: 10%;
+            max-width: 300px;
+            width: 100%;
 
-        &.is-right {
-            right: 5%;
-        }
-
-        .heading {
-            h2, p {
-                padding: 10px 20px;
-                color: $white;
-                font-weight: bold;
-                background: rgba($primary, 0.6);
+            &:not(.is-right) {
+                left: 5px;
             }
+
+            &.is-right {
+                right: 5px;
+            }
+
+            .heading {
+                h2, p {
+                    padding: 10px 20px;
+                    color: $white;
+                    font-weight: bold;
+                    background: rgba($primary, 0.6);
+                }
+            }
+        }
+    }
+}
+
+footer .menu-list a {
+    border-bottom: none;
+}
+
+.is-paddingless {
+    padding: 0 !important;
+}
+
+.hero.is-primary,
+.hero.is-dark {
+    .hero-head a {
+        color: darken($white, 10%) !important;
+
+        &:hover {
+            color: $white !important;
         }
     }
 }

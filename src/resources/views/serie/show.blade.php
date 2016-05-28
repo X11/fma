@@ -8,12 +8,11 @@
 <section class="section serie">
     <div class="container">
         <div class="columns">
-            <div class="serie-fanart column is-one-third">
+            <div class="serie-fanart column is-one-third has-text-centered">
                 <figure class="has-text-centered is-hidden-mobile">
                     <img data-src="{{ $serie->fanart }}" alt=""/>
                 </figure>
                 @if (Auth::check())
-                    <button style="width:100%;" class="button is-loading mark-serie" data-mark-initial="{{ Auth::user()->have('watching', $serie->id) ? 1 : 0 }}" data-mark-content="Add to watchlist|Remove from watchlist" data-mark-class="is-success|is-danger" data-mark-serie="{{ $serie->id }}"></button>
                 @endif
             </div>
             <div class="column" style="order: 2;">
@@ -53,9 +52,10 @@
                 <figure class="has-text-centered is-hidden-mobile">
                     <img data-src="{{ $serie->poster }}" alt=""/>
                 </figure>
+                    <button style="margin-bottom:5px;width:100%" class="button is-loading mark-serie" data-mark-initial="{{ Auth::user()->have('watching', $serie->id) ? 1 : 0 }}" data-mark-content="Track|Untrack" data-mark-class="is-primary|is-danger" data-mark-serie="{{ $serie->id }}"></button>
                 @if (Auth::check() && Auth::user()->isAdmin())
                     <small class="is-hidden-tablet-only is-hidden-desktop-only is-hidden-widescreen"><strong>ADMIN:</strong></small>
-                    <button style="margin-bottom:5px;width:100%" class="button is-primary" type="submit" form="updateSerie">Update</button>
+                    <button style="margin-bottom:5px;width:100%" class="button is-warning" type="submit" form="updateSerie">Update</button>
                     <button style="margin-bottom:5px;width:100%" class="button is-danger" type="submit" form="deleteSerie">Delete</button>
                 @endif
             </div>
