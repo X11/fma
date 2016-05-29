@@ -1,45 +1,83 @@
 .calender {
     
-    table {
-        th {
-            color: black;
-            font-weight: normal;
-            
-            &.is-active {
-                color: white;
-                background: #1fc8db;
-           }
-        }
+    h2 {
+        margin: 1.875em 0 0 0;
+        font-weight: 500;
+        color: #919FAF;
+        text-transform: uppercase;
+    }
+}
 
-        td {
-            position: relative;
+.calender-item {
+    margin: 4px 0;
+    box-shadow: 0 2px 3px rgba($black, 0.2);
+    border: 2px solid #ffffff;
+    border-radius: 3px;
+    padding: 10px;
 
-            &.is-first-episode {
-                border-left: 4px solid $green;
-            }
+    .date {
+        float: left;
+        padding: 0.125em 0.75em 0 0;
+        margin-left: 0.25em;
+        margin-right: 0.75em;
+        font-weight: bold;
+        text-align: center;
+        border-right: 2px solid #919FAF;
+    }
 
-            &.is-watching {
-                border-left: 4px solid $primary;
-            }
+    .date .bottom,
+    .date .top {
+      display: block;
+    }
 
-            &.is-first-episode {
-                background: $green;
-                color: white;
-            }
+    .date .bottom {
+      font-size: 0.75em;
+    }
 
-            &.is-first-episode.is-first-season {
-                background: $red;
-            }
+    .date .top {
+      margin-top: -2px;
+      font-size: 1.3em;
+    }
 
-            &.table-link:hover {
-                color: $white;
-                background: $primary !important;
-            }
-        }
+    h3 {
+        font-weight: bold;
+        margin-top: 3px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
 
-        a {
-            color: inherit;
-            text-decoration: underline;
-        }
+    p {
+        font-size: 0.875em;
+        color: #919FAF;
+        -webkit-font-smoothing: antialiased;
+        margin-right: 0.25em;
+        padding-left: 0.1em;
+        padding-right: 0.5em;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    &.is-watching .date,
+    &.is-premier .date,
+    &.is-returning .date {
+      border-width: 0.25em;
+      margin-right: 0.75em;
+      padding-right: 0.625em;
+    }
+
+    &.is-watching .date {
+      border-right-color: $primary;
+    }
+    &.is-premier .date {
+      border-right-color: $danger;
+    }
+    &.is-returning .date {
+      border-right-color: $warning;
+    }
+
+    &:first-child {
+      margin-top: 2px;
     }
 }

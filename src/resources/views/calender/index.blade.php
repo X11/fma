@@ -7,32 +7,25 @@
 @section('content')
 <section class="section">
     <div class="container calender is-fluid">
-        @foreach($episode_chunks as $episodes)
-            <div class="columns">
-                @foreach($episodes as $day => $day_episodes)
-                <div class="column">
-                    <h2 id="{{ $day }}" class="tag is-primary {{ $day == $today ? 'is-danger' : '' }}" style="border-radius:0;"><a href="#{{$day}}" style="color:inherit;">{{ Carbon\Carbon::parse($day)->format('D, d M') }}</a></h2>
-                    <table class="table">
-                        <tbody>
-                            @if (count($day_episodes) > 0)
-                                @foreach($day_episodes->sortBy('serie_name') as $episode)
-                                <tr>
-                                    <td class="table-link {{ in_array($episode->serie->id, $watching_ids) ? 'is-watching' : ''}} {{ $episode->episodeSeason == 1 ? 'is-first-season' : '' }} {{ $episode->episodeNumber == 1 ? 'is-first-episode' : ''}}">
-                                        <a href="{{ url($episode->url) }}">{{ $episode->serie->name }} {{ $episode->season_episode }} </a>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td>N/A</td>
-                                </tr>
-                            @endif
-                        </tbody>
-                    </table>
-                </div>
-                @endforeach
+        <div class="columns is-multiline">
+            @foreach($episodes as $day => $day_episodes)
+            <div class="column is-2">
+                <h2>{{ $day }}</h2>
+                <ul class="calender-list">
+                    @foreach($day_episodes->sortBy('serie_name') as $episode)
+                    <li class="calender-item {{ in_array($episode->serie->id, $watching_ids) ? 'is-watching' : ''}} {{ $episode->episodeSeason == 1 && $episode->episodeNumber == 1 ? 'is-premier' : '' }} {{ $episode->episodeNumber == 1 ? 'is-returning' : ''}}">
+                        <label class="date">
+                            <span class="top">{{ str_pad($episode->episodeNumber, 2, '0', STR_PAD_LEFT) }}</span>
+                            <span class="bottom">{{ $episode->episodeSeason }}</span>
+                        </label>
+                        <h3>{{ $episode->serie->name }}</h3>
+                        <p>{{ $episode->name or 'N/A' }}</p>
+                    </li>
+                    @endforeach
+                </ul>
             </div>
-        @endforeach
+            @endforeach
+        </div>
     </div>   
 </section>
 @endsection

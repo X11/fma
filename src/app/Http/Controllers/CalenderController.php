@@ -23,7 +23,7 @@ class CalenderController extends Controller
 
         $dates = collect();
         for ($i = -$diffDays; $i <= 34-$diffDays; $i++) {
-            $dates->put(Carbon::parse("$i days")->toDateString(), []);
+            $dates->put(Carbon::parse("$i days")->toDateString(), collect([]));
         }
 
         $episodes = Episode::whereBetween('aired', [
@@ -45,7 +45,7 @@ class CalenderController extends Controller
 
         return view('calender.index')
             ->with('today', $today)
-            ->with('episode_chunks', collect($dates)->merge($episodes)->chunk(7))
+            ->with('episodes', collect($dates)->merge($episodes))
             ->with('watching_ids', $watching_ids)
             ->with('breadcrumbs', [[
                 'name' => "Calender",

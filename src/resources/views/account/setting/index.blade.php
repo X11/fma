@@ -110,7 +110,7 @@
                         @endforeach
 
                         <p class="control">
-                            <label class="label">Images</label>
+                            <label class="label">HD Images</label>
                         </p>
                         @foreach(['never', 'size', 'not_on_mobile', 'always'] as $option)
                         <p class="control">

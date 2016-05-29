@@ -3991,6 +3991,10 @@ input[class="checkbox"] {
 .container {
   width: 100%; }
 
+.container.is-fluid {
+  margin: 0;
+  padding: 0 10px; }
+
 .fa-btn {
   margin-right: 6px; }
 
@@ -4278,31 +4282,64 @@ footer .menu-list a {
       right: 0;
       top: 0; }
 
-.calender table th {
-  color: black;
-  font-weight: normal; }
-  .calender table th.is-active {
-    color: white;
-    background: #1fc8db; }
+.calender h2 {
+  margin: 1.875em 0 0 0;
+  font-weight: 500;
+  color: #919FAF;
+  text-transform: uppercase; }
 
-.calender table td {
-  position: relative; }
-  .calender table td.is-first-episode {
-    border-left: 4px solid #97cd76; }
-  .calender table td.is-watching {
-    border-left: 4px solid #1fc8db; }
-  .calender table td.is-first-episode {
-    background: #97cd76;
-    color: white; }
-  .calender table td.is-first-episode.is-first-season {
-    background: #ed6c63; }
-  .calender table td.table-link:hover {
-    color: #fff;
-    background: #1fc8db !important; }
-
-.calender table a {
-  color: inherit;
-  text-decoration: underline; }
+.calender-item {
+  margin: 4px 0;
+  box-shadow: 0 2px 3px rgba(17, 17, 17, 0.2);
+  border: 2px solid #ffffff;
+  border-radius: 3px;
+  padding: 10px; }
+  .calender-item .date {
+    float: left;
+    padding: 0.125em 0.75em 0 0;
+    margin-left: 0.25em;
+    margin-right: 0.75em;
+    font-weight: bold;
+    text-align: center;
+    border-right: 2px solid #919FAF; }
+  .calender-item .date .bottom,
+  .calender-item .date .top {
+    display: block; }
+  .calender-item .date .bottom {
+    font-size: 0.75em; }
+  .calender-item .date .top {
+    margin-top: -2px;
+    font-size: 1.3em; }
+  .calender-item h3 {
+    font-weight: bold;
+    margin-top: 3px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap; }
+  .calender-item p {
+    font-size: 0.875em;
+    color: #919FAF;
+    -webkit-font-smoothing: antialiased;
+    margin-right: 0.25em;
+    padding-left: 0.1em;
+    padding-right: 0.5em;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap; }
+  .calender-item.is-watching .date,
+  .calender-item.is-premier .date,
+  .calender-item.is-returning .date {
+    border-width: 0.25em;
+    margin-right: 0.75em;
+    padding-right: 0.625em; }
+  .calender-item.is-watching .date {
+    border-right-color: #1fc8db; }
+  .calender-item.is-premier .date {
+    border-right-color: #ed6c63; }
+  .calender-item.is-returning .date {
+    border-right-color: #fce473; }
+  .calender-item:first-child {
+    margin-top: 2px; }
 
 .seasons .watched {
   color: #ed6c63; }

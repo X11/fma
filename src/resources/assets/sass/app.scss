@@ -11,6 +11,11 @@ input[class="checkbox"] {
     width: 100%;
 }
 
+.container.is-fluid {
+    margin: 0;
+    padding: 0 10px;
+}
+
 .fa-btn {
     margin-right: 6px;
 }
