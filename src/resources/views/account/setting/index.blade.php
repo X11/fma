@@ -109,6 +109,17 @@
                         </p>
                         @endforeach
 
+                        <p class="control">
+                            <label class="label">Images</label>
+                        </p>
+                        @foreach(['never', 'size', 'not_on_mobile', 'always'] as $option)
+                        <p class="control">
+                            <label class="radio">
+                                <input type="radio" value="{{ $option }}" name="tvdb_load_hd" {{ $settings->tvdb_load_hd == $option ? 'checked' : '' }} > {{ ucfirst(str_replace('_', ' ', $option)) }}
+                            </label>
+                        </p>
+                        @endforeach
+
                         <div class="is-clearfix">
                             <button type="submit" class="button is-success is-pulled-right is-small"><span class="icon is-small"><i class="fa fa-pencil"></i></span></button>
                         </div>

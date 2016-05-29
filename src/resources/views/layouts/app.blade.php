@@ -13,14 +13,14 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel='stylesheet' type='text/css'>
 
     <!-- Styles -->
-    @if ($theme =="green")
+    @if ($THEME =="green")
         <link href="{{ elixir('css/green.css') }}" rel="stylesheet">
     @else 
         <link href="{{ elixir('css/default.css') }}" rel="stylesheet">
     @endif
     @yield('styles')
 
-    @if ($theme == "inverted")
+    @if ($THEME == "inverted")
         <style type="text/css" media="screen">
             html {
                 -webkit-filter: invert(100%);
@@ -28,6 +28,15 @@
             }
         </style>
     @endif
+    <style type="text/css" media="screen">
+        img[data-src] {
+            opacity: 0;
+            transition: opacity .3s ease-in;
+        }
+    </style>
+    <script type="text/javascript" charset="utf-8">
+        window.tvdb_load_hd = '{{ $TVDB_LOAD_HD }}'
+    </script>
 </head>
 <body id="app-layout">
     @if (!Request::is('/'))
@@ -64,17 +73,12 @@
     <script src="https://rawgit.com/notifyjs/notifyjs/master/dist/notify.js"></script>
     <script src="{{ elixir('js/all.js') }}"></script>
 
-    <style type="text/css" media="screen">
-        img[data-src] {
-            opacity: 0;
-            transition: opacity .3s ease-in;
-        }
-    </style>
-
     <script type="text/javascript" charset="utf-8">
-    $("img[data-src]").unveil(null, function(){
-        $(this).load(function(){
-            this.style.opacity = 1;
+    $(window).on('load', function(){
+        $("img[data-src]").unveil(null, function(){
+            $(this).load(function(){
+                this.style.opacity = 1;
+            });
         });
     });
     </script>

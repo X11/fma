@@ -10,13 +10,13 @@
         <div class="columns">
             <div class="serie-fanart column is-one-third has-text-centered">
                 <figure class="has-text-centered is-hidden-mobile">
-                    <img data-src="{{ $serie->fanart }}" alt=""/>
+                    <img width="100%" src="{{ asset('img/poster.png') }}" data-src="{{ $serie->fanart }}" alt=""/>
                 </figure>
                 @if (Auth::check())
                 @endif
             </div>
             <div class="column" style="order: 2;">
-                <div class="content" style="max-width:700px">
+                <div class="content" style="max-width:600px">
                     <div class="heading">
                         <h2 class="title">{{ $serie->name }}</h2>
                         <p class="subtitle">
@@ -33,10 +33,12 @@
                             @endif
                         </p>
                     </div>
+                    <br>
                     <p>
                         <small><strong>OVERVIEW:</strong></small><br>
                         {{ $serie->overview }}
                     </p>
+                    <br>
                     <div class="is-clearfix">
                         <p>
                             <small><strong>GENRE:</strong></small><br>

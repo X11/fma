@@ -11,6 +11,7 @@ class User extends Authenticatable
     static $BASE_SETTINGS = [
         'theme' => 'default',
         'header' => 'primary',
+        'tvdb_load_hd' => 'never',
         'watchlist_filters' => []
     ];
 

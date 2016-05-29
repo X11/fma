@@ -16,9 +16,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->creator('layouts/app', function($view){
-            $view->with('theme', Auth::check()
-                                    ? Auth::user()->settings->theme
-                                    : User::$BASE_SETTINGS['theme']);
+            $settings = Auth::check()
+                        ? Auth::user()->settings
+                        : (object) User::$BASE_SETTINGS;
+
+            $view->with('THEME', $settings->theme);
+            $view->with('TVDB_LOAD_HD', $settings->tvdb_load_hd);
         });
 
         view()->creator('partial/header', function($view){
