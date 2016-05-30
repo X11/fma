@@ -1,19 +1,27 @@
-.calender {
+.calender-column {
     
     h2 {
         margin: 1.875em 0 0 0;
         font-weight: 500;
         color: #919FAF;
-        text-transform: uppercase;
+    }
+
+    &.is-active h2 {
+        color: $danger;
     }
 }
 
 .calender-item {
     margin: 4px 0;
     box-shadow: 0 2px 3px rgba($black, 0.2);
-    border: 2px solid #ffffff;
+    border: 0.25em solid #ffffff;
     border-radius: 3px;
     padding: 10px;
+
+    a {
+        color: inherit;
+        display: inherit;
+    }
 
     .date {
         float: left;
@@ -59,25 +67,25 @@
         white-space: nowrap;
     }
 
-    &.is-watching .date,
     &.is-premier .date,
     &.is-returning .date {
-      border-width: 0.25em;
-      margin-right: 0.75em;
-      padding-right: 0.625em;
+        border-width: 0.25em;
+        margin-right: 0.75em;
+        padding-right: 0.625em;
     }
 
-    &.is-watching .date {
-      border-right-color: $primary;
+    &.is-watching {
+        border-left-color: $primary;
+
     }
     &.is-premier .date {
-      border-right-color: $danger;
+        border-right-color: $danger;
     }
     &.is-returning .date {
-      border-right-color: $warning;
+        border-right-color: $warning;
     }
 
     &:first-child {
-      margin-top: 2px;
+        margin-top: 2px;
     }
 }

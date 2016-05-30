@@ -4282,18 +4282,23 @@ footer .menu-list a {
       right: 0;
       top: 0; }
 
-.calender h2 {
+.calender-column h2 {
   margin: 1.875em 0 0 0;
   font-weight: 500;
-  color: #919FAF;
-  text-transform: uppercase; }
+  color: #919FAF; }
+
+.calender-column.is-active h2 {
+  color: #ed6c63; }
 
 .calender-item {
   margin: 4px 0;
   box-shadow: 0 2px 3px rgba(17, 17, 17, 0.2);
-  border: 2px solid #ffffff;
+  border: 0.25em solid #ffffff;
   border-radius: 3px;
   padding: 10px; }
+  .calender-item a {
+    color: inherit;
+    display: inherit; }
   .calender-item .date {
     float: left;
     padding: 0.125em 0.75em 0 0;
@@ -4326,14 +4331,13 @@ footer .menu-list a {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap; }
-  .calender-item.is-watching .date,
   .calender-item.is-premier .date,
   .calender-item.is-returning .date {
     border-width: 0.25em;
     margin-right: 0.75em;
     padding-right: 0.625em; }
-  .calender-item.is-watching .date {
-    border-right-color: #48cfad; }
+  .calender-item.is-watching {
+    border-left-color: #48cfad; }
   .calender-item.is-premier .date {
     border-right-color: #ed6c63; }
   .calender-item.is-returning .date {
