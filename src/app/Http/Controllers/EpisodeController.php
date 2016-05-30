@@ -41,10 +41,10 @@ class EpisodeController extends Controller
         if ($serie->id != $episode->serie->id) throw new NotFoundHttpException;
 
         $magnets = [];
+        $search_query = preg_replace('/\([0-9]+\)/', '', $serie->name) . ' ' . $episode->season_episode;
 
         if (Auth::user()->isMember()){
             $ts = new TorrentSearch();
-            $search_query = preg_replace('/\([0-9]+\)/', '', $serie->name) . ' ' . $episode->season_episode;
             $magnets = $ts->search(strtolower($search_query), '1');
             $magnets = array_filter($magnets, function($magnet) use ($episode) {
                 return preg_match("/$episode->season_episode/", $magnet->getName());
