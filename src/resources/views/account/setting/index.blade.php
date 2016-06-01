@@ -87,38 +87,59 @@
                     <hr>
                     <form role="form" method="POST" action="{{ url('/account/setting') }}">
                         {!! csrf_field() !!}
-                        <p class="control">
-                            <label class="label">Themes</label>
-                        </p>
-                        @foreach(['default', 'green', 'inverted'] as $option)
-                        <p class="control">
-                            <label class="radio">
-                                <input type="radio" value="{{ $option }}" name="theme" {{ $settings->theme == $option ? 'checked' : '' }} > {{ ucfirst($option) }}
-                            </label>
-                        </p>
-                        @endforeach
+                        <div class="columns is-multiline is-mobile">
+                            <div class="column is-6">
+                                <p class="control">
+                                    <label class="label">Themes</label>
+                                </p>
+                                @foreach(['default', 'green', 'inverted'] as $option)
+                                <p class="control">
+                                    <label class="radio">
+                                        <input type="radio" value="{{ $option }}" name="theme" {{ $settings->theme == $option ? 'checked' : '' }} > {{ ucfirst($option) }}
+                                    </label>
+                                </p>
+                                @endforeach
+                            </div>
 
-                        <p class="control">
-                            <label class="label">Header</label>
-                        </p>
-                        @foreach(['default', 'primary', 'light', 'dark'] as $option)
-                        <p class="control">
-                            <label class="radio">
-                                <input type="radio" value="{{ $option }}" name="header" {{ $settings->header == $option ? 'checked' : '' }} > {{ ucfirst($option) }}
-                            </label>
-                        </p>
-                        @endforeach
+                            <div class="column is-6">
+                                <p class="control">
+                                    <label class="label">Serie overview</label>
+                                </p>
+                                @foreach(['default', 'fluid'] as $option)
+                                <p class="control">
+                                    <label class="radio">
+                                        <input type="radio" value="{{ $option }}" name="serie_overview" {{ $settings->serie_overview == $option ? 'checked' : '' }} > {{ ucfirst(str_replace('_', ' ', $option)) }}
+                                    </label>
+                                </p>
+                                @endforeach
+                            </div>
 
-                        <p class="control">
-                            <label class="label">HD Images</label>
-                        </p>
-                        @foreach(['never', 'size', 'not_on_mobile', 'always'] as $option)
-                        <p class="control">
-                            <label class="radio">
-                                <input type="radio" value="{{ $option }}" name="tvdb_load_hd" {{ $settings->tvdb_load_hd == $option ? 'checked' : '' }} > {{ ucfirst(str_replace('_', ' ', $option)) }}
-                            </label>
-                        </p>
-                        @endforeach
+                            <div class="column is-6">
+                                <p class="control">
+                                    <label class="label">Header</label>
+                                </p>
+                                @foreach(['default', 'primary', 'light', 'dark'] as $option)
+                                <p class="control">
+                                    <label class="radio">
+                                        <input type="radio" value="{{ $option }}" name="header" {{ $settings->header == $option ? 'checked' : '' }} > {{ ucfirst($option) }}
+                                    </label>
+                                </p>
+                                @endforeach
+                            </div>
+
+                            <div class="column is-6">
+                                <p class="control">
+                                    <label class="label">HD Images</label>
+                                </p>
+                                @foreach(['never', 'size', 'not_on_mobile', 'always'] as $option)
+                                <p class="control">
+                                    <label class="radio">
+                                        <input type="radio" value="{{ $option }}" name="tvdb_load_hd" {{ $settings->tvdb_load_hd == $option ? 'checked' : '' }} > {{ ucfirst(str_replace('_', ' ', $option)) }}
+                                    </label>
+                                </p>
+                                @endforeach
+                            </div>
+                        </div>
 
                         <div class="is-clearfix">
                             <button type="submit" class="button is-success is-pulled-right is-small"><span class="icon is-small"><i class="fa fa-pencil"></i></span></button>

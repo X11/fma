@@ -29,6 +29,12 @@ class AppServiceProvider extends ServiceProvider
                                     ? Auth::user()->settings->header
                                     : User::$BASE_SETTINGS['header']);
         });
+
+        view()->creator('serie/index', function($view){
+            $view->with('overview_container', Auth::check()
+                                    ? Auth::user()->settings->serie_overview
+                                    : User::$BASE_SETTINGS['serie_overview']);
+        });
     }
 
     /**
