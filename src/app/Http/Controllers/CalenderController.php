@@ -19,16 +19,25 @@ class CalenderController extends Controller
     public function index(Request $request)
     {
         $start_date = Carbon::parse("monday a week ago");
-        $diffDays = $start_date->diffInDays(Carbon::now());
+        $diffDays = $start_date->diffInDays(Carbon::now())%7;
 
         $dates = collect();
-        for ($i = -$diffDays; $i <= 34-$diffDays; $i++) {
-            $dates->put(Carbon::parse("$i days")->toDateString(), collect([]));
+        for ($i = 0; $i < 7; $i++) {
+            $weeks = collect();
+
+            $day = clone $start_date;
+            for ($k = 0; $k < 5; $k++) {
+                $weeks->push($day->toDateString());
+                $day->modify('+1 week');
+            }
+
+            $dates->put($i, $weeks);
+            $start_date->modify('+1 day');
         }
 
         $episodes = Episode::whereBetween('aired', [
                 $start_date->toDateString(), 
-                Carbon::now()->addDays(34-$diffDays)->toDateString()
+                Carbon::now()->addDays(28-(7-$diffDays))->toDateString()
             ])
             ->with('serie')
             ->get()
@@ -41,11 +50,10 @@ class CalenderController extends Controller
             ->pluck('id')
             ->toArray() : [];
 
-        $today = Carbon::now()->toDateString();
-
         return view('calender.index')
-            ->with('today', $today)
-            ->with('episodes', collect($dates)->merge($episodes))
+            ->with('today', Carbon::now()->toDateString())
+            ->with('dates', $dates)
+            ->with('episodes', $episodes)
             ->with('watching_ids', $watching_ids)
             ->with('breadcrumbs', [[
                 'name' => "Calender",

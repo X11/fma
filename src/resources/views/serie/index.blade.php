@@ -10,7 +10,7 @@
         <form role="form" method="GET" action="{{ action('SerieController@index') }}">
             <p class="control has-addons">
                 <input class="input" type="text" value="{{ $query }}" name="q" id="name"/>
-                <button type="submit" class="button is-primary"> Search </button>
+                <button type="submit" class="button is-primary"><i class="fa fa-search"></i></button>
             </p>
         </form>
     </div>

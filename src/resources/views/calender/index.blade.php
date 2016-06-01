@@ -7,14 +7,15 @@
 @section('content')
 <section class="section">
     <div class="container calender is-fluid">
-        <div class="columns is-multiline">
-            @foreach($episodes as $day => $day_episodes)
-            <div class="column is-2 calender-column {{ $day == $today ? 'is-active' : '' }}">
+        @foreach($dates as $day)
+        <div class="columns ">
+            @foreach($day as $date)
+            <div class="column calender-column {{ $date == $today ? 'is-active' : '' }}">
                 <div class="heading">
-                    <h2>{{ Carbon\Carbon::parse($day)->format('D, j M') }}</h2>
+                    <h2>{{ Carbon\Carbon::parse($date)->format('D, j M') }}</h2>
                 </div>
                 <ul class="calender-list">
-                    @foreach($day_episodes->sortBy('serie_name') as $episode)
+                    @foreach($episodes->get($date, collect([]))->sortBy('serie_name') as $episode)
                     <li class="calender-item {{ in_array($episode->serie->id, $watching_ids) ? 'is-watching' : ''}} {{ $episode->episodeSeason == 1 && $episode->episodeNumber == 1 ? 'is-premier' : '' }} {{ $episode->episodeNumber == 1 ? 'is-returning' : ''}}">
                         <a href="{{ $episode->url }}">
                             <label class="date">
@@ -30,6 +31,7 @@
             </div>
             @endforeach
         </div>
-    </div>   
+        @endforeach
+    </div>
 </section>
 @endsection
