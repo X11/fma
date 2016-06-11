@@ -1,50 +1,50 @@
 @extends('layouts.app')
 
-@section('hero.icon', 'pencil')
+@section('hero.icon', 'wrench')
 @section('hero.title', 'Updates')
-@section('hero.content', 'Update series')
+@section('hero.content', 'Update application')
 
 @section('content')
 <section class="section">
     <div class="container">
-        <form role="form" method="GET" action="{{ url()->current() }}">
-            <label>Get series updated later then </label>
-            <p class="control has-addons">
-                <input class="input" type="text" value="{{ $timestring }}" name="q" id="name" placeholder="7 days ago"/>
-                <button type="submit" class="button is-primary"> GET </button>
-            </p>
-        </form>
-        <hr>
-        <form role="form" method="POST" action="{{ url('/admin/update/') }}">
-            {{ method_field('PUT') }}
-            {!! csrf_field() !!}
-            <table class="table">
-                <thead>
-                    <th><input type="checkbox" id="selectAll"></th>
-                    <th>Name</th>
-                    <th>Updated at</th>
-                </thead>
-                <tbody>
-                    @foreach ($series as $serie)
-                    <tr>
-                        <td><input type="checkbox" name="seriesid[]" value="{{ $serie->id }}"></td>
-                        <td>{{ $serie->name }}</td>
-                        <td>{{ $serie->updated_at }}</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            @if (count($series) == 0)
-                <div class="message is-danger">
-                    <div class="message-body">
-                        Nothing to update
+        <div class="columns">
+            <div class="column">
+                <form role="form" method="POST" action="{{ url('/admin/update/series') }}">
+                    {{ method_field('PUT') }}
+                    {!! csrf_field() !!}
+                    <label>Update series before</label>
+                    <p class="control has-addons">
+                        <input class="input" type="text" value="last week" name="q" id="name" placeholder="7 days ago"/>
+                        <button type="submit" class="button is-primary"> UPDATE </button>
+                    </p>
+                </form>
+                <br>
+                <form role="form" method="POST" action="{{ url('/admin/update/cache') }}">
+                    {{ method_field('PUT') }}
+                    {!! csrf_field() !!}
+                    <label>Remove cache</label>
+                    <p class="control has-addons">
+                        <button type="submit" class="button is-danger"> REMOVE </button>
+                    </p>
+                </form>
+            </div>
+            <div class="column">
+                <div class="level">
+                    <div class="level-item has-text-centered">
+                        <p class="heading">Series</p>
+                        <p class="title">{{ $serieCount }}</p>
+                    </div>
+                    <div class="level-item has-text-centered">
+                        <p class="heading">Episodes</p>
+                        <p class="title">{{ $episodeCount }}</p>
+                    </div>
+                    <div class="level-item has-text-centered">
+                        <p class="heading">Users</p>
+                        <p class="title">{{ $userCount }}</p>
                     </div>
                 </div>
-            @endif
-            <button type="submit" class="button is-primary">
-                Update
-            </button>
-        </form>
+            </div>
+        </div>
     </div>   
 </section>
 @endsection

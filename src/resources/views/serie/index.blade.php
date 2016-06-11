@@ -23,10 +23,8 @@
             <aside class="column is-2">
                 <p class="menu-label">Sort</p>
                 <ul class="menu-list">
-                    <li><a href="{{ action('SerieController@index') }}?_sort=popular">Popularity</a></li>
                     <li><a href="{{ action('SerieController@index') }}?_sort=rating">Rating</a></li>
                     <li><a href="{{ action('SerieController@index') }}?_sort=recent">Recently added</a></li>
-                    <li><a href="{{ action('SerieController@index') }}?_sort=upcoming">Upcoming</a></li>
                 </ul>
                 <p class="menu-label">Genres</p>
                 <ul class="menu-list">

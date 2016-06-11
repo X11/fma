@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Serie;
+use App\Episode;
+use App\User;
 use Carbon\Carbon;
 use App\Jobs\UpdateSerieAndEpisodes;
 
@@ -19,15 +21,11 @@ class UpdateController extends Controller
      */
     public function index(Request $request)
     {
-        $timestring = ($request->input('q')) ? $request->input('q') : '7 days ago';
-
-        $series = Serie::where([
-            ['updated_at', '<', Carbon::parse($timestring)->toDateTimeString()],
-        ])->orWhere('updated_at', null)->get();
 
         return view('admin.update.index')
-            ->with('series', $series)
-            ->with('timestring', $timestring)
+            ->with('serieCount', Serie::count())
+            ->with('episodeCount', Episode::count())
+            ->with('userCount', User::count())
             ->with('breadcrumbs', [[
                 'name' => "Admin",
                 'url' => '/admin'
@@ -45,9 +43,12 @@ class UpdateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function updateSeries(Request $request)
     {
-        $series = Serie::find($request->input('seriesid'));
+        $series = Serie::where([
+            ['updated_at', '<', Carbon::parse($request->input('q'))->toDateTimeString()],
+        ])->orWhere('updated_at', null)->get();
+
         if (!$series)
             return back()
                 ->with('status', "No series selected");
@@ -58,5 +59,19 @@ class UpdateController extends Controller
         $count = $series->count();
         return back()
             ->with('status', "$count series updating");
+    }
+
+    /**
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateCache(Request $request)
+    {
+
+        \Artisan::call('cache:clear');
+
+        return back()
+            ->with('status', "Cache cleared");
     }
 }

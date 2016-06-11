@@ -93,6 +93,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::post('user/{user}/role', 'UserController@setRole');
 
         Route::get('update', 'UpdateController@index');
-        Route::put('update', 'UpdateController@update');
+        Route::put('update/series', 'UpdateController@updateSeries');
+        Route::put('update/cache', 'UpdateController@updateCache');
     });
 });
