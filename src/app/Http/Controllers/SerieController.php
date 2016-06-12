@@ -86,6 +86,8 @@ class SerieController extends Controller
         return view('serie.index')
             ->with('genres', Genre::has('series')->get())
             ->with('query', $request->input('q'))
+            ->with('_sort', $request->input('_sort'))
+            ->with('_genre', $request->input('_genre'))
             ->with('series', $series)
             ->with('tvdbResults', $tvdbResults)
             ->with('breadcrumbs', [[

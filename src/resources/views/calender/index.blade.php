@@ -6,7 +6,7 @@
 
 @section('content')
 <section class="section">
-    <div class="container calender is-fluid">
+    <div class="container calender is-{{ $overview_container }}">
         <div class="columns is-multiline">
             @foreach($dates as $week)
                 @foreach($week as $day => $order)

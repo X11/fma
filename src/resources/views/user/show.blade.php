@@ -56,7 +56,7 @@
                 <hr>
                 @foreach ($series as $serie)
                     <div class="media serie">
-                        <figure class="media-image">
+                        <figure class="media-image is-narrow">
                             <img width="100%" src="{{ asset('img/poster.png') }}"  data-src="{{ $serie->poster }}" alt="" style="max-height:124px; padding-right:10px;"/>
                         </figure>
                         <div class="media-content">

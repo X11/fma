@@ -35,6 +35,12 @@ class AppServiceProvider extends ServiceProvider
                                     ? Auth::user()->settings->serie_overview
                                     : User::$BASE_SETTINGS['serie_overview']);
         });
+
+        view()->creator('calender/index', function($view){
+            $view->with('overview_container', Auth::check()
+                                    ? Auth::user()->settings->calender_overview
+                                    : User::$BASE_SETTINGS['calender_overview']);
+        });
     }
 
     /**

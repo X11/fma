@@ -90,7 +90,7 @@
                         <div class="columns is-multiline is-mobile">
                             <div class="column is-6">
                                 <p class="control">
-                                    <label class="label">Themes</label>
+                                    <label class="label">Theme</label>
                                 </p>
                                 @foreach(['default', 'green', 'inverted'] as $option)
                                 <p class="control">
@@ -100,10 +100,12 @@
                                 </p>
                                 @endforeach
                             </div>
-
+                        </div>
+                        <hr>
+                        <div class="columns is-multiline is-mobile">
                             <div class="column is-6">
                                 <p class="control">
-                                    <label class="label">Serie overview</label>
+                                    <label class="label">Series overview</label>
                                 </p>
                                 @foreach(['default', 'fluid'] as $option)
                                 <p class="control">
@@ -114,6 +116,21 @@
                                 @endforeach
                             </div>
 
+                            <div class="column is-6">
+                                <p class="control">
+                                    <label class="label">Calender overview</label>
+                                </p>
+                                @foreach(['default', 'fluid'] as $option)
+                                <p class="control">
+                                    <label class="radio">
+                                        <input type="radio" value="{{ $option }}" name="calender_overview" {{ $settings->calender_overview == $option ? 'checked' : '' }} > {{ ucfirst(str_replace('_', ' ', $option)) }}
+                                    </label>
+                                </p>
+                                @endforeach
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="columns is-multiline is-mobile">
                             <div class="column is-6">
                                 <p class="control">
                                     <label class="label">Header</label>

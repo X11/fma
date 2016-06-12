@@ -13,6 +13,7 @@ class User extends Authenticatable
         'header' => 'default',
         'tvdb_load_hd' => 'never',
         'serie_overview' => 'default',
+        'calender_overview' => 'default',
         'watchlist_filters' => []
     ];
 

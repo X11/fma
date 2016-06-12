@@ -23,13 +23,13 @@
             <aside class="column is-2">
                 <p class="menu-label">Sort</p>
                 <ul class="menu-list">
-                    <li><a href="{{ action('SerieController@index') }}?_sort=rating">Rating</a></li>
-                    <li><a href="{{ action('SerieController@index') }}?_sort=recent">Recently added</a></li>
+                    <li><a class="{{ $_sort == 'rating' ? 'is-active' : '' }}" href="{{ action('SerieController@index') }}?_sort=rating">Rating</a></li>
+                    <li><a class="{{ $_sort == 'recent' ? 'is-active' : '' }}" href="{{ action('SerieController@index') }}?_sort=recent">Recently added</a></li>
                 </ul>
                 <p class="menu-label">Genres</p>
                 <ul class="menu-list">
                     @foreach($genres as $genre)
-                        <li><a href="{{ action('SerieController@index') }}?_genre={{ $genre->id }}">{{ $genre->name }}</a></li>
+                        <li><a class="{{ $_genre == $genre->id ? 'is-active' : '' }}" href="{{ action('SerieController@index') }}?_genre={{ $genre->id }}">{{ $genre->name }}</a></li>
                     @endforeach
                 </ul>
             </aside>
