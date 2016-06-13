@@ -77,7 +77,7 @@
             </div>
         </div>
         <br>
-        <div class="tabsris-boxed is-medium" style="">
+        <div class="tabs is-boxed is-medium" style="">
             <ul>
                 @foreach ($seasons_numbers as $season)
                     <li class="{{ $season == $seasons_numbers->last() ? 'is-active' : '' }}"><a tab-href="seasons/{{$season}}">{{ $season > 0 ? $season : 'Specials' }}</a></li>
