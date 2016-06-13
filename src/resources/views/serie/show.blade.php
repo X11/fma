@@ -77,7 +77,7 @@
             </div>
         </div>
         <br>
-        <div class="tabs is-boxed is-medium" style="">
+        <div class="tabsris-boxed is-medium" style="">
             <ul>
                 @foreach ($seasons_numbers as $season)
                     <li class="{{ $season == $seasons_numbers->last() ? 'is-active' : '' }}"><a tab-href="seasons/{{$season}}">{{ $season > 0 ? $season : 'Specials' }}</a></li>
@@ -105,8 +105,8 @@
                                     <span class="bottom">{{ $episode->episodeSeason }}</span>
                                 </label>
                                 <a href="{{ $episode->url }}"><i class="fa fa-arrow-right"></i></a>
-                                <h3>{{ $episode->name !== '' ? $episode->name : 'N/A' }}</h3>
-                                <p>{{ $episode->overview ? substr($episode->overview, 0, 200) : "N/A" }}</p>
+                                <h3>{{ ($episode->name ? $episode->name : '') !== '' ? $episode->name : 'N/A' }}</h3>
+                                <p>{{ $episode->air_date }}</p>
                             </div>
                         </div>
                     @endforeach
