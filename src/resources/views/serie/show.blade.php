@@ -62,50 +62,56 @@
                 @endif
             </div>
         </div>
-        <div class="seasons box">
-            <div class="media">
-                <div class="media-left">
-                    <i class="fa fa-circle-o-notch icon is-large"></i>
-                </div>
-                <div class="media-content">
-                    <div class="heading">
-                        <h3 class="title">seasons</h3>
-                    </div>
+    </div>
+</section>
+<section class="section seasons">
+    <div class="container">
+        <div class="media">
+            <div class="media-left">
+                <i class="fa fa-circle-o-notch icon is-large"></i>
+            </div>
+            <div class="media-content">
+                <div class="heading">
+                    <h3 class="title">seasons</h3>
                 </div>
             </div>
-            <div class="tabs is-fullwidth is-centered" style="">
-                <ul>
-                    @foreach ($seasons_numbers as $season)
-                        <li class="{{ $season == $seasons_numbers->last() ? 'is-active' : '' }}"><a tab-href="seasons/{{$season}}">{{ $season > 0 ? $season : 'Specials' }}</a></li>
-                    @endforeach
-                </ul>
-            </div>
-            <div id="seasons" class="tabs-content table-responsive">
-                @foreach ($seasons as $season => $episodes)
-                    <div tab-id="{{ $season }}" class="tab {{ $season == $seasons_numbers->last() ? 'is-active' : '' }}">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th><a class="mark-season" style="color:inherit;" title="Mark all episodes as watched" data-watched-season="{{ $season }}"><i class='fa fa-check'></i></a></th>
-                                    <th>Name</th>
-                                    <th>Episode</th>
-                                    <th>Aired</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($episodes as $episode)
-                                    <tr>
-                                        <td width="20px" class="watched mark-episode" data-watched-initial="{{ $episode->watched ? 1 : 0 }}" data-watched-content="<i class='fa fa-times'></i>|<i class='fa fa-check'></i>" data-watched-class="|is-watched" data-watched-episode="{{ $episode->id }}" data-watched-season="{{ $season }}"></td>
-                                        <td>{{ $episode->name }}</td>
-                                        <td><a href="{{ url($episode->url) }}">{{ $episode->season_episode }}</a></td>
-                                        <td class="{{ $episode->isAired() ? '' : 'is-danger' }}">{{ $episode->air_date }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+        </div>
+        <br>
+        <div class="tabs is-boxed is-medium" style="">
+            <ul>
+                @foreach ($seasons_numbers as $season)
+                    <li class="{{ $season == $seasons_numbers->last() ? 'is-active' : '' }}"><a tab-href="seasons/{{$season}}">{{ $season > 0 ? $season : 'Specials' }}</a></li>
                 @endforeach
-            </div>
+            </ul>
+        </div>
+        
+        <div id="seasons" class="tabs-content">
+            @foreach ($seasons as $season => $episodes)
+                <div tab-id="{{ $season }}" class="tab {{ $season == $seasons_numbers->last() ? 'is-active' : '' }}">
+                    <div class="season-heading heading">
+                        <span class="click-catch mark-season" data-watched-season="{{ $season }}"></span>
+                    </div>
+                    @foreach ($episodes as $episode)
+                        <div class="episode-entry {{ $episode == $episodes->last() ? 'is-last' : '' }} {{ $episode->isAired() ? 'is-aired' : 'is-not-aired' }}">
+                            <span class="click-catch mark-episode"
+                                        data-watched-parent=".episode-entry"
+                                        data-watched-initial="{{ $episode->watched ? 1 : 0 }}" 
+                                        data-watched-class="|is-watched" 
+                                        data-watched-episode="{{ $episode->id }}" 
+                                        data-watched-season="{{ $season }}"></span>
+                            <div class="episode {{ $episode->isAired() ? '' : 'is-not-aired' }}">
+                                <label class="date">
+                                    <span class="top">{{ str_pad($episode->episodeNumber, 2, '0', STR_PAD_LEFT) }}</span>
+                                    <span class="bottom">{{ $episode->episodeSeason }}</span>
+                                </label>
+                                <a href="{{ $episode->url }}"><i class="fa fa-arrow-right"></i></a>
+                                <h3>{{ $episode->name !== '' ? $episode->name : 'N/A' }}</h3>
+                                <p>{{ $episode->overview ? substr($episode->overview, 0, 200) : "N/A" }}</p>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @endforeach
         </div>
     </div>
 </section>

@@ -4053,7 +4053,7 @@ input[class="checkbox"] {
         background: rgba(72, 207, 173, 0.6); }
 
 footer .menu-list a {
-  border-bottom: none; }
+  border-bottom: none !important; }
 
 .is-paddingless {
   padding: 0 !important; }
@@ -4151,6 +4151,156 @@ footer .menu-list a {
       border: 2px solid white;
       background: white;
       border-radius: 5px; }
+
+.season-heading {
+  padding-left: 25px;
+  padding-bottom: 75px;
+  margin: 0 0 0 25px;
+  border-left: 2px solid #48cfad;
+  position: relative; }
+  .season-heading .click-catch {
+    background: transparent;
+    border-radius: 50%;
+    content: "";
+    display: block;
+    position: absolute;
+    left: -17px;
+    width: 32px;
+    height: 32px;
+    box-sizing: border-box;
+    z-index: 3; }
+  .season-heading:before {
+    background: #48cfad;
+    color: #fff;
+    content: "\f00c";
+    display: block;
+    font-family: "FontAwesome";
+    line-height: 32px;
+    position: absolute;
+    top: 0;
+    left: -17px;
+    text-align: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    box-sizing: border-box; }
+
+.episode-entry {
+  padding-left: 25px;
+  padding-bottom: 15px;
+  margin: 0 0 0 25px;
+  border-left: 2px solid #48cfad;
+  position: relative; }
+  .episode-entry.is-last {
+    border-left-color: transparent; }
+  .episode-entry .click-catch {
+    background: transparent;
+    border-radius: 50%;
+    content: "";
+    display: block;
+    position: absolute;
+    left: -17px;
+    width: 32px;
+    height: 32px;
+    box-sizing: border-box;
+    z-index: 3; }
+  .episode-entry:before {
+    background: #fff;
+    border: 7px solid #48cfad;
+    border-radius: 50%;
+    content: "";
+    display: block;
+    position: absolute;
+    left: -17px;
+    width: 32px;
+    height: 32px;
+    box-sizing: border-box; }
+  .episode-entry.is-watched:after {
+    background: #48cfad;
+    color: #fff;
+    content: "\f00c";
+    display: block;
+    font-family: "FontAwesome";
+    line-height: 32px;
+    position: absolute;
+    top: 0;
+    left: -17px;
+    text-align: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    box-sizing: border-box; }
+  .episode-entry.is-not-aired .click-catch {
+    display: none; }
+  .episode-entry.is-not-aired:before {
+    border: none; }
+  .episode-entry.is-not-aired:after {
+    background: rgba(72, 207, 173, 0.6);
+    content: "";
+    display: block;
+    font-family: "FontAwesome";
+    line-height: 32px;
+    position: absolute;
+    top: 0;
+    left: -17px;
+    text-align: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    box-sizing: border-box; }
+  .episode-entry .episode {
+    box-shadow: 0 2px 3px rgba(17, 17, 17, 0.2);
+    border: 0.25em solid #ffffff;
+    border-radius: 3px;
+    padding: 10px; }
+    .episode-entry .episode a {
+      position: relative;
+      top: 3px;
+      display: block;
+      float: right;
+      width: 40px;
+      line-height: 2.5;
+      text-align: center;
+      color: #919FAF; }
+      .episode-entry .episode a .fa {
+        vertical-align: middle; }
+    .episode-entry .episode .date {
+      float: left;
+      padding: 0.125em 0.75em 0 0;
+      margin-left: 0.25em;
+      margin-right: 0.75em;
+      font-weight: bold;
+      text-align: center;
+      border-right: 2px solid #919FAF; }
+    .episode-entry .episode .date .bottom,
+    .episode-entry .episode .date .top {
+      display: block; }
+    .episode-entry .episode .date .bottom {
+      font-size: 0.75em; }
+    .episode-entry .episode .date .top {
+      margin-top: -2px;
+      font-size: 1.3em; }
+    .episode-entry .episode h3 {
+      font-weight: bold;
+      margin-top: 3px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap; }
+    .episode-entry .episode p {
+      font-size: 0.875em;
+      color: #919FAF;
+      -webkit-font-smoothing: antialiased;
+      margin-right: 0.25em;
+      padding-left: 0.1em;
+      padding-right: 0.5em;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap; }
+    .episode-entry .episode.is-not-aired .date {
+      border-width: 0.25em;
+      margin-right: 0.75em;
+      padding-right: 0.625em;
+      border-right-color: #ed6c63; }
 
 .poster {
   position: relative;

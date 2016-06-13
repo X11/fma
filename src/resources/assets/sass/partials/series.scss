@@ -73,7 +73,7 @@
             transition: left .4s ease-in;
         }
 
-        &:checked ~ .push-content{
+        &:checked ~ .push-content {
             left: 180px;
         }
     }
@@ -117,6 +117,203 @@
             border: 2px solid white;
             background: white;
             border-radius: 5px;
+        }
+    }
+}
+
+.seasons {
+    
+}
+
+.season-heading {
+    padding-left: 25px;
+    padding-bottom: 75px;
+    margin: 0 0 0 25px;
+    border-left: 2px solid $primary;
+    position: relative;
+
+    .click-catch {
+        background: transparent;
+        border-radius: 50%;
+        content: "";
+        display: block;
+        position: absolute;
+        left: -17px;
+        width: 32px;
+        height: 32px;
+        box-sizing: border-box;
+        z-index: 3;
+    }
+
+    &:before {
+        background: $primary;
+        color: $white;
+        content: "\f00c";
+        display: block;
+        font-family: "FontAwesome";
+        line-height: 32px;
+        position: absolute;
+        top: 0;
+        left: -17px;
+        text-align: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        box-sizing: border-box;
+    }
+
+}
+
+.episode-entry {
+    padding-left: 25px;
+    padding-bottom: 15px;
+    margin: 0 0 0 25px;
+    border-left: 2px solid $primary;
+    position: relative;
+
+    &.is-last {
+        border-left-color: transparent;
+    }
+
+    .click-catch {
+        background: transparent;
+        border-radius: 50%;
+        content: "";
+        display: block;
+        position: absolute;
+        left: -17px;
+        width: 32px;
+        height: 32px;
+        box-sizing: border-box;
+        z-index: 3;
+    }
+
+    &:before {
+        background: $white;
+        border: 7px solid $primary;
+        border-radius: 50%;
+        content: "";
+        display: block;
+        position: absolute;
+        left: -17px;
+        width: 32px;
+        height: 32px;
+        box-sizing: border-box;
+    }
+
+    &.is-watched:after {
+        background: $primary;
+        color: $white;
+        content: "\f00c";
+        display: block;
+        font-family: "FontAwesome";
+        line-height: 32px;
+        position: absolute;
+        top: 0;
+        left: -17px;
+        text-align: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        box-sizing: border-box;
+    }
+
+    &.is-not-aired {
+        .click-catch {
+            display:none;
+        }
+
+        &:before {
+            border: none;
+        }
+
+        &:after {
+            background: rgba($primary, 0.6);
+            content: "";
+            display: block;
+            font-family: "FontAwesome";
+            line-height: 32px;
+            position: absolute;
+            top: 0;
+            left: -17px;
+            text-align: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            box-sizing: border-box;
+        }
+    }
+
+    .episode {
+        box-shadow: 0 2px 3px rgba($black, 0.2);
+        border: 0.25em solid #ffffff;
+        border-radius: 3px;
+        padding: 10px;
+
+        a {
+            position: relative;
+            top: 3px;
+            display: block;
+            float: right;
+            width: 40px;
+            line-height: 2.5;
+            text-align: center;
+            color: #919FAF;
+
+            .fa {
+                vertical-align: middle;
+            }
+        }
+
+        .date {
+            float: left;
+            padding: 0.125em 0.75em 0 0;
+            margin-left: 0.25em;
+            margin-right: 0.75em;
+            font-weight: bold;
+            text-align: center;
+            border-right: 2px solid #919FAF;
+        }
+
+        .date .bottom,
+        .date .top {
+          display: block;
+        }
+
+        .date .bottom {
+          font-size: 0.75em;
+        }
+
+        .date .top {
+          margin-top: -2px;
+          font-size: 1.3em;
+        }
+
+        h3 {
+            font-weight: bold;
+            margin-top: 3px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        p {
+            font-size: 0.875em;
+            color: #919FAF;
+            -webkit-font-smoothing: antialiased;
+            margin-right: 0.25em;
+            padding-left: 0.1em;
+            padding-right: 0.5em;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        &.is-not-aired .date {
+            border-width: 0.25em;
+            margin-right: 0.75em;
+            padding-right: 0.625em;
+            border-right-color: $danger;
         }
     }
 }

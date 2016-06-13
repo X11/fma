@@ -16,23 +16,36 @@
 
     $('.mark-episode').each(function(){
         var $button = $(this);
+        var $container = $button;
         var initial = $(this).data('watchedInitial');
-        var content = $(this).data('watchedContent').split('|');
+        var content = $(this).data('watchedContent');
+        if (content){
+            content.split('|');
+        }
         var classes = $(this).data('watchedClass').split('|');
         var episode = $(this).data('watchedEpisode');
         var season = $(this).data('watchedSeason');
+        var parent = $(this).data('watchedParent');
+        if (parent){
+            $container = $button.closest(parent);
+        }
 
         var state = initial ? 1 : 0;
-        $button.html(content[state]);
-        $button.removeClass('is-loading');
-        $button.addClass(classes[state]);
+        if (content){
+            $button.html(content[state]);
+        }
+        $container.removeClass('is-loading');
+        $container.addClass(classes[state]);
+
 
         $button.click(function(){
-            $button.removeClass(classes[state]);
+            $container.removeClass(classes[state]);
             state = state === 0 ? 1 : 0;
             setEpisodeMark(state, episode);
-            $button.html(content[state]);
-            $button.addClass(classes[state]);
+            if (content){
+                $container.html(content[state]);
+            }
+            $container.addClass(classes[state]);
             return false;
         });
     });
@@ -43,7 +56,7 @@
 
         $button.click(function(){
             var i = 0;
-            $('.mark-episode[data-watched-season="' + season + '"]').each(function(){
+            $('.is-aired .mark-episode[data-watched-season="' + season + '"]').each(function(){
                 var $but = $(this);
                 setTimeout(function(){
                     $but.click();
