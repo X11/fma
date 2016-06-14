@@ -1069,7 +1069,7 @@ $.support.pjax ? enable() : disable()
         var initial = $(this).data('watchedInitial');
         var content = $(this).data('watchedContent');
         if (content){
-            content.split('|');
+            content = content.split('|');
         }
         var classes = $(this).data('watchedClass').split('|');
         var episode = $(this).data('watchedEpisode');

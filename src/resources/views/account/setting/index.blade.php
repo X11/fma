@@ -156,6 +156,19 @@
                                 </p>
                                 @endforeach
                             </div>
+
+                            <div class="column is-6">
+                                <p class="control">
+                                    <label class="label">Serie fanart</label>
+                                </p>
+                                @foreach(['default', 'bottom', 'never'] as $option)
+                                <p class="control">
+                                    <label class="radio">
+                                        <input type="radio" value="{{ $option }}" name="serie_fanart" {{ $settings->serie_fanart == $option ? 'checked' : '' }} > {{ ucfirst(str_replace('_', ' ', $option)) }}
+                                    </label>
+                                </p>
+                                @endforeach
+                            </div>
                         </div>
 
                         <div class="is-clearfix">

@@ -36,6 +36,12 @@ class AppServiceProvider extends ServiceProvider
                                     : User::$BASE_SETTINGS['serie_overview']);
         });
 
+        view()->creator('serie/show', function($view){
+            $view->with('serie_fanart', Auth::check()
+                                    ? Auth::user()->settings->serie_fanart
+                                    : User::$BASE_SETTINGS['serie_fanart']);
+        });
+
         view()->creator('calender/index', function($view){
             $view->with('overview_container', Auth::check()
                                     ? Auth::user()->settings->calender_overview
