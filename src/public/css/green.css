@@ -4090,13 +4090,14 @@ footer .menu-list a {
       font-size: 16px;
       -webkit-transition: .4s all;
       transition: .4s all;
-      font-weight: normal; }
+      font-weight: normal;
+      -webkit-transition: padding .3s ease-in;
+      transition: padding .3s ease-in; }
+    .series .serie:hover .subtitle {
+      padding-left: 20px; }
   .series.darken .serie:not(.selected) img,
   .series.darken .serie:not(.selected) .subtitle {
     opacity: 0.8 !important; }
-  .series.darken .serie:not(.selected) img {
-    -webkit-filter: blur(1px);
-    filter: blur(1px); }
 
 #aside-label {
   display: none;
