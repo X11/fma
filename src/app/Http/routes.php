@@ -76,24 +76,34 @@ Route::group(['middleware' => 'web'], function () {
         Route::delete('watchlist/{id}', 'WatchlistController@delete');
 
         // Account
-        Route::get('account', function(){ return redirect()->action('UserController@getSettings'); });
-        Route::get('account/setting', 'UserController@getSettings');
-        Route::post('account/setting', 'UserController@setSettings');
-        Route::put('account/setting', 'UserController@setSettings');
+        Route::group([
+            'prefix' => 'account', 
+        ], function () {
+            Route::get('/', function(){ return redirect()->action('UserController@getProfile'); });
+
+            Route::get('profile', 'UserController@getProfile');
+            Route::get('settings', 'UserController@getSettings');
+
+            Route::post('settings', 'UserController@setSettings');
+            Route::put('settings', 'UserController@setSettings');
+        });
     });
     
     Route::group([
         'prefix' => 'admin', 
         'middleware' => 'admin',
     ], function () {
-        Route::get('/', function(){ return redirect()->action('UserController@index'); });
+        Route::get('/', function(){ return redirect()->action('AdminController@stats'); });
 
-        Route::get('user', 'UserController@index');
+        Route::get('users', 'AdminController@users');
         Route::post('user/invite', 'UserController@invite');
         Route::post('user/{user}/role', 'UserController@setRole');
 
-        Route::get('update', 'UpdateController@index');
-        Route::put('update/series', 'UpdateController@updateSeries');
-        Route::put('update/cache', 'UpdateController@updateCache');
+        Route::get('stats', 'AdminController@stats');
+
+        Route::get('update', 'AdminController@update');
+        Route::put('update', 'AdminController@postUpdate');
+        Route::get('cache', 'AdminController@cache');
+        Route::put('cache', 'AdminController@postCache');
     });
 });

@@ -44,42 +44,6 @@
     }
 }
 
-#aside-label {
-    display: none;
-    padding: 20px;
-
-    @media (max-width: $tablet){
-        display: table;
-    }
-}
-
-#aside-checkbox {
-    display: none;
-
-    @media (max-width: $tablet){
-        & ~ aside {
-            position: absolute;
-            left: -100%;
-            width: auto;
-            transition: left .4s ease-in;
-        }
-
-        &:checked ~ aside {
-            left: 0;
-        }
-
-        & ~ .push-content {
-            position: relative;
-            left: 0;
-            transition: left .4s ease-in;
-        }
-
-        &:checked ~ .push-content {
-            left: 180px;
-        }
-    }
-}
-
 .episode {
     .serie-poster {
         position: relative;

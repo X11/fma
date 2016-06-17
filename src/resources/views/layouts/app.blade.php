@@ -41,9 +41,7 @@
 <body id="app-layout">
     @if (!Request::is('/'))
         @include('partial.header')
-        @if (Request::is('admin*') || Request::is('account*'))
-            @include('partial.nav')
-        @elseif (isset($breadcrumbs))
+        @if (isset($breadcrumbs))
             @include('partial.breadcrumbs')
         @endif
     @endif

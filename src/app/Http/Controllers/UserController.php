@@ -13,37 +13,6 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
-    {
-        if ($request->input('q'))
-            $users = User::where('name', 'like', '%' . $request->input('q') . '%')->paginate(10);
-        else
-            $users = User::paginate(10);
-
-        $users->appends(['q' => $request->input('q')]);
-        return view('admin.user.index')
-            ->with('users', $users)
-            ->with('role_tags', [
-                'User' => 'is-primary',
-                'Member' => 'is-info',
-                'Moderator' => 'is-success',
-                'SuperModerator' => 'is-warning',
-                'Admin' => 'is-danger',
-                'Owner' => 'is-dark'
-            ])
-            ->with('breadcrumbs', [[
-                'name' => "Admin",
-                'url' => '/admin'
-            ], [
-                'name' => "Users",
-                'url' => action("UserController@index")
-            ]]);
-    }
 
     /**
      * Display the resource.
@@ -96,15 +65,15 @@ class UserController extends Controller
     }
 
     /**
-     * View user settings
+     * undocumented function
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
-    public function getSettings(Request $request)
+    public function getProfile(Request $request)
     {
         $user = Auth::user();
 
-        return view('account.setting.index')
+        return view('account.profile')
             ->with('user', $user)
             ->with('role_tags', [
                 'User' => 'is-primary',
@@ -114,6 +83,27 @@ class UserController extends Controller
                 'Admin' => 'is-danger',
                 'Owner' => 'is-dark'
             ])
+            ->with('breadcrumbs', [[
+                'name' => "Account",
+                'url' => '/account'
+            ], [
+                'name' => "Settings",
+                'url' => action("UserController@getProfile")
+            ]]);
+    }
+    
+
+    /**
+     * View user settings
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getSettings(Request $request)
+    {
+        $user = Auth::user();
+
+        return view('account.settings')
+            ->with('user', $user)
             ->with('settings', $user->settings)
             ->with('breadcrumbs', [[
                 'name' => "Account",

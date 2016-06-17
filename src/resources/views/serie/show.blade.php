@@ -40,7 +40,7 @@
                                     <br>
                                     <small><strong>GENRE{{ $serie->genres->count() > 1 ? 'S' : '' }}:</strong></small>
                                 </p>
-                                <ul style="margin-top:0;">
+                                <ul style="margin-top:4px;">
                                     @foreach($serie->genres as $genre)
                                         <li><a href="{{ url('/serie') }}?_genre={{ $genre->id }}" class="is-link" style="color:inherit;"><small>{{ $genre->name }}</small></a></li>
                                     @endforeach
@@ -58,7 +58,7 @@
                     @if (Auth::check() && Auth::user()->isAdmin())
                         <div class="is-clearfix">
                             <p class="is-pulled-right">
-                                <button class="button is-link is-small" type="submit" form="updateSerie">Update now</button>
+                                <button class="button is-link is-small" type="submit" form="updateSerie">Update</button>
                                 <button class="button is-danger is-link is-small" type="submit" form="deleteSerie">Delete</button>
                             </p>
                         </div>
