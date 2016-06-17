@@ -68,7 +68,7 @@
                     </div>
                 </div>
             </div>
-            <div class="column">
+            <div class="column table-responsive">
                 <div class="tabs is-boxed is-centered" style="">
                     <ul>
                         @foreach ($seasons_numbers as $season)
@@ -76,7 +76,6 @@
                         @endforeach
                     </ul>
                 </div>
-                
                 <div id="seasons" class="tabs-content">
                     @foreach ($seasons as $season => $episodes)
                         <div tab-id="{{ $season }}" class="tab {{ $season == $seasons_numbers->last() ? 'is-active' : '' }}">
