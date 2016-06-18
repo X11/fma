@@ -45,7 +45,7 @@ class SerieController extends Controller
                 $tvdbResults = $client->search()->seriesByName($request->input('q'));
                 $tvdbResults = $tvdbResults->getData();
             } catch (\Exception $e){
-                $tvdbResults = [];
+                $tvdbResults = collect();
             }
             $tvdbResults = $tvdbResults->filter(function($value) use ($series_tvdbids){
                 if (Carbon::parse($value->getFirstAired())->year < 2000) return false;
