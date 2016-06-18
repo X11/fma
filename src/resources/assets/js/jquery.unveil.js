@@ -27,7 +27,7 @@
                     this.setAttribute("src", "https:" + source);
                     this.onerror = function(){
                         if (this.getAttribute('src') !== source){
-                            this.setAttribute('src', source);
+                            this.setAttribute('src', "http:" + source);
                         }
                     };
                 } else {
