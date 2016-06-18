@@ -4026,7 +4026,7 @@ input[class="checkbox"] {
 
 .landing-info {
   height: calc(100vh - 270px);
-  min-height: 400px;
+  min-height: 500px;
   background-size: 100% auto;
   background-size: cover;
   background-repeat: no-repeat;
@@ -4036,7 +4036,9 @@ input[class="checkbox"] {
     padding: 40px;
     background: white;
     height: 100%;
-    width: 400px;
+    width: 66%;
+    min-width: 250px;
+    max-width: 400px;
     box-shadow: 1px 0 4px #333; }
 
 footer .menu-list a {
@@ -4054,7 +4056,7 @@ footer .menu-list a {
 
 #aside-label {
   display: none;
-  padding: 20px; }
+  padding: 20px 0; }
   @media (max-width: 769px) {
     #aside-label {
       display: table; } }
@@ -4063,9 +4065,9 @@ footer .menu-list a {
   display: none; }
   @media (max-width: 769px) {
     #aside-checkbox ~ aside {
+      min-width: 140px;
       position: absolute;
       left: -100%;
-      width: auto;
       -webkit-transition: left .4s ease-in;
       transition: left .4s ease-in; }
     #aside-checkbox:checked ~ aside {
@@ -4076,7 +4078,15 @@ footer .menu-list a {
       -webkit-transition: left .4s ease-in;
       transition: left .4s ease-in; }
     #aside-checkbox:checked ~ .push-content {
-      left: 180px; } }
+      left: 180px; }
+      #aside-checkbox:checked ~ .push-content.push-3 {
+        left: 25%; }
+      #aside-checkbox:checked ~ .push-content.push-4 {
+        left: 33.3333%; }
+      #aside-checkbox:checked ~ .push-content.push-5 {
+        left: 41.6666%; }
+      #aside-checkbox:checked ~ .push-content.push-6 {
+        left: 50%; } }
 
 .home .heading .tag {
   display: block; }
@@ -4084,18 +4094,22 @@ footer .menu-list a {
 .series {
   -webkit-transition: background .4s;
   transition: background .4s; }
+  @media (max-width: 769px) {
+    .series {
+      padding: 0; } }
   .series img {
     -webkit-transition: opacity .5s;
     transition: opacity .5s; }
   .series .serie {
     position: relative;
-    background: black; }
+    background: black;
+    border: 1px solid #000; }
     .series .serie, .series .serie.media,
     .series .serie.media img {
       height: 100%; }
     .series .serie .subtitle {
       position: absolute;
-      bottom: 10%;
+      bottom: 20%;
       left: 0;
       padding: 5px 10px;
       background: #1fc8db;
@@ -4108,6 +4122,11 @@ footer .menu-list a {
       transition: padding .3s ease-in; }
     .series .serie:hover .subtitle {
       padding-left: 20px; }
+    .series .serie .serie-footer .button, .series .serie .serie-footer .pagination a, .pagination .series .serie .serie-footer a {
+      border: none;
+      background: black;
+      width: 100%;
+      border-radius: 0; }
   .series.darken .serie:not(.selected) img,
   .series.darken .serie:not(.selected) .subtitle {
     opacity: 0.8 !important; }
@@ -4423,7 +4442,8 @@ footer .menu-list a {
   color: #919FAF; }
 
 .calender-column.is-active h2 {
-  color: #ed6c63; }
+  color: #ed6c63;
+  font-weight: 700; }
 
 .calender-item {
   margin: 4px 0;

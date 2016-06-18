@@ -15,14 +15,15 @@
         </form>
     </div>
 </section>
-<section class="section is-paddingless series" style="overflow:hidden;">
+<section class="section series" style="overflow:hidden;">
     <div class="container is-{{ $overview_container }}">
-        <label id="aside-label" for="aside-checkbox"><i class="fa fa-bars"></i> Options</label>
+        <label id="aside-label" for="aside-checkbox" style="padding: 20px;"><i class="fa fa-bars"></i> Menu</label>
         <div class="columns is-mobile">
             <input type="checkbox" id="aside-checkbox"/>
             <aside class="column is-2">
                 <p class="menu-label">Sort</p>
                 <ul class="menu-list">
+                    <li><a class="{{ $_sort == 'name' ? 'is-active' : '' }}" href="{{ action('SerieController@index') }}?_sort=name">Name</a></li>
                     <li><a class="{{ $_sort == 'rating' ? 'is-active' : '' }}" href="{{ action('SerieController@index') }}?_sort=rating">Rating</a></li>
                     <li><a class="{{ $_sort == 'recent' ? 'is-active' : '' }}" href="{{ action('SerieController@index') }}?_sort=recent">Recently added</a></li>
                 </ul>
@@ -54,8 +55,8 @@
                     @endforeach
                 </div>
                 @include('partial.pagination', ['items' => $series])
-                <hr>
                 @if ($tvdbResults)
+                    <hr>
                     <div class="content">
                         <p>Serie not in the above results? Find it here to add it to the system</p>
                     </div>

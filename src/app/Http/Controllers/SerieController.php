@@ -64,6 +64,10 @@ class SerieController extends Controller
                 $series->appends(['_genre' => $request->input('_genre')]);    
         } else if ($request->input('_sort')){
             switch ($request->input('_sort')){
+                case 'name':
+                    $series = Serie::orderBy('name', 'asc')
+                                    ->paginate($limit);
+                    break;
                 case 'rating':
                     $series = Serie::orderBy('rating', 'desc')
                                     ->orderBy('name', 'asc')
@@ -78,7 +82,7 @@ class SerieController extends Controller
                     return redirect()->action('SerieController@index');
             }
         } else {
-            $series = Serie::orderBy('name')->paginate($limit);
+            $series = Serie::orderBy('rating', 'desc')->orderBy('tvdbid', 'desc')->paginate($limit);
         }
 
         $series->appends(['q' => $request->input('q')]);    

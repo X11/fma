@@ -61,7 +61,7 @@ class AdminController extends Controller
                 'name' => "Admin",
                 'url' => '/admin'
             ], [
-                'name' => "Update",
+                'name' => "Stats",
                 'url' => action("AdminController@stats")
             ]]);
     }
@@ -121,7 +121,7 @@ class AdminController extends Controller
                 'name' => "Admin",
                 'url' => '/admin'
             ], [
-                'name' => "Update",
+                'name' => "Cache",
                 'url' => action("AdminController@cache")
             ]]);
     }

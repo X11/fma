@@ -1,6 +1,10 @@
 
 .series {
 
+    @media (max-width: 769px){
+        padding: 0;
+    }
+
     transition: background .4s;
 
     img {
@@ -10,6 +14,7 @@
     .serie {
         position: relative;
         background: black;
+        border: 1px solid #000;
 
         &,
         &.media,
@@ -19,7 +24,7 @@
 
         .subtitle {
             position: absolute;
-            bottom: 10%;
+            bottom: 20%;
             left: 0;
             padding: 5px 10px;
             background: $primary;
@@ -32,6 +37,15 @@
 
         &:hover .subtitle {
             padding-left: 20px;
+        }
+
+        .serie-footer {
+            .button {
+                border: none;
+                background: black;
+                width: 100%;
+                border-radius: 0;
+            }
         }
 
     }

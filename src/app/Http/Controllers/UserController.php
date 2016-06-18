@@ -87,7 +87,7 @@ class UserController extends Controller
                 'name' => "Account",
                 'url' => '/account'
             ], [
-                'name' => "Settings",
+                'name' => "Profile",
                 'url' => action("UserController@getProfile")
             ]]);
     }
