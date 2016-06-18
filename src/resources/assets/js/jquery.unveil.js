@@ -19,14 +19,23 @@
         images = this,
         loaded;
 
-    this.one("unveil", function() {
-      var source = this.getAttribute(attrib);
-      source = source || this.getAttribute("data-src");
-      if (source) {
-        this.setAttribute("src", source);
-        if (typeof callback === "function") callback.call(this);
-      }
-    });
+        this.one("unveil", function() {
+            var source = this.getAttribute(attrib);
+            source = source || this.getAttribute("data-src");
+            if (source) {
+                if (source.slice(0, 2) == "//"){
+                    this.setAttribute("src", "https:" + source);
+                    this.onerror = function(){
+                        if (this.getAttribute('src') !== source){
+                            this.setAttribute(source);
+                        }
+                    };
+                } else {
+                    this.setAttribute("src", source);
+                }
+                if (typeof callback === "function") callback.call(this);
+            }
+        });
 
     function unveil() {
       var inview = images.filter(function() {

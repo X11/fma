@@ -90,6 +90,10 @@
         left: 0;
         width: 100%;
         transform: translateY(-50%);
+
+        &[src*="_cache"] {
+            filter: blur(4px);
+        }
     }
 }
 

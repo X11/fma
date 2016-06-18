@@ -4025,7 +4025,7 @@ input[class="checkbox"] {
   box-shadow: 0 2px 3px rgba(17, 17, 17, 0.1); }
 
 .landing-info {
-  height: calc(100vh - 270px);
+  height: 100vh;
   min-height: 500px;
   background-size: 100% auto;
   background-size: cover;
@@ -4155,6 +4155,9 @@ footer .menu-list a {
     width: 100%;
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%); }
+    .serie-fanart img[src*="_cache"] {
+      -webkit-filter: blur(4px);
+      filter: blur(4px); }
 
 .season-heading {
   padding-left: 25px;

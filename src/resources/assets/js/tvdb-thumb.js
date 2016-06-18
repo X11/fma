@@ -1,7 +1,7 @@
 (function() {
 
-    var IMAGE_URL = "http://thetvdb.com/banners/";
-    var IMAGE_CACHE_URL = "http://thetvdb.com/banners/_cache/";
+    var IMAGE_URL = "//thetvdb.com/banners/";
+    var IMAGE_CACHE_URL = "//thetvdb.com/banners/_cache/";
     var check;
     switch(window.tvdb_load_hd){
         case 'not_on_mobile':
@@ -24,14 +24,20 @@
     $('img[data-src^="' + IMAGE_CACHE_URL + '"]').on('load', function(){
         var elm = $(this);
         var src = elm.attr('src');
+
+        src = src.slice(0, 5) === "https" ? src.slice(6) : src.slice(5);
         if (src.slice(0, IMAGE_CACHE_URL.length) == IMAGE_CACHE_URL){
             if (check(elm)){
-                var newSrc = IMAGE_URL + src.slice(IMAGE_CACHE_URL.length);
+                var after = src.slice(IMAGE_CACHE_URL.length);
+
                 var img = new Image();
-                img.src = newSrc;
+                img.src = "https:" + IMAGE_URL + after;
                 img.onload = function(){
-                    elm[0].src = newSrc;
-                    console.log("Loaded HD", newSrc);
+                    elm[0].src = this.getAttribute('src');
+                    console.log("Loaded HD", this.getAttribute('src'));
+                };
+                img.onerror = function(){
+                    img.src = "http:" + IMAGE_URL + after;
                 };
             }
         }
