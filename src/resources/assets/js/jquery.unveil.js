@@ -24,12 +24,14 @@
             source = source || this.getAttribute("data-src");
             if (source) {
                 if (source.slice(0, 2) == "//"){
-                    this.setAttribute("src", "https:" + source);
+                    var img = new Image();
+                    img.src = "https:" + source;
+                    img.onload = function(){
+                        this.setAttribute('src', "https:" + source);
+                    }.bind(this);
                     this.onerror = function(){
-                        if (this.getAttribute('src') !== source){
-                            this.setAttribute('src', "http:" + source);
-                        }
-                    };
+                        this.setAttribute('src', "http:" + source);
+                    }.bind(this);
                 } else {
                     this.setAttribute("src", source);
                 }
