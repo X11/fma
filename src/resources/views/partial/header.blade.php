@@ -17,14 +17,16 @@
 
                 <!-- Right side -->
                 <div class="nav-right nav-menu">
+                    @if (Auth::check())
+                        <a class="nav-item is-tab {{ Request::is('home') ? 'is-active' : '' }}" href="{{ url('/home') }}">Home</a>
+                    @endif
+                    <a class="nav-item is-tab {{ Request::is('serie*') ? 'is-active' : '' }}" href="{{ url('/serie') }}">Series</a>
+                    <a class="nav-item is-tab {{ Request::is('calender*') ? 'is-active' : '' }}" href="{{ url('/calender') }}">Calender</a>
                     @if (Auth::guest())
                         <span class="nav-item">
                             <a class="button is-primary" href="{{ url('/login') }}">Login</a>
                         </span>
                     @else
-                        <a class="nav-item is-tab {{ Request::is('home') ? 'is-active' : '' }}" href="{{ url('/home') }}">Home</a>
-                        <a class="nav-item is-tab {{ Request::is('serie*') ? 'is-active' : '' }}" href="{{ url('/serie') }}">Series</a>
-                        <a class="nav-item is-tab {{ Request::is('calender*') ? 'is-active' : '' }}" href="{{ url('/calender') }}">Calender</a>
                         <a class="nav-item is-tab {{ Request::is('watchlist*') ? 'is-active' : '' }}" href="{{ url('/watchlist') }}">Watchlist</a>
                         @if (Auth::user()->isAdmin())
                             <a class="nav-item is-tab {{ Request::is('admin*') ? 'is-active' : '' }}" href="{{ url('/admin') }}">Admin</a>

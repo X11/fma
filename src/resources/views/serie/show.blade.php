@@ -19,7 +19,9 @@
                         <figure class="has-text-centered">
                             <img data-src="{{ $serie->poster }}" alt=""/>
                         </figure>
-                        <button style="margin-bottom:5px;width:100%;" class="button is-loading mark-serie" data-mark-initial="{{ Auth::user()->have('watching', $serie->id) ? 1 : 0 }}" data-mark-content="Track|Untrack" data-mark-class="is-primary|is-danger" data-mark-serie="{{ $serie->id }}"></button>
+                        @if (Auth::check())
+                            <button style="margin-bottom:5px;width:100%;" class="button is-loading mark-serie" data-mark-initial="{{ Auth::user()->have('watching', $serie->id) ? 1 : 0 }}" data-mark-content="Track|Untrack" data-mark-class="is-primary|is-danger" data-mark-serie="{{ $serie->id }}"></button>
+                        @endif
                     </div>
                     <div class="column">
                         <div class="content" style="max-width:600px">

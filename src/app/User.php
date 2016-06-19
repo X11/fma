@@ -11,7 +11,7 @@ class User extends Authenticatable
     static $BASE_SETTINGS = [
         'theme' => 'default',
         'header' => 'default',
-        'tvdb_load_hd' => 'never',
+        'tvdb_load_hd' => 'size',
         'serie_overview' => 'default',
         'serie_fanart' => 'default',
         'calender_overview' => 'default',
