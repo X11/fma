@@ -29,7 +29,7 @@
                     img.onload = function(){
                         this.setAttribute('src', "https:" + source);
                     }.bind(this);
-                    this.onerror = function(){
+                    img.onerror = function(){
                         this.setAttribute('src', "http:" + source);
                     }.bind(this);
                 } else {
