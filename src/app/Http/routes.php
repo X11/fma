@@ -70,10 +70,11 @@ Route::group(['middleware' => 'web'], function () {
         Route::delete('episode/{episodeId}/watched', 'EpisodeController@unmarkWatched');
         Route::delete('episode/{episode}', 'EpisodeController@destroy');
 
+        Route::post('serie/{id}/track', 'WatchlistController@add');
+        Route::delete('serie/{id}/track', 'WatchlistController@delete');
+
         // WATCHLIST
         Route::get('watchlist', 'WatchlistController@index');
-        Route::post('watchlist/{id}', 'WatchlistController@add');
-        Route::delete('watchlist/{id}', 'WatchlistController@delete');
 
         // Account
         Route::group([

@@ -1016,12 +1016,14 @@ $.support.pjax ? enable() : disable()
             source = source || this.getAttribute("data-src");
             if (source) {
                 if (source.slice(0, 2) == "//"){
-                    this.setAttribute("src", "https:" + source);
-                    this.onerror = function(){
-                        if (this.getAttribute('src') !== source){
-                            this.setAttribute('src', "http:" + source);
-                        }
-                    };
+                    var img = new Image();
+                    img.src = "https:" + source;
+                    img.onload = function(){
+                        this.setAttribute('src', "https:" + source);
+                    }.bind(this);
+                    img.onerror = function(){
+                        this.setAttribute('src', "http:" + source);
+                    }.bind(this);
                 } else {
                     this.setAttribute("src", source);
                 }
@@ -1130,7 +1132,7 @@ $.support.pjax ? enable() : disable()
 
     function setSerieMark(state, id){
         $.ajax({
-            url: "/watchlist/" + id + '?_token=' + token,
+            url: "/serie/" + id + '/track?_token=' + token,
             cache: false,
             method: state ? 'POST' : 'DELETE',
             json: true,

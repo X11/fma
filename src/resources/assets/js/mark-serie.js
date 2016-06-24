@@ -3,7 +3,7 @@
 
     function setSerieMark(state, id){
         $.ajax({
-            url: "/watchlist/" + id + '?_token=' + token,
+            url: "/serie/" + id + '/track?_token=' + token,
             cache: false,
             method: state ? 'POST' : 'DELETE',
             json: true,
