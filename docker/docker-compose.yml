@@ -30,6 +30,18 @@ services:
             - ./database/mysql:/var/lib/mysql
         ports: 
             - "127.0.0.1:3306:3306"
+    queue:
+        build: ./queueworker/
+        volumes_from:
+            - data
+        links:
+            - mysql
+        depends_on:
+            - mysql
+    npm:
+        build: ./npm/
+        volumes_from:
+            - data
     #redis:
     #    build: ./redis/
     #    volumes:
