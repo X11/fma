@@ -10,6 +10,10 @@
 | kernel and includes session state, CSRF protection, and more.
 |
 */
+Route::group([ 'prefix' => 'api/v1/', 'middleware' => 'auth.basic.once' ], function () {
+    Route::get('serie', 'API\V1\SerieController@index');
+    Route::get('serie/{id}', 'API\V1\SerieController@index');
+});
 
 Route::group(['middleware' => 'web'], function () {
 
