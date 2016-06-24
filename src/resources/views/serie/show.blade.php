@@ -17,7 +17,7 @@
                 <div class="columns is-mobile">
                     <div class="column is-4">
                         <figure class="has-text-centered">
-                            <img data-src="{{ $serie->poster }}" alt=""/>
+                            <img src="{{ asset('img/poster.png') }}" data-src="{{ $serie->poster }}" alt=""/>
                         </figure>
                         @if (Auth::check())
                             <button style="margin-bottom:5px;width:100%;" class="button is-loading mark-serie" data-mark-initial="{{ Auth::user()->have('watching', $serie->id) ? 1 : 0 }}" data-mark-content="Track|Untrack" data-mark-class="is-primary|is-danger" data-mark-serie="{{ $serie->id }}"></button>
@@ -40,13 +40,17 @@
                                         <small><strong>STATUS:</strong> {{ $serie->status }}</small>
                                     @endif
                                     <br>
+                                    @if ($serie->genres->count() > 0)
                                     <small><strong>GENRE{{ $serie->genres->count() > 1 ? 'S' : '' }}:</strong></small>
+                                    @endif
                                 </p>
+                                @if ($serie->genres->count() > 0)
                                 <ul style="margin-top:4px;">
                                     @foreach($serie->genres as $genre)
                                         <li><a href="{{ url('/serie') }}?_genre={{ $genre->id }}" class="is-link" style="color:inherit;"><small>{{ $genre->name }}</small></a></li>
                                     @endforeach
                                 </ul>
+                                @endif
                             </div>
                         </div>
                     </div>
