@@ -4282,9 +4282,9 @@ footer .menu-list a {
     .episode-entry .episode .date .bottom,
     .episode-entry .episode .date .top {
       display: block; }
-    .episode-entry .episode .date .bottom {
-      font-size: 0.75em; }
     .episode-entry .episode .date .top {
+      font-size: 0.75em; }
+    .episode-entry .episode .date .bottom {
       margin-top: -2px;
       font-size: 1.3em; }
     .episode-entry .episode h3 {
@@ -4468,9 +4468,9 @@ footer .menu-list a {
   .calender-item .date .bottom,
   .calender-item .date .top {
     display: block; }
-  .calender-item .date .bottom {
-    font-size: 0.75em; }
   .calender-item .date .top {
+    font-size: 0.75em; }
+  .calender-item .date .bottom {
     margin-top: -2px;
     font-size: 1.3em; }
   .calender-item h3 {

@@ -95,8 +95,8 @@
                                                 data-watched-season="{{ $season }}"></span>
                                     <div class="episode {{ $episode->isAired() ? '' : 'is-not-aired' }}">
                                         <label class="date">
-                                            <span class="top">{{ str_pad($episode->episodeNumber, 2, '0', STR_PAD_LEFT) }}</span>
-                                            <span class="bottom">{{ $episode->episodeSeason }}</span>
+                                            <span class="top">{{ $episode->episodeSeason }}</span>
+                                            <span class="bottom">{{ str_pad($episode->episodeNumber, 2, '0', STR_PAD_LEFT) }}</span>
                                         </label>
                                         <a href="{{ $episode->url }}"><i class="fa fa-arrow-right"></i></a>
                                         <h3>{{ ($episode->name ? $episode->name : '') !== '' ? $episode->name : 'N/A' }}</h3>

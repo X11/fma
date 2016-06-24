@@ -19,8 +19,8 @@
                         <li class="calender-item {{ in_array($episode->serie->id, $watching_ids) ? 'is-watching' : ''}} {{ $episode->episodeSeason == 1 && $episode->episodeNumber == 1 ? 'is-premier' : '' }} {{ $episode->episodeNumber == 1 ? 'is-returning' : ''}}">
                             <a href="{{ $episode->url }}">
                                 <label class="date">
-                                    <span class="top">{{ str_pad($episode->episodeNumber, 2, '0', STR_PAD_LEFT) }}</span>
-                                    <span class="bottom">{{ $episode->episodeSeason }}</span>
+                                    <span class="top">{{ $episode->episodeSeason }}</span>
+                                    <span class="bottom">{{ str_pad($episode->episodeNumber, 2, '0', STR_PAD_LEFT) }}</span>
                                 </label>
                                 <h3>{{ $episode->serie->name }}</h3>
                                 <p>{{ $episode->name or 'N/A' }}</p>
