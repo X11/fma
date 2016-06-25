@@ -58,6 +58,48 @@
     }
 }
 
+section.serie {
+
+    .heading .title span {
+        color: #69707a;
+        font-weight: 300;
+        font-size: 18px;
+    }
+}
+
+.serie-info {
+    font-size: 14px;
+
+    tr {
+        text-transform: uppercase;
+    }
+
+    th {
+        color: #69707a;
+        font-weight: 500;
+        width: 60px;
+        font-size: 14px;
+    }
+
+    td {
+        padding-left: 10px;
+        color: #69707a;
+        font-weight: 300;
+        font-size: 14px;
+
+        ul {
+            margin: 0;
+            margin-left: 15px;
+
+            a {
+                color: #69707a;
+                font-weight: 300;
+                font-size: 12px;
+            }
+        }
+    }
+}
+
 .episode {
     .serie-poster {
         position: relative;

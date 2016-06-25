@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
-@section('hero.icon', 'tv')
-@section('hero.title', $serie->name)
-@section('hero.content', '#'.$serie->id)
+@section('hero.display', 'none')
 
 @section('content')
 @if ($serie_fanart === 'default')
@@ -14,6 +12,10 @@
     <div class="container">
         <div class="columns">
             <div class="column is-8">
+                <div class="heading">
+                    <h2 class="title">{!! str_replace(['(', ')'], ['<span>(', ')</span>'], $serie->name) !!}</h2>
+                </div>
+                <br>
                 <div class="columns is-mobile">
                     <div class="column is-4">
                         <figure class="has-text-centered">
@@ -24,42 +26,35 @@
                         @endif
                     </div>
                     <div class="column">
-                        <div class="content" style="max-width:600px">
-                            <div class="heading">
-                                <h2 class="title">{{ $serie->name }}</h2>
-                                <p class="subtitle is-marginless">
-                                    <small><strong>TVDB:</strong> {{ $serie->tvdbid }}</small>
+                        <div style="max-width:600px">
+                            <table class="serie-info">
+                                <tbody>
+                                    <tr><th>TVDB:</th><td>{{ $serie->tvdbid }}</td></tr>
                                     @if ($serie->imdbid)
-                                        <br>
-                                        <small><strong>IMDB:</strong> <a href="http://www.imdb.com/title/{{ $serie->imdbid }}" target="_blank">{{ $serie->imdbid }}</a></small>
+                                        <tr><th>IMDB:</th><td><a href="http://www.imdb.com/title/{{ $serie->imdbid }}" target="_blank">{{ $serie->imdbid }}</a></td></tr>
                                     @endif
-                                    <br>
-                                    <small><strong>STATUS:</strong> {{ $serie->status or 'N/A' }}</small>
+                                    <tr><th>STATUS:</th><td>{{ $serie->status or 'N/A'}}</td></tr>
                                     @if ($serie->status == "Continuing")
-                                        <br>
-                                        <small><strong>NETWORK:</strong> {{ $serie->network or 'N/A' }}</small>
-                                        <br>
-                                        <small><strong>AIRDAY:</strong> {{ $serie->airday or 'N/A' }}</small>
-                                        <br>
-                                        <small><strong>AIRTIME:</strong> {{ $serie->airtime or 'N/A' }}</small>
-                                        <br>
-                                        <small><strong>RUNTIME:</strong> {{ $serie->runtime or 'N/A' }}</small>
+                                        <tr><th>NETWORK:</th><td>{{ $serie->network or 'N/A'}}</td></tr>
+                                        <tr><th>AIRDAY:</th><td>{{ $serie->airday or 'N/A'}}</td></tr>
+                                        <tr><th>AIRTIME:</th><td>{{ $serie->airtime or 'N/A'}}</td></tr>
+                                        <tr><th>RUNTIME:</th><td>{{ $serie->runtime or 'N/A'}}</td></tr>
                                     @endif
-                                    <br>
-                                    <small><strong>RATING:</strong> {{ $serie->rating}}/10</small>
-                                    <br>
-                                    @if ($serie->genres->count() > 0)
-                                    <small><strong>GENRE{{ $serie->genres->count() > 1 ? 'S' : '' }}:</strong></small>
-                                    @endif
-                                </p>
-                                @if ($serie->genres->count() > 0)
-                                <ul style="margin-top:4px;">
-                                    @foreach($serie->genres as $genre)
-                                        <li><a href="{{ url('/serie') }}?_genre={{ $genre->id }}" class="is-link" style="color:inherit;"><small>{{ $genre->name }}</small></a></li>
-                                    @endforeach
-                                </ul>
-                                @endif
-                            </div>
+                                    <tr><th>RATING:</th><td>{{ $serie->rating }}/10</td></tr>
+                                    <tr>
+                                        <th>GENRE{{ $serie->genres->count() > 1 ? 'S' : '' }}:</th>
+                                        <td class="content">
+                                            @if ($serie->genres->count() > 0)
+                                            <ul>
+                                                @foreach($serie->genres as $genre)
+                                                    <li><a href="{{ url('/serie') }}?_genre={{ $genre->id }}" class="is-link" style="color:inherit;">{{ $genre->name }}</a></li>
+                                                @endforeach
+                                            </ul>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

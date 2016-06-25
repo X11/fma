@@ -3,7 +3,7 @@
     "use strict";
 
     var $overview = $('.series');
-    var $series = $('.serie');
+    var $series = $('.series .serie');
 
     $series.hover(function(e){
         $(this).addClass('selected');

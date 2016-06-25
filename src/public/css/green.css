@@ -4131,6 +4131,33 @@ footer .menu-list a {
   .series.darken .serie:not(.selected) .subtitle {
     opacity: 0.8 !important; }
 
+section.serie .heading .title span {
+  color: #69707a;
+  font-weight: 300;
+  font-size: 18px; }
+
+.serie-info {
+  font-size: 14px; }
+  .serie-info tr {
+    text-transform: uppercase; }
+  .serie-info th {
+    color: #69707a;
+    font-weight: 500;
+    width: 60px;
+    font-size: 14px; }
+  .serie-info td {
+    padding-left: 10px;
+    color: #69707a;
+    font-weight: 300;
+    font-size: 14px; }
+    .serie-info td ul {
+      margin: 0;
+      margin-left: 15px; }
+      .serie-info td ul a {
+        color: #69707a;
+        font-weight: 300;
+        font-size: 12px; }
+
 .episode .serie-poster {
   position: relative;
   top: -150px; }

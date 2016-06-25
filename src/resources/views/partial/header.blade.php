@@ -42,7 +42,7 @@
     </div>
 
     <!-- Hero content: will be in the middle -->
-    <div class="hero-body">
+    <div class="hero-body" style="display:@yield('hero.display', 'initial');">
         <div class="container">
             <div class="media">
                 <div class="media-left">
