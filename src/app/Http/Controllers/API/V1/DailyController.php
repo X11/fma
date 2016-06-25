@@ -20,7 +20,7 @@ class DailyController extends Controller
             ->with('serie')
             ->get();
 
-        return response()->json($episodes);
+        return response()->json(["episodes" => $episodes]);
     }
 
     public function user($user) {
@@ -35,6 +35,6 @@ class DailyController extends Controller
             ->with('serie')
             ->get();
 
-        return response()->json($episodes);
+        return response()->json(["episodes" => $episodes]);
     }
 }
