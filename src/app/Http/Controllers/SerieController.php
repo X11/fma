@@ -164,6 +164,10 @@ class SerieController extends Controller
         $show->fanart = $tvshowFanart;
         $show->rating = $tvshow->getSiteRating();
         $show->status = $tvshow->getStatus();
+        $show->network = $tvshow->getNetwork();
+        $show->airtime = $tvshow->getAirsTime();
+        $show->airday  = $tvshow->getAirsDayOfWeek();
+        $show->runtime = $tvshow->getRuntime();
         $show->save();
 
         dispatch(new FetchSerieEpisodes($show));

@@ -34,11 +34,19 @@
                                         <small><strong>IMDB:</strong> <a href="http://www.imdb.com/title/{{ $serie->imdbid }}" target="_blank">{{ $serie->imdbid }}</a></small>
                                     @endif
                                     <br>
-                                    <small><strong>RATING:</strong> {{ $serie->rating}}/10</small>
-                                    @if ($serie->status)
+                                    <small><strong>STATUS:</strong> {{ $serie->status or 'N/A' }}</small>
+                                    @if ($serie->status == "Continuing")
                                         <br>
-                                        <small><strong>STATUS:</strong> {{ $serie->status }}</small>
+                                        <small><strong>NETWORK:</strong> {{ $serie->network or 'N/A' }}</small>
+                                        <br>
+                                        <small><strong>AIRDAY:</strong> {{ $serie->airday or 'N/A' }}</small>
+                                        <br>
+                                        <small><strong>AIRTIME:</strong> {{ $serie->airtime or 'N/A' }}</small>
+                                        <br>
+                                        <small><strong>RUNTIME:</strong> {{ $serie->runtime or 'N/A' }}</small>
                                     @endif
+                                    <br>
+                                    <small><strong>RATING:</strong> {{ $serie->rating}}/10</small>
                                     <br>
                                     @if ($serie->genres->count() > 0)
                                     <small><strong>GENRE{{ $serie->genres->count() > 1 ? 'S' : '' }}:</strong></small>

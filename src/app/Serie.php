@@ -19,7 +19,18 @@ class Serie extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'overview', 'poster', 'fanart', 'tvdbid', 'imdbid', 'rating', 'status'
+        'name',
+        'overview',
+        'poster',
+        'fanart',
+        'tvdbid',
+        'imdbid',
+        'rating',
+        'status',
+        'network',
+        'airtime',
+        'airday',
+        'runtime'
     ];
 
     /**

@@ -90,6 +90,10 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
         $this->serie->poster = $seriePoster;
         $this->serie->fanart = $serieFanart;
         $this->serie->status = $serie->getStatus();
+        $this->serie->network = $serie->getNetwork();
+        $this->serie->airtime = $serie->getAirsTime();
+        $this->serie->airday  = $serie->getAirsDayOfWeek();
+        $this->serie->runtime = $serie->getRuntime();
 
         $episodes = [];
         $page = 1;
@@ -100,13 +104,14 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
             }
 
             foreach ($serieEpisodes->getData() as $episode) {
-                $e = Episode::first(['episodeid' => $episode->getId()]);
+                $e = Episode::where('episodeid', $episode->getId())->first();
                 if (!$e){
-                    $e = Episode::first([
+                    $e = Episode::where([
                         'serie_id' => $this->serie->id,
                         'episodeNumber' => $episode->getAiredEpisodeNumber(),
                         'episodeSeason' => $episode->getAiredSeason(),
-                    ]);
+                    ])->first();
+
                     if (!$e){
                         $e = new Episode();
                     }
