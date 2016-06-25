@@ -29,8 +29,8 @@
                 </nav>
             </aside>
             <div class="column push-content push-6">
-                <div class="table-responsive">
-                    <table class="table">
+                <div class="box is-paddingless table-responsive">
+                    <table class="table" style="margin:0;">
                         <thead>
                             <tr>
                                 <th>Serie</th>
@@ -52,8 +52,8 @@
                             @endforeach
                         </tbody>
                     </table>
-                    @include('partial.pagination', ['items' => $items])
                 </div>
+                @include('partial.pagination', ['items' => $items])
             </div>
         </div>
         @else

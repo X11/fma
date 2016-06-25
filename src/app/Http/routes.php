@@ -2,14 +2,12 @@
 
 /*
 |--------------------------------------------------------------------------
-| Application Routes
+| API Routes
 |--------------------------------------------------------------------------
 |
-| This route group applies the "web" middleware group to every route
-| it contains. The "web" middleware group is defined in your HTTP
-| kernel and includes session state, CSRF protection, and more.
 |
 */
+
 Route::group([ 'prefix' => 'api/v1/', 'middleware' => 'auth.basic.once' ], function () {
     Route::get('serie', 'API\V1\SerieController@index');
     Route::get('serie/{id}', 'API\V1\SerieController@show');
@@ -18,13 +16,24 @@ Route::group([ 'prefix' => 'api/v1/', 'middleware' => 'auth.basic.once' ], funct
     Route::get('daily/{user}', 'API\V1\DailyController@user');
 });
 
+/*
+|--------------------------------------------------------------------------
+| Application Routes
+|--------------------------------------------------------------------------
+|
+| This route group applies the "web" middleware group to every route
+| it contains. The "web" middleware group is defined in your HTTP
+| kernel and includes session state, CSRF protection, and more.
+|
+*/
+
 Route::group(['middleware' => 'web'], function () {
 
     Route::get('/', function () { 
         if (Auth::guest()){
             $fanarts = [
-                //'http://thetvdb.com/banners/fanart/original/259765-12.jpg',
-                'http://thetvdb.com/banners/fanart/original/248742-8.jpg'
+                '//thetvdb.com/banners/fanart/original/259765-12.jpg',
+                '//thetvdb.com/banners/fanart/original/248742-8.jpg'
             ];
             return view('welcome')
                 ->with('fanart', $fanarts[array_rand($fanarts)]);

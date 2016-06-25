@@ -59,11 +59,13 @@
 
     @yield('content')
 
-    @if (isset($breadcrumbs))
-        @include('partial.breadcrumbs')
-    @endif
+    @if (!Request::is('/'))
+        @if (isset($breadcrumbs))
+            @include('partial.breadcrumbs')
+        @endif
 
-    @include('partial.footer')
+        @include('partial.footer')
+    @endif
     @yield('post-footer')
 
     <!-- JavaScripts -->

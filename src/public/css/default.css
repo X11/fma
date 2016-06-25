@@ -4027,19 +4027,45 @@ input[class="checkbox"] {
 .landing-info {
   height: 100vh;
   min-height: 500px;
-  background-size: 100% auto;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: left top;
-  padding: 0; }
+  padding: 0;
+  overflow: hidden;
+  background: black;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; }
+  .landing-info .img-parent {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%; }
+    .landing-info .img-parent img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+      min-width: 50%;
+      min-height: 50%; }
   .landing-info .landing-column {
+    position: relative;
     padding: 40px;
     background: white;
     height: 100%;
     width: 66%;
     min-width: 250px;
     max-width: 400px;
-    box-shadow: 1px 0 4px #333; }
+    box-shadow: 1px 0 1px #333;
+    z-index: 3; }
+  .landing-info footer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 40px;
+    width: 100%; }
 
 footer .menu-list a {
   border-bottom: none !important; }
