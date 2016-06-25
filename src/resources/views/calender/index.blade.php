@@ -6,6 +6,15 @@
 
 @section('content')
 <section class="section">
+    <div class="controls heading is-clearfix">
+        <p class="control">
+            <label class="checkbox is-pulled-right" title="Only show Premier/Returning/Watching episodes">
+                Only show important episodes
+                <input class="checkbox" type="checkbox" id="show-important">
+            </label>
+        </p>
+    </div>
+    <br>
     <div class="container calender is-{{ $overview_container }}">
         <div class="columns is-multiline">
             @foreach($dates as $week)

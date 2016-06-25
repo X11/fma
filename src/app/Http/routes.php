@@ -33,7 +33,11 @@ Route::group(['middleware' => 'web'], function () {
         if (Auth::guest()){
             $fanarts = [
                 '//thetvdb.com/banners/fanart/original/259765-12.jpg',
-                '//thetvdb.com/banners/fanart/original/248742-8.jpg'
+                '//thetvdb.com/banners/fanart/original/248742-8.jpg',
+                '//thetvdb.com/banners/fanart/original/289590-20.jpg',
+                '//thetvdb.com/banners/fanart/original/269533-14.jpg',
+                '//thetvdb.com/banners/fanart/original/248835-3.jpg'
+
             ];
             return view('welcome')
                 ->with('fanart', $fanarts[array_rand($fanarts)]);
