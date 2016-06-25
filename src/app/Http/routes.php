@@ -12,7 +12,10 @@
 */
 Route::group([ 'prefix' => 'api/v1/', 'middleware' => 'auth.basic.once' ], function () {
     Route::get('serie', 'API\V1\SerieController@index');
-    Route::get('serie/{id}', 'API\V1\SerieController@index');
+    Route::get('serie/{id}', 'API\V1\SerieController@show');
+
+    Route::get('daily', 'API\V1\DailyController@index');
+    Route::get('daily/{user}', 'API\V1\DailyController@user');
 });
 
 Route::group(['middleware' => 'web'], function () {
