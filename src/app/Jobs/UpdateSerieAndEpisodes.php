@@ -100,7 +100,18 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
             }
 
             foreach ($serieEpisodes->getData() as $episode) {
-                $episodes[] = $e = Episode::firstOrNew(['episodeid' => $episode->getId()]);
+                $e = Episode::first(['episodeid' => $episode->getId()]);
+                if (!$e){
+                    $e = Episode::first([
+                        'serie_id' => $this->serie->id,
+                        'episodeNumber' => $episode->getAiredEpisodeNumber(),
+                        'episodeSeason' => $episode->getAiredSeason(),
+                    ]);
+                    if (!$e){
+                        $e = new Episode();
+                    }
+                }
+                $episodes[] = $e;
                 $e->name = $episode->getEpisodeName();
                 $e->overview = $episode->getOverview();
                 $e->aired = $episode->getFirstAired();
