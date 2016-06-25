@@ -3,7 +3,7 @@
     <head>
         <title>Be right back.</title>
 
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Lato:700" rel="stylesheet" type="text/css">
 
         <style>
             html, body {
@@ -18,6 +18,7 @@
                 display: table;
                 font-weight: 100;
                 font-family: 'Lato';
+                background: black;
             }
 
             .container {
@@ -34,6 +35,7 @@
             .title {
                 font-size: 72px;
                 margin-bottom: 40px;
+                font-weight: 700;
             }
         </style>
     </head>

@@ -1,141 +1,23 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width">
-        <title>404 Not found</title>
-        <style type="text/css" media="screen">
-        @import url(http://fonts.googleapis.com/css?family=Roboto:900);
-        @import url(http://fonts.googleapis.com/css?family=Open+Sans);
-        * { 
-          paading: 0; 
-          margin: 0;
-        }
-        #oopss  {
-            background: #333;
-            text-align: center;
-            margin-bottom: 50px;
-            font-weight: 400;
-            font-size: 20px;
-            font-family: 'Open Sans', sans-serif;
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            line-height: 1.5em;
-            z-index: 9999;
-            left: 0px;
-        }
-        #error-text  {
-            top: 30%;
-            position: relative;
-            font-size: 20px;
-            color: #eee;
-        }
-
-        #error-text a {
-            color: #eee;
-        }
-
-        #error-text a:hover {
-            color:#f35d5c;
-        }
-
-
-        #error-text p  {
-            color: #eee;
-            margin: 50px 0 0 0;
-        }
-
-        #error-text i  {
-            margin-left: 10px;
-        }
-
-        #error-text p.hmpg  {
-            margin: 20px 0 0 0;
-        }
-
-        #error-text span  {
-            position: relative;
-            background: #ef4824;
-            color: #fff;
-            font-size: 450%;
-            padding: 0 20px;
-            border-radius: 5px;
-            font-family: 'Roboto', sans-serif;
-            ,  sans-serif;
-            font-weight: bolder;
-            transition: all .5s;
-            cursor:pointer;
-        }
-        #error-text span:hover  {
-            background: #d7401f;
-            color: #fff;
-        }
-
-        #error-text span:after  {
-            top: 100%;
-            left: 50%;
-            border: solid transparent;
-            content: &quot;
-             &quot;
-            ;
-            height: 0;
-            
-        width: 0;
-            position: absolute;
-            pointer-events: none;
-            border-color: rgba(136, 183, 213, 0);
-            border-top-color: #ef4824;
-            border-width: 7px;
-            margin-left: -7px;
-        }
-
-
-        /* CSS Error Page Responsive */
-        @media only screen and (max-width:640px) {
-                
-            #error-text span  {
-                font-size: 200%;
-            }
-
-            #error-text a:hover  {
-                color: #fff;
-            }
-        }
-        .back:active {
-          -webkit-transform:scale(0.95);
-          -moz-transform:scale(0.95);
-          transform:scale(0.95);
-          background:#f53b3b;
-          color:#fff;
-        }
-        .back:hover {
-          background:#4c4c4c;
-        }
-
-        .back {
-          text-decoration:none;
-          background:#5b5a5a;
-          color:#fff;
-          padding:10px 20px;
-          font-size:20px;
-          font-weight:700;
-          line-height:normal;
-          text-transform:uppercase;
-          border-radius:3px;
-          -webkit-transform:scale(1);
-          -moz-transform:scale(1);
-          transform:scale(1);
-          transition:all 0.5s ease-out;
-        }
+        <title>Be right back.</title>
+        <link href="https://fonts.googleapis.com/css?family=Lato:700" rel="stylesheet" type="text/css">
+        <style>
+            html, body { height: 100%; }
+            body { margin: 0; padding: 0; width: 100%; color: #B0BEC5; display: table; font-weight: 100; font-family: 'Lato'; background: black; }
+            .container { text-align: center; display: table-cell; vertical-align: middle; }
+            .content { text-align: center; display: inline-block; }
+            .title { font-size: 72px; margin-bottom: 0; font-weight: 700; }
+            .back { margin-top: 20px; display:block; padding: 20px;            color: inherit; }
         </style>
     </head>
     <body>
-        <div id='oopss'>
-            <div id='error-text'>
-                <span>404</span>
-                <p>NOT FOUND</p>
-                <p class='hmpg'><a href='{{ url('/') }}' class="back">Homepage</a></p>
+        <div class="container">
+            <div class="content">
+                <div class="title">404</div>
+                <div class="subtitle">Page not found</div>
+                <a href='{{ url('/') }}' class="back">Home</a>
             </div>
         </div>
     </body>
