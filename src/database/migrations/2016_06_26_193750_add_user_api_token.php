@@ -13,7 +13,7 @@ class AddUserApiToken extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('api_token', 71)->unique()->after('last_login');
+            $table->string('api_token', 71)->after('last_login')->unique();
         });
 
         $users = DB::table('users')->select('id')->get();
