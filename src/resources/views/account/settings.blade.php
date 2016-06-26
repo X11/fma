@@ -80,7 +80,7 @@
 
             <div class="column is-6">
                 <p class="control">
-                    <label class="label">Serie fanart</label>
+                    <label class="label">Serie fanart position</label>
                 </p>
                 @foreach(['default', 'bottom', 'never'] as $option)
                 <p class="control">

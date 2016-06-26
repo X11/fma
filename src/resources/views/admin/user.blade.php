@@ -51,10 +51,12 @@
             <input class="input" type="name" value="" name="name" id="name" required/>
         </p>
         <p class="control">
-            <label for="email">E-mail</label>
+            <label for="email">Email</label>
             <input class="input" type="email" value="" name="email" id="email" required/>
         </p>
-        <button type="submit" class="button is-primary is-pulled-right"> Invite </button>
+        <div class="is-clearfix">
+            <button type="submit" class="button is-primary is-pulled-right"> Invite </button>
+        </div>
     </form>
 </div>
 @endsection

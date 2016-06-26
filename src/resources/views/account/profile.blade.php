@@ -15,6 +15,9 @@
             </div>
         </div>
         <div class="column">
+            <div class="heading">
+                <h2 class="title">{{ $user->name }}</h2>
+            </div>
             <form role="form" method="POST" action="{{ url('/password/change') }}">
                 {!! csrf_field() !!}
                 <div class="content">
