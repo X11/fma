@@ -180,5 +180,24 @@ class UserController extends Controller
 
     }
     
+    /**
+     * Get user API
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getApi(Request $request)
+    {
+        $user = Auth::user();
+
+        return view('account.api')
+            ->with('key', $user->api_token)
+            ->with('breadcrumbs', [[
+                'name' => "Account",
+                'url' => '/account'
+            ], [
+                'name' => "API",
+                'url' => action("UserController@getApi")
+            ]]);
+    }
 
 }

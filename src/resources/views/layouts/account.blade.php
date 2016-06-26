@@ -11,6 +11,7 @@
                 <ul class="menu-list">
                     <li><a class="{{ Request::is('*profile') ? 'is-active' : '' }}" href="{{ action('UserController@getProfile') }}">Profile</a></li>
                     <li><a class="{{ Request::is('*settings') ? 'is-active' : '' }}" href="{{ action('UserController@getSettings') }}">User Interface</a></li>
+                    <li><a class="{{ Request::is('*api') ? 'is-active' : '' }}" href="{{ action('UserController@getApi') }}">API</a></li>
                 </ul>
             </aside>
             <div class="column push-content">

@@ -8,7 +8,7 @@
 |
 */
 
-Route::group([ 'prefix' => 'api/v1/', 'middleware' => 'auth.basic.once' ], function () {
+Route::group([ 'prefix' => 'api/v1/', 'middleware' => 'auth:api' ], function () {
     Route::get('serie', 'API\V1\SerieController@index');
     Route::get('serie/{id}', 'API\V1\SerieController@show');
 
@@ -104,6 +104,7 @@ Route::group(['middleware' => 'web'], function () {
 
             Route::get('profile', 'UserController@getProfile');
             Route::get('settings', 'UserController@getSettings');
+            Route::get('api', 'UserController@getApi');
 
             Route::post('settings', 'UserController@setSettings');
             Route::put('settings', 'UserController@setSettings');
