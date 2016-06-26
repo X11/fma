@@ -34,7 +34,7 @@
                 img.src = "https:" + IMAGE_URL + after;
                 img.onload = function(){
                     elm[0].src = this.getAttribute('src');
-                    console.log("Loaded HD", this.getAttribute('src'));
+                    //console.log("Loaded HD", this.getAttribute('src'));
                 };
                 img.onerror = function(){
                     img.src = "http:" + IMAGE_URL + after;

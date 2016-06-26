@@ -6,10 +6,10 @@
     var $series = $('.series .serie');
 
     $series.hover(function(e){
-        $(this).addClass('selected');
+        $series.addClass('selected');
         $overview.addClass('darken');
     }, function(e) {
-        $(this).removeClass('selected');
+        $series.removeClass('selected');
         $overview.removeClass('darken');
     });
 

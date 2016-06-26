@@ -1,90 +1,26 @@
-(function() {
+;(function($) {
 
     "use strict";
 
-    var $checkbox = $('#show-important');
-    var checked = localStorage.getItem('calender-show-special') == "true";
-    $checkbox.prop('checked', checked);
-    toggleWatched(checked);
+    $.fn.check = function(key, trueState, falseState){
 
-    $checkbox.on('change', function(e) {
-        var checked = $checkbox.prop('checked');
-        toggleWatched(checked);
-        localStorage.setItem('calender-show-special', checked.toString());
-    });
+        var $checkbox = this;
+        var checked = localStorage.getItem(key) == "true";
 
-    function toggleWatched(state) {
-        if (state)
-            $('.calender-item:not(.is-watching,is-premier,is-returning)').addClass('is-hidden');
-        else
-            $('.calender-item').removeClass('is-hidden');
-    }
+        var checkSwitch = $.switch(trueState, falseState);
+        checkSwitch.set(checked);
 
-}());
-
-(function() {
-    var timeout = 10;
-
-    $(document).ready(function(){
-        $('[data-counter]').each(function(){
-            var $this = $(this);
-            var countTo = $this.data('counter');
-            var time = $this.data('counterTime');
-            var cur = 0;
-            var division = time / timeout;
-            var add = Math.ceil(countTo / division);
-
-            function up() {
-                cur += add;
-                if (cur < countTo)
-                    $this.html(cur);
-                else if(cur > countTo)
-                    return $this.html(countTo);
-
-                setTimeout(up, timeout);
-            }
-            setTimeout(up, timeout);
+        $checkbox.on('change', function(e) {
+            var checked = $checkbox.prop('checked');
+            localStorage.setItem('hide-watched-value', checked.toString());
+            checkSwitch.set(checked);
         });
-    });
-}());
 
-$('a.is-danger, button.is-danger').on('click', function(e) {
-    return window.confirm("Are you sure?");
-});
 
-(function() {
-    "use strict";
+        return this;
+    };
 
-    $(".nav-toggle").click(function(){
-        $(this).parent().find('.nav-menu').toggleClass('is-active');
-    });
-
-}());
-
-(function() {
-
-    "use strict";
-
-    var $checkbox = $('#hide-watched');
-    var $columns = $('.is-watched');
-    var checked = localStorage.getItem('hide-watched-value') == "true";
-    $checkbox.prop('checked', checked);
-    toggleWatched(checked);
-
-    $checkbox.on('change', function(e) {
-        var checked = $checkbox.prop('checked');
-        toggleWatched(checked);
-        localStorage.setItem('hide-watched-value', checked.toString());
-    });
-
-    function toggleWatched(state) {
-        if (state)
-            $columns.hide();
-        else
-            $columns.show();
-    }
-
-}());
+})(window.jQuery || window.Zepto);
 
 jQuery.fn.exists = function(){return jQuery(this).length>0;};
 
@@ -1014,6 +950,56 @@ $.support.pjax ? enable() : disable()
 
 })(jQuery);
 
+;(function($) {
+
+    "use strict";
+
+    var token = $('meta[name="csrf-token"]').attr('content');
+
+    $.request = function(method, url, data, success, error) {
+        return $.ajax({
+                    url: url + (url.search('&') === -1 ? '?' : '&') + '_token=' + token,
+                    cache: false,
+                    method: method,
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    json: true,
+                    data: data || '',
+                    success: success,
+                    error: error
+                });
+    };
+
+})(window.jQuery || window.Zepto);
+
+;(function($) {
+
+    "use strict";
+
+    var token = $('meta[name="csrf-token"]').attr('content');
+
+    $.switch = function(trueState, falseState, state) {
+        return {
+            state: state || false,
+            get: function(state){
+                return this.state;
+            },
+            set: function(state){
+                this.state = state;
+                if (state){
+                    this.trueState();
+                } else {
+                    this.falseState();
+                }
+            },
+            trueState: trueState || function(){},
+            falseState: falseState || function(){}
+        };
+
+    };
+
+})(window.jQuery || window.Zepto);
+
 /**
  * jQuery Unveil
  * A very lightweight jQuery plugin to lazy load images
@@ -1083,142 +1069,35 @@ $.support.pjax ? enable() : disable()
 })(window.jQuery || window.Zepto);
 
 (function() {
-    var token = $('meta[name="csrf-token"]').attr('content');
-
-    function setEpisodeMark(watched, id){
-        $.ajax({
-            url: "/episode/" + id + '/watched?_token=' + token,
-            cache: false,
-            method: watched ? 'POST' : 'DELETE',
-            json: true,
-            success: function(res){
-                //alert(res.status);
-                $.notify(res.status, "success");
-            }
-        });
-    }
-
-    $('.mark-episode').each(function(){
-        var $button = $(this);
-        var $container = $button;
-        var initial = $(this).data('watchedInitial');
-        var content = $(this).data('watchedContent');
-        if (content){
-            content = content.split('|');
-        }
-        var classes = $(this).data('watchedClass').split('|');
-        var episode = $(this).data('watchedEpisode');
-        var season = $(this).data('watchedSeason');
-        var parent = $(this).data('watchedParent');
-        if (parent){
-            $container = $button.closest(parent);
-        }
-
-        var state = initial ? 1 : 0;
-        if (content){
-            $button.html(content[state]);
-        }
-        $container.removeClass('is-loading');
-        $container.addClass(classes[state]);
-
-
-        $button.click(function(){
-            $container.removeClass(classes[state]);
-            state = state === 0 ? 1 : 0;
-            setEpisodeMark(state, episode);
-            if (content){
-                $container.html(content[state]);
-            }
-            $container.addClass(classes[state]);
-            return false;
-        });
-    });
-
-    $('.mark-season').each(function(){
-        var $button = $(this);
-        var season = $(this).data('watchedSeason');
-
-        $button.click(function(){
-            var i = 0;
-            $('.is-aired .mark-episode[data-watched-season="' + season + '"]').each(function(){
-                var $but = $(this);
-                setTimeout(function(){
-                    $but.click();
-                }, 100*i);
-                i++;
-            });
-        });
-    });
-}());
-
-(function() {
-    var token = $('meta[name="csrf-token"]').attr('content');
-
-    function setSerieMark(state, id){
-        $.ajax({
-            url: "/serie/" + id + '/track?_token=' + token,
-            cache: false,
-            method: state ? 'POST' : 'DELETE',
-            json: true,
-            success: function(res){
-                //alert(res.status);
-                $.notify(res.status, "success");
-            }
-        });
-    }
-
-    $('.mark-serie').each(function(){
-        var $button = $(this);
-        var initial = $(this).data('markInitial');
-        var content = $(this).data('markContent').split('|');
-        var classes = $(this).data('markClass').split('|');
-        var serie = $(this).data('markSerie');
-
-        var state = initial ? 1 : 0;
-        $button.html(content[state]);
-        $button.removeClass('is-loading');
-        $button.addClass(classes[state]);
-
-        $button.click(function(){
-            $button.removeClass(classes[state]);
-            state = state === 0 ? 1 : 0;
-            setSerieMark(state, serie);
-            $button.html(content[state]);
-            $button.addClass(classes[state]);
-            return false;
-        });
-    });
-}());
-
-(function() {
 
     "use strict";
 
-    $("#selectAll").click(function(){
-        var checked = $(this).prop('checked');
-        $(this).parents('form').find('input[type="checkbox"]').each(function(){
-            $(this).prop('checked', checked);
-        });
-    });
-    
-}());
-
-(function() {
-    
-    "use strict";
-
-    var $overview = $('.series');
-    var $series = $('.series .serie');
-
-    $series.hover(function(e){
-        $(this).addClass('selected');
-        $overview.addClass('darken');
-    }, function(e) {
-        $(this).removeClass('selected');
-        $overview.removeClass('darken');
+    /**
+     * Homepage
+     *
+     */
+    $('#hide-watched').check('hide-watched-value', function(){
+        $('.is-watched').hide();
+    }, function(){
+        $('.is-watched').show();
     });
 
+    /**
+     * Calender
+     *
+     */
+    $("#show-important").check('calender-show-special', function(){
+        $('.calender-item:not(.is-watching,is-premier,is-returning)').addClass('is-hidden');
+    }, function(){
+        $('.calender-item').removeClass('is-hidden');
+    });
+
+
 }());
+
+$('a.is-danger, button.is-danger').on('click', function(e) {
+    return window.confirm("Are you sure?");
+});
 
 // Setup all listeners
 $('.tabs a[tab-href]').on('click', function() {
@@ -1285,7 +1164,7 @@ window.addEventListener('load', function(e) {
                 img.src = "https:" + IMAGE_URL + after;
                 img.onload = function(){
                     elm[0].src = this.getAttribute('src');
-                    console.log("Loaded HD", this.getAttribute('src'));
+                    //console.log("Loaded HD", this.getAttribute('src'));
                 };
                 img.onerror = function(){
                     img.src = "http:" + IMAGE_URL + after;
@@ -1296,27 +1175,159 @@ window.addEventListener('load', function(e) {
 }());
 
 (function() {
+    "use strict";
+
+    $(".nav-toggle").click(function(){
+        $(this).parent().find('.nav-menu').toggleClass('is-active');
+    });
+
+}());
+
+(function() {
+
+    /**
+     * Toggle tracking state from series
+     *
+     */
+    $('.mark-serie').each(function(){
+        var $button = $(this);
+        var initial = $(this).data('markInitial');
+        var content = $(this).data('markContent').split('|');
+        var classes = $(this).data('markClass').split('|');
+        var id = $(this).data('markSerie');
+
+        var stateSwitch = $.switch(function(){
+                                        $button.removeClass(classes[0]);
+                                        $button.html(content[1]);
+                                        $button.addClass(classes[1]);
+
+                                        $.request('POST', '/serie/' + id + '/track', null, function(res){
+                                            $.notify(res.status, "success");
+                                        });
+                                    }, function(){
+                                        $button.removeClass(classes[1]);
+                                        $button.html(content[0]);
+                                        $button.addClass(classes[0]);
+
+                                        $.request('DELETE', '/serie/' + id + '/track', null, function(res){
+                                            $.notify(res.status, "success");
+                                        });
+                                    }, initial ? true : false);
+
+        $button.removeClass('is-loading');
+        var i = initial ? 1 : 0;
+        $button.html(content[i]);
+        $button.addClass(classes[i]);
+
+        $button.click(function(){
+            stateSwitch.set(!stateSwitch.get());
+            return false;
+        });
+    });
+
+
+    /**
+     * Mark episode as watched
+     *
+     */
+    $('.mark-episode').each(function(){
+
+        var $button = $(this);
+        var $container = $button;
+
+        var initial = $(this).data('watchedInitial');
+        var content = $(this).data('watchedContent');
+        if (content) content = content.split('|');
+
+        var classes = $(this).data('watchedClass').split('|');
+        var episode = $(this).data('watchedEpisode');
+        var season = $(this).data('watchedSeason');
+
+        var parent = $(this).data('watchedParent');
+        if (parent) $container = $button.closest(parent);
+
+        var stateSwitch = $.switch(function(){
+                                        $container.removeClass(classes[0]);
+                                        if (content) $container.html(content[1]);
+                                        $container.addClass(classes[1]);
+
+                                        $.request('POST', '/episode/' + episode + '/watched', null, function(res){
+                                            $.notify(res.status, "success");
+                                        });
+                                    }, function(){
+                                        $container.removeClass(classes[1]);
+                                        if (content) $container.html(content[0]);
+                                        $container.addClass(classes[0]);
+
+                                        $.request('DELETE', '/episode/' + episode + '/watched', null, function(res){
+                                            $.notify(res.status, "success");
+                                        });
+                                    }, initial ? true : false);
+
+        $button.removeClass('is-loading');
+        var i = initial ? 1 : 0;
+        if (content) $container.html(content[i]);
+        $container.addClass(classes[i]);
+
+        $button.click(function(){
+            stateSwitch.set(!stateSwitch.get());
+            return false;
+        });
+    });
+
+    /**
+     * Mark season as watched
+     *
+     */
+    $('.mark-season').each(function(){
+        var $button = $(this);
+        var season = $(this).data('watchedSeason');
+
+        $button.click(function(){
+            var i = 0;
+            $('.is-aired .mark-episode[data-watched-season="' + season + '"]').each(function(){
+                var $but = $(this);
+                setTimeout(function(){
+                    $but.click();
+                }, 100*i);
+                i++;
+            });
+        });
+    });
+
+}());
+
+(function() {
+    
+    "use strict";
+
+    var $overview = $('.series');
+    var $series = $('.series .serie');
+
+    $series.hover(function(e){
+        $series.addClass('selected');
+        $overview.addClass('darken');
+    }, function(e) {
+        $series.removeClass('selected');
+        $overview.removeClass('darken');
+    });
+
+}());
+
+(function() {
 
     "use strict";
 
     var token = $('meta[name="csrf-token"]').attr('content');
 
     function updateFilters(filters){
-        $.ajax({
-            url: "/account/setting/?_token=" + token,
-            cache: false,
-            method: 'POST',
-            json: true,
-            data: JSON.stringify({
-                watchlist_filters: filters
-            }),
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function(res){
-                $.notify("Filters updated", "success");
-                location.reload();
-            }
-        });
+        $.request("POST", '/account/settings', JSON.stringify({
+                                                                watchlist_filters: filters
+                                                            }), function(res){
+                                                                location.reload();
+                                                            }, function(res){
+                                                                $.notify("Something went wrong", "error");
+                                                            });
     }
 
     $('[watchlist-filter]').on('change', function(){
@@ -1337,6 +1348,13 @@ window.addEventListener('load', function(e) {
             $(this).prop('checked', 'true');
         });
         updateFilters([]);
+    });
+
+    $("#selectAll").click(function(){
+        var checked = $(this).prop('checked');
+        $(this).parents('form').find('input[type="checkbox"]').each(function(){
+            $(this).prop('checked', checked);
+        });
     });
 }());
 

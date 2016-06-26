@@ -15,7 +15,8 @@ elixir(function(mix) {
     mix.sass('default.scss', 'public/css/default.css');
     mix.sass('green.scss', 'public/css/green.css');
     mix.scripts([
-        '*.js',
+        'jquery/**/jquery.*.js',
+        '**/*.js',
     ]);
     mix.copy('resources/assets/img', 'public/img');
     mix.version([
