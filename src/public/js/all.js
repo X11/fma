@@ -1095,38 +1095,47 @@ $.support.pjax ? enable() : disable()
 
 }());
 
-$('a.is-danger, button.is-danger').on('click', function(e) {
-    return window.confirm("Are you sure?");
-});
+(function() {
 
-// Setup all listeners
-$('.tabs a[tab-href]').on('click', function() {
-    // Split the target to get the main & sub id
-    var target = $(this).attr('tab-href');
-    var parts = target.split('/');
+    /**
+     * Add an extra confirmation box on danger buttons
+     *
+     */
+    $('a.is-danger, button.is-danger').on('click', function(e) {
+        return window.confirm("Are you sure?");
+    });
+}());
 
-    // Find the good tab
-    $('#'+ parts[0] + '> *').each(function(){
-        var c = $(this);
-        c.removeClass('is-active');
-        if (parts[1] == c.attr('tab-id')) c.addClass('is-active');
+(function() {
+    // Setup all listeners
+    $('.tabs a[tab-href]').on('click', function() {
+        // Split the target to get the main & sub id
+        var target = $(this).attr('tab-href');
+        var parts = target.split('/');
+
+        // Find the good tab
+        $('#'+ parts[0] + '> *').each(function(){
+            var c = $(this);
+            c.removeClass('is-active');
+            if (parts[1] == c.attr('tab-id')) c.addClass('is-active');
+        });
+
+        // Remove all active
+        $(this).parents('ul').find('li').each(function(){
+            $(this).removeClass('is-active');
+        });
+
+        // Set active to the good one
+        $(this).parent('li').addClass('is-active');
+
+        history.replaceState(parts, "", '#' + target);
     });
 
-    // Remove all active
-    $(this).parents('ul').find('li').each(function(){
-        $(this).removeClass('is-active');
+    window.addEventListener('load', function(e) {
+        var hash = location.hash.slice(1);
+        $('[tab-href="' + hash + '"]').click();
     });
-
-    // Set active to the good one
-    $(this).parent('li').addClass('is-active');
-
-    history.replaceState(parts, "", '#' + target);
-});
-
-window.addEventListener('load', function(e) {
-    var hash = location.hash.slice(1);
-    $('[tab-href="' + hash + '"]').click();
-});
+}());
 
 (function() {
 
@@ -1177,6 +1186,10 @@ window.addEventListener('load', function(e) {
 (function() {
     "use strict";
 
+    /**
+     * Handle navbar click on mobile
+     *
+     */
     $(".nav-toggle").click(function(){
         $(this).parent().find('.nav-menu').toggleClass('is-active');
     });
@@ -1318,8 +1331,11 @@ window.addEventListener('load', function(e) {
 
     "use strict";
 
-    var token = $('meta[name="csrf-token"]').attr('content');
-
+    /**
+     * Update filters
+     *
+     * @param Array filters
+     */
     function updateFilters(filters){
         $.request("POST", '/account/settings', JSON.stringify({
                                                                 watchlist_filters: filters
@@ -1330,6 +1346,10 @@ window.addEventListener('load', function(e) {
                                                             });
     }
 
+    /**
+     * Handle on filter click
+     *
+     */
     $('[watchlist-filter]').on('change', function(){
         var filters = [];
         $('[watchlist-filter]').each(function(){
@@ -1343,6 +1363,10 @@ window.addEventListener('load', function(e) {
         updateFilters(filters);
     });
 
+    /**
+     * Remove all filters
+     *
+     */
     $('[watchlist-reset-filters]').click(function(){
         $('[watchlist-filter]').each(function(){
             $(this).prop('checked', 'true');
@@ -1350,12 +1374,33 @@ window.addEventListener('load', function(e) {
         updateFilters([]);
     });
 
+    /*
     $("#selectAll").click(function(){
         var checked = $(this).prop('checked');
         $(this).parents('form').find('input[type="checkbox"]').each(function(){
             $(this).prop('checked', checked);
         });
     });
+    */
+
+    /**
+     * Find filters by name
+     *
+     */
+    var $style = $('#watchlist_filter_search_style');
+    var value = localStorage.getItem('watchlist_filter_search');
+    if (value !== '') $style.html('[watchlist-serie]{display:none;}[watchlist-serie*="' + value + '"]{display:block;}');
+
+    $('#watchlist_filter_search').on('keyup', function(){
+        if (this.value === ''){
+            $style.html('');
+            localStorage.setItem('watchlist_filter_search', '');
+        } else {
+            $style.html('[watchlist-serie]{display:none;}[watchlist-serie*="' + this.value + '"]{display:block;}');
+            localStorage.setItem('watchlist_filter_search', this.value);
+        }
+    });
+
 }());
 
 //# sourceMappingURL=all.js.map
