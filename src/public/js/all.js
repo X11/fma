@@ -4,7 +4,7 @@
 
     $.fn.check = function(key, trueState, falseState){
 
-        var $checkbox = this;
+        var $checkbox = $(this);
         var checked = localStorage.getItem(key) == "true";
 
         var checkSwitch = $.switch(trueState, falseState);
@@ -13,10 +13,9 @@
 
         $checkbox.on('change', function(e) {
             var checked = $checkbox.prop('checked');
-            localStorage.setItem('hide-watched-value', checked.toString());
+            localStorage.setItem(key, checked.toString());
             checkSwitch.set(checked);
         });
-
 
         return this;
     };
