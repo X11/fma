@@ -9,6 +9,7 @@
 
         var checkSwitch = $.switch(trueState, falseState);
         checkSwitch.set(checked);
+        $checkbox.attr('checked', checked);
 
         $checkbox.on('change', function(e) {
             var checked = $checkbox.prop('checked');
