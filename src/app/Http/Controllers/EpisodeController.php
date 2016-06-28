@@ -9,7 +9,6 @@ use App\Http\Controllers\Controller;
 use App\Episode;
 use TorrentSearch\TorrentSearch;
 use App\Serie;
-use Seedr\Seedr;
 use Auth;
 use App\Jobs\DownloadEpisodeFile;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
