@@ -61,6 +61,7 @@
     var $style = $('#watchlist_filter_search_style');
     var value = localStorage.getItem('watchlist_filter_search') || '';
     if (value !== '') $style.html('[watchlist-serie]{display:none;}[watchlist-serie*="' + value + '"]{display:block;}');
+    $('#watchlist_filter_search').val(value);
 
     $('#watchlist_filter_search').on('keyup', function(){
         if (this.value === ''){

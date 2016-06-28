@@ -11,6 +11,13 @@
 Route::group([ 'prefix' => 'api/v1/', 'middleware' => 'auth:api' ], function () {
     Route::get('serie', 'API\V1\SerieController@index');
     Route::get('serie/{id}', 'API\V1\SerieController@show');
+    Route::post('serie/{id}/track', 'API\V1\SerieController@postTrack');
+    Route::delete('serie/{id}/track', 'API\V1\SerieController@deleteTrack');
+    Route::get('serie/{id}/episodes', 'API\V1\EpisodeController@index');
+
+    Route::get('episode/{id}', 'API\V1\EpisodeController@show');
+    Route::post('episode/{id}/watched', 'API\V1\EpisodeController@postWatched');
+    Route::delete('episode/{id}/watched', 'API\V1\EpisodeController@deleteWatched');
 
     Route::get('daily', 'API\V1\DailyController@index');
     Route::get('daily/{user}', 'API\V1\DailyController@user');
