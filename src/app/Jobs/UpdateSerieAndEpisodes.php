@@ -96,6 +96,7 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
         $this->serie->runtime = $serie->getRuntime();
 
         $episodes = [];
+        $episodeIds = [];
         $page = 1;
         do {
             try { $serieEpisodes = $serieExtension->getEpisodes($this->serie->tvdbid, $page);
@@ -104,18 +105,8 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
             }
 
             foreach ($serieEpisodes->getData() as $episode) {
-                $e = Episode::where('episodeid', $episode->getId())->first();
-                if (!$e){
-                    $e = Episode::where([
-                        'serie_id' => $this->serie->id,
-                        'episodeNumber' => $episode->getAiredEpisodeNumber(),
-                        'episodeSeason' => $episode->getAiredSeason(),
-                    ])->first();
-
-                    if (!$e){
-                        $e = new Episode();
-                    }
-                }
+                $episodeIds[] = $episode->getId();
+                $e = Episode::firstOrNew(['episodeid' => $episode->getId()]);
                 $episodes[] = $e;
                 $e->name = $episode->getEpisodeName();
                 $e->overview = $episode->getOverview();
@@ -129,5 +120,7 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
         $this->serie->episodes()->saveMany($episodes);
         $this->serie->touch();
         $this->serie->save();
+
+        \DB::table('episodes')->where('serie_id', $this->serie->id)->whereNotIn('episodeid', $episodeIds)->delete();
     }
 }
