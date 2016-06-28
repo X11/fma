@@ -9,7 +9,7 @@
 */
 
 Route::group([ 'prefix' => 'api/v1/', 'middleware' => 'auth:api' ], function () {
-    Route::get('serie', 'API\V1\SerieController@index');
+    Route::get('series', 'API\V1\SerieController@index');
     Route::get('serie/{id}', 'API\V1\SerieController@show');
     Route::post('serie/{id}/track', 'API\V1\SerieController@postTrack');
     Route::delete('serie/{id}/track', 'API\V1\SerieController@deleteTrack');

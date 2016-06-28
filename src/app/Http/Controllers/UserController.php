@@ -190,6 +190,60 @@ class UserController extends Controller
         $user = Auth::user();
 
         return view('account.api')
+            ->with('api_endpoints', [
+                [
+                    [
+                        'label' => 'is-success',
+                        'method' => 'GET',
+                        'url' => '/series',
+                        'extra' => 'Get all series'
+                    ],
+                    [
+                        'label' => 'is-success',
+                        'method' => 'GET',
+                        'url' => '/serie/{serieId}',
+                        'extra' => 'Get serie information'
+                    ],
+                    [
+                        'label' => 'is-success',
+                        'method' => 'GET',
+                        'url' => '/serie/{serieId}/episodes',
+                        'extra' => 'Get serie episodes'
+                    ],
+                    [
+                        'label' => 'is-info',
+                        'method' => 'POST',
+                        'url' => '/serie/{serieId}/track',
+                        'extra' => 'Add serie to your watchlist'
+                    ],
+                    [
+                        'label' => 'is-danger',
+                        'method' => 'DELETE',
+                        'url' => '/serie/{serieId}/track',
+                        'extra' => 'Remove serie from your watchlist'
+                    ],
+                ], 
+                [
+                    [
+                        'label' => 'is-success',
+                        'method' => 'GET',
+                        'url' => '/episode/{episodeId}',
+                        'extra' => 'Get episode information'
+                    ],
+                    [
+                        'label' => 'is-info',
+                        'method' => 'POST',
+                        'url' => '/episode/{episodeId}/watched',
+                        'extra' => 'Mark episode as watched'
+                    ],
+                    [
+                        'label' => 'is-danger',
+                        'method' => 'DELETE',
+                        'url' => '/episode/{episodeId}/watched',
+                        'extra' => 'Unmark episode as watched'
+                    ],
+                ]
+            ])
             ->with('key', $user->api_token)
             ->with('breadcrumbs', [[
                 'name' => "Account",
