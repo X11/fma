@@ -56,10 +56,10 @@ class EpisodeController extends Controller
         $nextEpisode = Episode::where([ ['serie_id', $serie->id],
                                         ['episodeSeason', $episode->episodeSeason],
                                         ['episodeNumber', $episode->episodeNumber+1]
-                                    ])->orWhere([['serie_id', $serie->id],
-                                                ['episodeSeason', $episode->episodeSeason+1],
-                                                ['episodeNumber', 1] 
-                                            ])->first();
+                                    ])->first()
+                                ?: Episode::where([ ['serie_id', $serie->id],
+                                                    ['episodeSeason', $episode->episodeSeason+1]
+                                                ])->orderBy('episodeNumber', 'asc')->first();
         
         $prevEpisode = Episode::where([ ['serie_id', $serie->id],
                                         ['episodeSeason', $episode->episodeSeason],
