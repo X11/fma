@@ -53,8 +53,26 @@ class EpisodeController extends Controller
             });
         }
 
+        $nextEpisode = Episode::where([ ['serie_id', $serie->id],
+                                        ['episodeSeason', $episode->episodeSeason],
+                                        ['episodeNumber', $episode->episodeNumber+1]
+                                    ])->orWhere([['serie_id', $serie->id],
+                                                ['episodeSeason', $episode->episodeSeason+1],
+                                                ['episodeNumber', 1] 
+                                            ])->first();
+        
+        $prevEpisode = Episode::where([ ['serie_id', $serie->id],
+                                        ['episodeSeason', $episode->episodeSeason],
+                                        ['episodeNumber', $episode->episodeNumber-1]
+                                    ])->first()
+                                ?: Episode::where([ ['serie_id', $serie->id],
+                                                    ['episodeSeason', $episode->episodeSeason-1]
+                                                ])->orderBy('episodeNumber', 'desc')->first();
+
         return view('episode.show')
             ->with('episode', $episode)
+            ->with('nextEpisode', $nextEpisode)
+            ->with('prevEpisode', $prevEpisode)
             ->with('serie', $serie)
             ->with('magnets', $magnets)
             ->with('search_query', $search_query)

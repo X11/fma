@@ -23,6 +23,14 @@
                 <div class="content">
                     <p>{{ $episode->overview }}</p>
                 </div>
+                <div class="is-clearfix">
+                    @if ($prevEpisode)
+                        <a class="button is-primary" href="{{ $prevEpisode->url }}">{{ $prevEpisode->seasonEpisode }}</a>
+                    @endif
+                    @if ($nextEpisode)
+                        <a class="button is-primary is-pulled-right" href="{{ $nextEpisode->url }}">{{ $nextEpisode->seasonEpisode }}</a>
+                    @endif
+                </div>
             </div>
             <div class="serie-poster column is-one-quarter-tablet is-one-third">
                 <figure class="has-text-centered is-hidden-mobile">
