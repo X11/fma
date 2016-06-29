@@ -242,6 +242,14 @@ class UserController extends Controller
                         'url' => '/episode/{episodeId}/watched',
                         'extra' => 'Unmark episode as watched'
                     ],
+                ], 
+                [
+                    [
+                        'label' => 'is-success',
+                        'method' => 'GET',
+                        'url' => '/search/serie/{query}',
+                        'extra' => 'Search series by query'
+                    ],
                 ]
             ])
             ->with('key', $user->api_token)
