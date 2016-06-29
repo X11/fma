@@ -21,6 +21,8 @@ Route::group([ 'prefix' => 'api/v1/', 'middleware' => 'auth:api' ], function () 
 
     Route::get('daily', 'API\V1\DailyController@index');
     Route::get('daily/{user}', 'API\V1\DailyController@user');
+
+    Route::get('search/serie/{query}', 'API\V1\SearchController@serie');
 });
 
 /*
