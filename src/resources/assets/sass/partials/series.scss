@@ -259,10 +259,12 @@ section.serie {
     }
 
     .episode {
+        display: block;
         box-shadow: 0 2px 3px rgba($black, 0.2);
         border: 0.25em solid #ffffff;
         border-radius: 3px;
         padding: 10px;
+        color: inherit;
 
         a {
             position: relative;

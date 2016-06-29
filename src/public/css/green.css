@@ -4309,10 +4309,12 @@ section.serie .heading .title span {
     border-radius: 50%;
     box-sizing: border-box; }
   .episode-entry .episode {
+    display: block;
     box-shadow: 0 2px 3px rgba(17, 17, 17, 0.2);
     border: 0.25em solid #ffffff;
     border-radius: 3px;
-    padding: 10px; }
+    padding: 10px;
+    color: inherit; }
     .episode-entry .episode a {
       position: relative;
       top: 3px;

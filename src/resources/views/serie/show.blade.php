@@ -2,12 +2,15 @@
 
 @section('hero.display', 'none')
 
-@section('content')
-@if ($serie_fanart === 'default')
-    <section class="section serie-fanart">
-        <img width="100%" src="{{ asset('img/poster.png') }}" data-src="{{ $serie->fanart }}" alt=""/>
-    </section>
+@if ($serie_fanart === 'default') 
+    @section('header.after')
+        <section class="section  serie-fanart">
+            <img width="100%" src="{{ asset('img/poster.png') }}" data-src="{{ $serie->fanart }}" alt=""/>
+        </section>
+    @endsection
 @endif
+
+@section('content')
 <section class="section serie">
     <div class="container">
         <div class="columns">
@@ -100,15 +103,14 @@
                                                 data-watched-class="|is-watched" 
                                                 data-watched-episode="{{ $episode->id }}" 
                                                 data-watched-season="{{ $season }}"></span>
-                                    <div class="episode {{ $episode->isAired() ? '' : 'is-not-aired' }}">
+                                    <a href="{{ $episode->url }}" class="episode {{ $episode->isAired() ? '' : 'is-not-aired' }}">
                                         <label class="date">
                                             <span class="top">{{ $episode->episodeSeason }}</span>
                                             <span class="bottom">{{ str_pad($episode->episodeNumber, 2, '0', STR_PAD_LEFT) }}</span>
                                         </label>
-                                        <a href="{{ $episode->url }}"><i class="fa fa-arrow-right"></i></a>
                                         <h3>{{ ($episode->name ? $episode->name : '') !== '' ? $episode->name : 'N/A' }}</h3>
                                         <p>{{ $episode->air_date }}</p>
-                                    </div>
+                                    </a>
                                 </div>
                             @endforeach
                         </div>

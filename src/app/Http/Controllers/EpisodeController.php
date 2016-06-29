@@ -63,7 +63,7 @@ class EpisodeController extends Controller
                 'url' => action("SerieController@index")
             ], [
                 'name' => $serie->name,
-                'url' => url($serie->url)
+                'url' => url($serie->url) . '#seasons/' . $episode->episodeSeason
             ], [
                 'name' => $episode->season_episode,
                 'url' => url($episode->url)
