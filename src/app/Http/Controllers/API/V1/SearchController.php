@@ -17,6 +17,6 @@ class SearchController extends Controller
                             ->orderBy('name')
                             ->paginate(5);
 
-        return response()->json(["series" => $series]);
+        return response()->json($series);
     }
 }
