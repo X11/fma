@@ -12,6 +12,7 @@ use App\Jobs\FetchSerieEpisodes;
 use App\Jobs\UpdateSerieAndEpisodes;
 use Carbon\Carbon;
 use App;
+use Auth;
 
 class SerieController extends Controller
 {
@@ -83,6 +84,20 @@ class SerieController extends Controller
                 case 'recent':
                     $series = Serie::orderBy('created_at', 'desc')
                                     ->orderBy('name', 'asc')
+                                    ->paginate($limit);
+                    break;
+                case 'watched':
+                    $serieIds = Auth::user()->watched()
+                                            ->withPivot('id')
+                                            ->orderBy('episodes_watched.id', 'desc')
+                                            ->get()
+                                            ->unique('serie_id')
+                                            ->pluck('serie_id')
+                                            ->toArray();
+
+
+                    $series = Serie::whereIn('id', $serieIds)
+                                    ->orderByRaw('FIND_IN_SET(id, ?)', [join(',', $serieIds)])
                                     ->paginate($limit);
                     break;
                 default:
