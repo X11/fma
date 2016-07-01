@@ -21,7 +21,7 @@
                 <br>
                 <div class="columns is-mobile">
                     <div class="column is-4">
-                        <figure class="has-text-centered">
+                        <figure class="has-text-centered serie-poster">
                             <img src="{{ asset('img/poster.png') }}" data-src="{{ $serie->poster }}" alt=""/>
                         </figure>
                         @if (Auth::check())
@@ -124,6 +124,21 @@
     <section class="section serie-fanart">
         <img width="100%" src="{{ asset('img/poster.png') }}" data-src="{{ $serie->fanart }}" alt=""/>
     </section>
+@endif
+@if ($serie_fanart !== 'never')
+    <div class="modal" id="image-modal">
+        <div class="modal-background"></div>
+        <div class="modal-content-secondary">
+            <div class="modal-prev">
+                <i class="fa fa-chevron-left"></i>
+            </div>
+            <img src="http://placehold.it/1280x960">
+            <div class="modal-next">
+                <i class="fa fa-chevron-right"></i>
+            </div>
+        </div>
+        <button class="modal-close"></button>
+    </div>
 @endif
 @endsection
 

@@ -1308,6 +1308,42 @@ $.support.pjax ? enable() : disable()
         });
     });
 
+    function imageModal() {
+        var $modal = $('#image-modal');
+        $modal.addClass('is-active');
+
+        $img = $modal.find('img');
+        $img.attr('src', $(this).attr('src'));
+
+        $modal.find('.modal-close').one('click', function(){
+            $modal.removeClass('is-active');
+        });
+
+        $modal.find('.modal-prev').on('click', prev); function prev() { setNumber(-1); }
+        $modal.find('.modal-next').on('click', next); function next() { setNumber(1); }
+
+        $testImg = new Image();
+        $testImg.onerror = function(){
+            $img.show();
+        };
+        $testImg.onload = function(){
+            $img.attr('src', $testImg.src);
+            $img.show();
+        };
+
+        function setNumber(add) {
+            var src = $img.attr('src');
+            var matches = /([\d]+)\.jpg$/.exec(src);
+            if (matches){
+                $testImg.src = src.replace('-' + matches[1] + '.jpg', '-' + (add + parseInt(matches[1])) + '.jpg');
+                $img.hide();
+            }
+        }
+    }
+
+    $('.serie-fanart img').dblclick(imageModal);
+    $('.serie-poster img').dblclick(imageModal);
+
 }());
 
 (function() {

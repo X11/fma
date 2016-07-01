@@ -4114,6 +4114,39 @@ footer .menu-list a {
       #aside-checkbox:checked ~ .push-content.push-6 {
         left: 50%; } }
 
+.modal-content-secondary {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  width: 100%;
+  text-align: center; }
+  .modal-content-secondary .modal-prev,
+  .modal-content-secondary .modal-next {
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    position: absolute;
+    padding: 10px;
+    cursor: pointer; }
+    .modal-content-secondary .modal-prev i,
+    .modal-content-secondary .modal-next i {
+      font-size: 60px;
+      color: #127682; }
+    .modal-content-secondary .modal-prev:hover i,
+    .modal-content-secondary .modal-next:hover i {
+      color: #1fc8db; }
+    .modal-content-secondary .modal-prev.modal-prev,
+    .modal-content-secondary .modal-next.modal-prev {
+      left: 0; }
+    .modal-content-secondary .modal-prev.modal-next,
+    .modal-content-secondary .modal-next.modal-next {
+      right: 0; }
+  .modal-content-secondary img {
+    max-width: 100%;
+    max-height: 100%; }
+
 .home .heading .tag {
   display: block; }
 
