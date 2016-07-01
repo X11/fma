@@ -22,8 +22,6 @@ class CreateAdmin extends Command
 
     /**
      * Create a new command instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -45,7 +43,7 @@ class CreateAdmin extends Command
             'name' => $name,
             'email' => $email,
             'password' => bcrypt($password),
-            'role' => 5
+            'role' => 5,
         ]);
     }
 }

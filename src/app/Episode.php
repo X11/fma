@@ -33,32 +33,32 @@ class Episode extends Model
     }
 
     /**
-     * undocumented function
+     * undocumented function.
      *
-     * @return Boolean
+     * @return bool
      */
     public function getWatchedAttribute()
     {
         return !Auth::guest() && Auth::user()->have('watched', $this->id);
     }
-    
 
     /**
-     * Get S**E** notation 
+     * Get S**E** notation.
      *
-     * @return String
+     * @return string
      */
     public function getSeasonEpisodeAttribute()
     {
-        $s = ($this->episodeSeason < 10 ? "0" : "") . $this->episodeSeason;
-        $n = ($this->episodeNumber < 10 ? "0" : "") . $this->episodeNumber;
-        return "S" . $s . 'E' . $n;
+        $s = ($this->episodeSeason < 10 ? '0' : '').$this->episodeSeason;
+        $n = ($this->episodeNumber < 10 ? '0' : '').$this->episodeNumber;
+
+        return 'S'.$s.'E'.$n;
     }
 
     /**
-     * Return the air date from the aired attribute
+     * Return the air date from the aired attribute.
      *
-     * @return String
+     * @return string
      */
     public function getAirDateAttribute()
     {
@@ -66,33 +66,32 @@ class Episode extends Model
     }
 
     /**
-     * check if an episode is already aired
+     * check if an episode is already aired.
      *
-     * @return Boolean
+     * @return bool
      */
     public function isAired()
     {
         return Carbon::now() > Carbon::parse($this->aired);
     }
-    
-    
+
     /**
-     * shortcut for sorting
+     * shortcut for sorting.
      *
-     * @return String
+     * @return string
      */
     public function getSerieNameAttribute()
     {
         return $this->serie->name;
     }
-    
+
     /**
-     * Get url
+     * Get url.
      *
-     * @return String
+     * @return string
      */
     public function getUrlAttribute()
     {
-        return $this->serie->url . '/episode/' . str_slug($this->id . ' ' . $this->name);
+        return $this->serie->url.'/episode/'.str_slug($this->id.' '.$this->name);
     }
 }

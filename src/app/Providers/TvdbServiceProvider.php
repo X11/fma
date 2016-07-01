@@ -10,8 +10,6 @@ class TvdbServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
-     *
-     * @return void
      */
     public function boot()
     {
@@ -20,18 +18,17 @@ class TvdbServiceProvider extends ServiceProvider
 
     /**
      * Register the application services.
-     *
-     * @return void
      */
     public function register()
     {
-         $this->app->singleton('tvdb', function () {
+        $this->app->singleton('tvdb', function () {
             $client = new Client();
             $client->setLanguage('en');
 
-            $token = Cache::get('tvdb_token', function() use ($client){
+            $token = Cache::get('tvdb_token', function () use ($client) {
                 $t = $client->authentication()->login(env('TVDB_KEY'), null, null);
                 Cache::put('tvdb_token', $t, 1200);
+
                 return $t;
             }, 1200);
 

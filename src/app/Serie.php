@@ -30,20 +30,19 @@ class Serie extends Model
         'network',
         'airtime',
         'airday',
-        'runtime'
+        'runtime',
     ];
 
     /**
-     * Get the episodes for the serie
-     *
+     * Get the episodes for the serie.
      */
-    public function episodes() {
+    public function episodes()
+    {
         return $this->hasMany('App\Episode');
     }
 
     /**
-     * Get the series watchers
-     *
+     * Get the series watchers.
      */
     public function watchers()
     {
@@ -51,28 +50,25 @@ class Serie extends Model
     }
 
     /**
-     * Get the serie genres
-     *
+     * Get the serie genres.
      */
     public function genres()
     {
         return $this->belongsToMany('App\Genre', 'serie_genre');
     }
-    
+
     /**
-     * Get url
+     * Get url.
      *
-     * @return String
+     * @return string
      */
     public function getUrlAttribute()
     {
-        return '/serie/' . str_slug($this->id . ' ' . $this->name);
+        return '/serie/'.str_slug($this->id.' '.$this->name);
     }
 
     /**
-     * Get poster raw number
-     *
-     * @return void
+     * Get poster raw number.
      */
     public function getPosterNumberAttribute($value)
     {
@@ -80,42 +76,38 @@ class Serie extends Model
     }
 
     /**
-     * Get poster URL
-     *
-     * @return void
+     * Get poster URL.
      */
     public function getPosterAttribute($value)
     {
-        if ($value)
-            return "//thetvdb.com/banners/_cache/" . $value;
-        else
-            return null;
+        if ($value) {
+            return '//thetvdb.com/banners/_cache/'.$value;
+        } else {
+            return;
+        }
     }
 
     /**
-     * Get fanart URL
-     *
-     * @return void
+     * Get fanart URL.
      */
     public function getFanartAttribute($value)
     {
-        if ($value)
-            return "//thetvdb.com/banners/_cache/" . $value;
-        else
-            return null;
+        if ($value) {
+            return '//thetvdb.com/banners/_cache/'.$value;
+        } else {
+            return;
+        }
     }
 
     /**
-     * Get fanart URL
-     *
-     * @return void
+     * Get fanart URL.
      */
     public function getFanarthdAttribute($value)
     {
-        if ($this->attributes['fanart'])
-            return "http://thetvdb.com/banners/" . $this->attributes['fanart'];
-        else
-            return null;
+        if ($this->attributes['fanart']) {
+            return 'http://thetvdb.com/banners/'.$this->attributes['fanart'];
+        } else {
+            return;
+        }
     }
-    
 }

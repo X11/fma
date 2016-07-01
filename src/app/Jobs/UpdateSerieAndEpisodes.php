@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Jobs\Job;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -20,8 +19,6 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
 
     /**
      * Create a new job instance.
-     *
-     * @return void
      */
     public function __construct(Serie $serie)
     {
@@ -30,37 +27,36 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
     public function handle()
     {
-
         $client = App::make('tvdb');
 
         $serieExtension = $client->series();
 
         $serie = $serieExtension->get($this->serie->tvdbid);
 
-        try { $seriePoster = $client->series()->getImagesWithQuery($this->serie->tvdbid, [
-                'keyType' => 'poster'
-            ])->getData()->sortByDesc(function($a){
-                return $a->getRatingsInfo()["average"];
-            })->first()->getFileName(); 
+        try {
+            $seriePoster = $client->series()->getImagesWithQuery($this->serie->tvdbid, [
+                'keyType' => 'poster',
+            ])->getData()->sortByDesc(function ($a) {
+                return $a->getRatingsInfo()['average'];
+            })->first()->getFileName();
         } catch (\Exception $e) {
             $seriePoster = null;
         }
 
-        try { $serieFanart = $client->series()->getImagesWithQuery($this->serie->tvdbid, [
-                'keyType' => 'fanart'
-            ])->getData()->sortByDesc(function($a){
-                return $a->getRatingsInfo()["average"];
-            })->first()->getFileName(); 
+        try {
+            $serieFanart = $client->series()->getImagesWithQuery($this->serie->tvdbid, [
+                'keyType' => 'fanart',
+            ])->getData()->sortByDesc(function ($a) {
+                return $a->getRatingsInfo()['average'];
+            })->first()->getFileName();
         } catch (\Exception $e) {
             $serieFanart = null;
         }
 
-        $genre_lookup = Cache::get('genre_lookup', function(){
+        $genre_lookup = Cache::get('genre_lookup', function () {
 
             $lookup = [];
             $genres = DB::table('genres')
@@ -72,19 +68,20 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
             }
 
             Cache::put('genre_lookup', $lookup, 600);
+
             return $lookup;
         });
 
         $genre_ids = [];
         foreach ($serie->getGenre() as $genre) {
-            if (isset($genre_lookup[$genre])){
+            if (isset($genre_lookup[$genre])) {
                 $genre_ids[] = $genre_lookup[$genre];
             }
         }
 
         $this->serie->genres()->sync($genre_ids);
 
-        $this->serie->overview = $serie->getOverview();;
+        $this->serie->overview = $serie->getOverview();
         $this->serie->imdbid = $serie->getImdbId();
         $this->serie->rating = $serie->getSiteRating();
         $this->serie->poster = $seriePoster;
@@ -92,14 +89,15 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
         $this->serie->status = $serie->getStatus();
         $this->serie->network = $serie->getNetwork();
         $this->serie->airtime = $serie->getAirsTime();
-        $this->serie->airday  = $serie->getAirsDayOfWeek();
+        $this->serie->airday = $serie->getAirsDayOfWeek();
         $this->serie->runtime = $serie->getRuntime();
 
         $episodes = [];
         $episodeIds = [];
         $page = 1;
         do {
-            try { $serieEpisodes = $serieExtension->getEpisodes($this->serie->tvdbid, $page);
+            try {
+                $serieEpisodes = $serieExtension->getEpisodes($this->serie->tvdbid, $page);
             } catch (\Exception $e) {
                 break;
             }

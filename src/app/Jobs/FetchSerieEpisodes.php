@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Jobs\Job;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -18,8 +17,6 @@ class FetchSerieEpisodes extends Job implements ShouldQueue
 
     /**
      * Create a new job instance.
-     *
-     * @return void
      */
     public function __construct(Serie $serie)
     {
@@ -28,19 +25,17 @@ class FetchSerieEpisodes extends Job implements ShouldQueue
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
     public function handle()
     {
-
         $client = App::make('tvdb');
         $serieExtension = $client->series();
 
         $episodes = [];
         $page = 1;
         do {
-            try { $serieEpisodes = $serieExtension->getEpisodes($this->serie->tvdbid, $page);
+            try {
+                $serieEpisodes = $serieExtension->getEpisodes($this->serie->tvdbid, $page);
             } catch (\Exception $e) {
                 break;
             }

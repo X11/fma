@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use App\User;
 use Auth;
 use Illuminate\Support\Facades\Mail;
@@ -13,7 +10,6 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-
     /**
      * Display the resource.
      *
@@ -33,19 +29,19 @@ class UserController extends Controller
                 'Moderator' => 'is-success',
                 'SuperModerator' => 'is-warning',
                 'Admin' => 'is-danger',
-                'Owner' => 'is-dark'
+                'Owner' => 'is-dark',
             ])
             ->with('breadcrumbs', [[
-                'name' => "Profiles",
-                'url' => ''
+                'name' => 'Profiles',
+                'url' => '',
             ], [
                 'name' => $profile->name,
-                'url' => action("UserController@show", [$profile->id])
+                'url' => action('UserController@show', [$profile->id]),
             ]]);
     }
 
     /**
-     * Invite a user
+     * Invite a user.
      *
      * @return \Illuminate\Http\Response
      */
@@ -61,13 +57,11 @@ class UserController extends Controller
             $m->to($user->email, $user->name)->subject('FMA Invite!');
         });
 
-        return back()->with('status', $user->name . ' invited!');
+        return back()->with('status', $user->name.' invited!');
     }
 
     /**
-     * undocumented function
-     *
-     * @return void
+     * undocumented function.
      */
     public function getProfile(Request $request)
     {
@@ -81,20 +75,19 @@ class UserController extends Controller
                 'Moderator' => 'is-success',
                 'SuperModerator' => 'is-warning',
                 'Admin' => 'is-danger',
-                'Owner' => 'is-dark'
+                'Owner' => 'is-dark',
             ])
             ->with('breadcrumbs', [[
-                'name' => "Account",
-                'url' => '/account'
+                'name' => 'Account',
+                'url' => '/account',
             ], [
-                'name' => "Profile",
-                'url' => action("UserController@getProfile")
+                'name' => 'Profile',
+                'url' => action('UserController@getProfile'),
             ]]);
     }
-    
 
     /**
-     * View user settings
+     * View user settings.
      *
      * @return \Illuminate\Http\Response
      */
@@ -106,16 +99,16 @@ class UserController extends Controller
             ->with('user', $user)
             ->with('settings', $user->settings)
             ->with('breadcrumbs', [[
-                'name' => "Account",
-                'url' => '/account'
+                'name' => 'Account',
+                'url' => '/account',
             ], [
-                'name' => "Settings",
-                'url' => action("UserController@getSettings")
+                'name' => 'Settings',
+                'url' => action('UserController@getSettings'),
             ]]);
     }
 
     /**
-     * Set user settings
+     * Set user settings.
      *
      * @return \Illuminate\Http\Response
      */
@@ -123,10 +116,10 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        $user->settings = array_merge((array) $user->settings, $request->except('_token')); 
+        $user->settings = array_merge((array) $user->settings, $request->except('_token'));
         $user->save();
 
-        if ($request->ajax()){
+        if ($request->ajax()) {
             return response()->json(['status' => 'Settings updated']);
         } else {
             return back()->with('status', 'Settings updated');
@@ -134,7 +127,7 @@ class UserController extends Controller
     }
 
     /**
-     * Set user role
+     * Set user role.
      *
      * @return \Illuminate\Http\Response
      */
@@ -142,7 +135,7 @@ class UserController extends Controller
     {
         $level = Auth::user()->role_index;
 
-        if ($user->role_index < $level && $request->input('role') < $level){
+        if ($user->role_index < $level && $request->input('role') < $level) {
             $user->role = $request->input('role');
             $user->save();
 
@@ -153,14 +146,12 @@ class UserController extends Controller
     }
 
     /**
-     * Change user password
+     * Change user password.
      *
      * @return \Iluminate\Http\Response
      */
     /**
-     * undocumented function
-     *
-     * @return void
+     * undocumented function.
      */
     public function changeUserPassword(Request $request)
     {
@@ -170,18 +161,18 @@ class UserController extends Controller
             'new_password_confirmation' => 'required|same:new_password',
         ]);
         $user = Auth::user();
-        if (Hash::check($request->input('old_password'), $user->password)){
+        if (Hash::check($request->input('old_password'), $user->password)) {
             $user->password = Hash::make($request->input('new_password'));
             $user->save();
+
             return back()->with('status', 'Password changed');
         } else {
             return back()->with('status', 'Incorrect password');
         }
-
     }
-    
+
     /**
-     * Get user API
+     * Get user API.
      *
      * @return \Illuminate\Http\Response
      */
@@ -196,70 +187,69 @@ class UserController extends Controller
                         'label' => 'is-success',
                         'method' => 'GET',
                         'url' => '/series',
-                        'extra' => 'Get all series'
+                        'extra' => 'Get all series',
                     ],
                     [
                         'label' => 'is-success',
                         'method' => 'GET',
                         'url' => '/serie/{serieId}',
-                        'extra' => 'Get serie information'
+                        'extra' => 'Get serie information',
                     ],
                     [
                         'label' => 'is-success',
                         'method' => 'GET',
                         'url' => '/serie/{serieId}/episodes',
-                        'extra' => 'Get serie episodes'
+                        'extra' => 'Get serie episodes',
                     ],
                     [
                         'label' => 'is-info',
                         'method' => 'POST',
                         'url' => '/serie/{serieId}/track',
-                        'extra' => 'Add serie to your watchlist'
+                        'extra' => 'Add serie to your watchlist',
                     ],
                     [
                         'label' => 'is-danger',
                         'method' => 'DELETE',
                         'url' => '/serie/{serieId}/track',
-                        'extra' => 'Remove serie from your watchlist'
+                        'extra' => 'Remove serie from your watchlist',
                     ],
-                ], 
+                ],
                 [
                     [
                         'label' => 'is-success',
                         'method' => 'GET',
                         'url' => '/episode/{episodeId}',
-                        'extra' => 'Get episode information'
+                        'extra' => 'Get episode information',
                     ],
                     [
                         'label' => 'is-info',
                         'method' => 'POST',
                         'url' => '/episode/{episodeId}/watched',
-                        'extra' => 'Mark episode as watched'
+                        'extra' => 'Mark episode as watched',
                     ],
                     [
                         'label' => 'is-danger',
                         'method' => 'DELETE',
                         'url' => '/episode/{episodeId}/watched',
-                        'extra' => 'Unmark episode as watched'
+                        'extra' => 'Unmark episode as watched',
                     ],
-                ], 
+                ],
                 [
                     [
                         'label' => 'is-success',
                         'method' => 'GET',
                         'url' => '/search/serie/{query}',
-                        'extra' => 'Search series by query'
+                        'extra' => 'Search series by query',
                     ],
-                ]
+                ],
             ])
             ->with('key', $user->api_token)
             ->with('breadcrumbs', [[
-                'name' => "Account",
-                'url' => '/account'
+                'name' => 'Account',
+                'url' => '/account',
             ], [
-                'name' => "API",
-                'url' => action("UserController@getApi")
+                'name' => 'API',
+                'url' => action('UserController@getApi'),
             ]]);
     }
-
 }

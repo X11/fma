@@ -39,8 +39,8 @@ class Kernel extends HttpKernel
         ],
         'admin' => [
             \App\Http\Middleware\Authenticate::class,
-            \App\Http\Middleware\AdminMiddleware::class
-        ]
+            \App\Http\Middleware\AdminMiddleware::class,
+        ],
     ];
 
     /**
@@ -56,6 +56,6 @@ class Kernel extends HttpKernel
         'auth.basic.once' => \App\Http\Middleware\AuthenticateOnceWithBasicAuth::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'admin' => \App\Http\Middleware\AdminMiddleware::class
+        'admin' => \App\Http\Middleware\AdminMiddleware::class,
     ];
 }

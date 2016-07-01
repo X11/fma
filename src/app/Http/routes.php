@@ -8,7 +8,7 @@
 |
 */
 
-Route::group([ 'prefix' => 'api/v1/', 'middleware' => 'auth:api' ], function () {
+Route::group(['prefix' => 'api/v1/', 'middleware' => 'auth:api'], function () {
     Route::get('series', 'API\V1\SerieController@index');
     Route::get('serie/{id}', 'API\V1\SerieController@show');
     Route::post('serie/{id}/track', 'API\V1\SerieController@postTrack');
@@ -38,22 +38,23 @@ Route::group([ 'prefix' => 'api/v1/', 'middleware' => 'auth:api' ], function () 
 
 Route::group(['middleware' => 'web'], function () {
 
-    Route::get('/', function () { 
-        if (Auth::guest()){
+    Route::get('/', function () {
+        if (Auth::guest()) {
             $fanarts = [
                 '//thetvdb.com/banners/fanart/original/259765-12.jpg',
                 '//thetvdb.com/banners/fanart/original/248742-8.jpg',
                 '//thetvdb.com/banners/fanart/original/289590-20.jpg',
                 '//thetvdb.com/banners/fanart/original/269533-14.jpg',
-                '//thetvdb.com/banners/fanart/original/248835-3.jpg'
+                '//thetvdb.com/banners/fanart/original/248835-3.jpg',
 
             ];
+
             return view('welcome')
                 ->with('fanart', $fanarts[array_rand($fanarts)]);
         } else {
             return redirect('/home');
         }
-    }); 
+    });
 
     //Route::auth();
    // Authentication Routes...
@@ -61,7 +62,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('login', 'Auth\AuthController@login');
     Route::get('logout', 'Auth\AuthController@logout');
 
-    if (env('ALLOW_REGISTER')){
+    if (env('ALLOW_REGISTER')) {
         Route::get('register', 'Auth\AuthController@showRegistrationForm');
         Route::post('register', 'Auth\AuthController@register');
     }
@@ -77,16 +78,14 @@ Route::group(['middleware' => 'web'], function () {
     Route::put('/serie/{id}', 'SerieController@update');
     Route::delete('/serie/{serie}', 'SerieController@destroy');
 
-
     // CALENDER
     Route::get('calender', 'CalenderController@index');
 
     // User profile
     Route::get('profile/{User}', 'UserController@show');
 
-
     // USER THINGS
-    Route::group(['middleware' => 'user'], function(){
+    Route::group(['middleware' => 'user'], function () {
 
         Route::post('password/change', 'UserController@changeUserPassword');
 
@@ -107,9 +106,9 @@ Route::group(['middleware' => 'web'], function () {
 
         // Account
         Route::group([
-            'prefix' => 'account', 
+            'prefix' => 'account',
         ], function () {
-            Route::get('/', function(){ return redirect()->action('UserController@getProfile'); });
+            Route::get('/', function () { return redirect()->action('UserController@getProfile'); });
 
             Route::get('profile', 'UserController@getProfile');
             Route::get('settings', 'UserController@getSettings');
@@ -119,12 +118,12 @@ Route::group(['middleware' => 'web'], function () {
             Route::put('settings', 'UserController@setSettings');
         });
     });
-    
+
     Route::group([
-        'prefix' => 'admin', 
+        'prefix' => 'admin',
         'middleware' => 'admin',
     ], function () {
-        Route::get('/', function(){ return redirect()->action('AdminController@stats'); });
+        Route::get('/', function () { return redirect()->action('AdminController@stats'); });
 
         Route::get('users', 'AdminController@users');
         Route::post('user/invite', 'UserController@invite');

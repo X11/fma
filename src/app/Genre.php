@@ -19,12 +19,11 @@ class Genre extends Model
      * @var array
      */
     protected $fillable = [
-        'name'
+        'name',
     ];
 
     /**
-     * Get the genre series
-     *
+     * Get the genre series.
      */
     public function series()
     {

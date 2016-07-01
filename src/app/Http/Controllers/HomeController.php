@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
-use Illuminate\Http\Request;
 use App\Serie;
-use App\Jobs\FetchSerieEpisodes;
 use Carbon\Carbon;
 use App\Episode;
 use Illuminate\Support\Facades\Auth;
@@ -14,8 +11,6 @@ class HomeController extends Controller
 {
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -35,14 +30,14 @@ class HomeController extends Controller
             ->pluck('id');
 
         $dates = collect();
-        for ($i = -7; $i <= 0; $i++) {
+        for ($i = -7; $i <= 0; ++$i) {
             $dates->put(Carbon::parse("$i days")->toDateString(), []);
         }
 
         $episodes = Episode::whereIn('serie_id', $serie_ids)
-            ->whereBetween('aired', [ 
-                Carbon::parse('7 days ago')->toDateTimeString(), 
-                Carbon::parse('today')->toDateTimeString()
+            ->whereBetween('aired', [
+                Carbon::parse('7 days ago')->toDateTimeString(),
+                Carbon::parse('today')->toDateTimeString(),
             ])
             ->where('episodeSeason', '>', '0')
             ->with('serie')
@@ -61,8 +56,8 @@ class HomeController extends Controller
         return view('home')
             ->with('days', $days->reverse())
             ->with('breadcrumbs', [[
-                'name' => "Home",
-                'url' => action("HomeController@index")
+                'name' => 'Home',
+                'url' => action('HomeController@index'),
             ]]);
     }
 }

@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use App\Serie;
 use App\Episode;
 use App\User;
@@ -21,12 +18,14 @@ class AdminController extends Controller
      */
     public function users(Request $request)
     {
-        if ($request->input('q'))
-            $users = User::where('name', 'like', '%' . $request->input('q') . '%')->paginate(10);
-        else
+        if ($request->input('q')) {
+            $users = User::where('name', 'like', '%'.$request->input('q').'%')->paginate(10);
+        } else {
             $users = User::paginate(10);
+        }
 
         $users->appends(['q' => $request->input('q')]);
+
         return view('admin.user')
             ->with('users', $users)
             ->with('role_tags', [
@@ -35,14 +34,14 @@ class AdminController extends Controller
                 'Moderator' => 'is-success',
                 'SuperModerator' => 'is-warning',
                 'Admin' => 'is-danger',
-                'Owner' => 'is-dark'
+                'Owner' => 'is-dark',
             ])
             ->with('breadcrumbs', [[
-                'name' => "Admin",
-                'url' => '/admin'
+                'name' => 'Admin',
+                'url' => '/admin',
             ], [
-                'name' => "Users",
-                'url' => action("AdminController@users")
+                'name' => 'Users',
+                'url' => action('AdminController@users'),
             ]]);
     }
 
@@ -58,11 +57,11 @@ class AdminController extends Controller
             ->with('episodeCount', Episode::count())
             ->with('userCount', User::count())
             ->with('breadcrumbs', [[
-                'name' => "Admin",
-                'url' => '/admin'
+                'name' => 'Admin',
+                'url' => '/admin',
             ], [
-                'name' => "Stats",
-                'url' => action("AdminController@stats")
+                'name' => 'Stats',
+                'url' => action('AdminController@stats'),
             ]]);
     }
 
@@ -75,20 +74,20 @@ class AdminController extends Controller
     {
         return view('admin.update')
             ->with('breadcrumbs', [[
-                'name' => "Admin",
-                'url' => '/admin'
+                'name' => 'Admin',
+                'url' => '/admin',
             ], [
-                'name' => "Update",
-                'url' => action("AdminController@update")
+                'name' => 'Update',
+                'url' => action('AdminController@update'),
             ]]);
     }
-
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int                      $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function postUpdate(Request $request)
@@ -97,14 +96,16 @@ class AdminController extends Controller
             ['updated_at', '<', Carbon::parse($request->input('q'))->toDateTimeString()],
         ])->orWhere('updated_at', null)->get();
 
-        if (!$series)
+        if (!$series) {
             return back()
-                ->with('status', "No series selected");
+                ->with('status', 'No series selected');
+        }
 
         foreach ($series as $serie) {
             dispatch(new UpdateSerieAndEpisodes($serie));
         }
         $count = $series->count();
+
         return back()
             ->with('status', "$count series updating");
     }
@@ -118,25 +119,24 @@ class AdminController extends Controller
     {
         return view('admin.cache')
             ->with('breadcrumbs', [[
-                'name' => "Admin",
-                'url' => '/admin'
+                'name' => 'Admin',
+                'url' => '/admin',
             ], [
-                'name' => "Cache",
-                'url' => action("AdminController@cache")
+                'name' => 'Cache',
+                'url' => action('AdminController@cache'),
             ]]);
     }
 
     /**
+     * @param \Illuminate\Http\Request $request
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function postCache(Request $request)
     {
-
         \Artisan::call('cache:clear');
 
         return back()
-            ->with('status', "Cache cleared");
+            ->with('status', 'Cache cleared');
     }
 }

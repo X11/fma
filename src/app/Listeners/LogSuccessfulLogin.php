@@ -3,7 +3,6 @@
 namespace App\Listeners;
 
 use Illuminate\Auth\Events\Login;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Carbon\Carbon;
 
@@ -11,8 +10,6 @@ class LogSuccessfulLogin implements ShouldQueue
 {
     /**
      * Create the event listener.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -22,8 +19,7 @@ class LogSuccessfulLogin implements ShouldQueue
     /**
      * Handle the event.
      *
-     * @param  Login  $event
-     * @return void
+     * @param Login $event
      */
     public function handle(Login $event)
     {

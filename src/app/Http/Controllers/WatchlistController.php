@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -22,9 +19,9 @@ class WatchlistController extends Controller
         $filters = collect(Auth::user()->settings->watchlist_filters);
 
         $items = DB::table('watchlist')
-            ->join('series','series.id', '=', 'watchlist.serie_id')
-            ->join('episodes','episodes.serie_id', '=', 'series.id')
-            ->leftJoin('episodes_watched','episodes_watched.episode_id', '=', 'episodes.id')
+            ->join('series', 'series.id', '=', 'watchlist.serie_id')
+            ->join('episodes', 'episodes.serie_id', '=', 'series.id')
+            ->leftJoin('episodes_watched', 'episodes_watched.episode_id', '=', 'episodes.id')
             ->select(
                 'series.name as serie_name',
                 'episodes.name as episode_name',
@@ -38,7 +35,7 @@ class WatchlistController extends Controller
                 ['episodes.aired', '!=', ''],
                 ['episodes.aired', '<', Carbon::today()],
                 ['episodes.episodeSeason', '>', 0],
-                ['watchlist.user_id', '=', Auth::user()->id]
+                ['watchlist.user_id', '=', Auth::user()->id],
             ])
            ->whereNotIn('series.id', $filters)
             ->whereNull('episodes_watched.episode_id')
@@ -46,9 +43,9 @@ class WatchlistController extends Controller
             ->paginate(50);
 
         $series_episode_count = DB::table('watchlist')
-            ->join('series','series.id', '=', 'watchlist.serie_id')
-            ->join('episodes','episodes.serie_id', '=', 'series.id')
-            ->leftJoin('episodes_watched','episodes_watched.episode_id', '=', 'episodes.id')
+            ->join('series', 'series.id', '=', 'watchlist.serie_id')
+            ->join('episodes', 'episodes.serie_id', '=', 'series.id')
+            ->leftJoin('episodes_watched', 'episodes_watched.episode_id', '=', 'episodes.id')
             ->select(
                 DB::raw('count(*) as episode_count, series.id')
             )
@@ -56,7 +53,7 @@ class WatchlistController extends Controller
                 ['episodes.aired', '!=', ''],
                 ['episodes.aired', '<', Carbon::today()],
                 ['episodes.episodeSeason', '>', 0],
-                ['watchlist.user_id', '=', Auth::user()->id]
+                ['watchlist.user_id', '=', Auth::user()->id],
             ])
             ->whereNull('episodes_watched.episode_id')
             ->groupBy('id')
@@ -64,7 +61,7 @@ class WatchlistController extends Controller
 
         $series_episode_count = collect($series_episode_count)
             ->groupBy('id')
-            ->map(function($a) {
+            ->map(function ($a) {
                 return $a->first()->episode_count;
             });
 
@@ -79,7 +76,7 @@ class WatchlistController extends Controller
     }
 
     /**
-     * Add a serie to the watchlist
+     * Add a serie to the watchlist.
      *
      * @return \Illuminate\Http\Response
      */
@@ -88,12 +85,12 @@ class WatchlistController extends Controller
         Auth::user()->watching()->attach($id);
 
         return response()->json([
-            'status' => 'Added to watchlist'
+            'status' => 'Added to watchlist',
         ]);
     }
 
     /**
-     * Remove a serie from the watchlist
+     * Remove a serie from the watchlist.
      *
      * @return \Illuminate\Http\Response
      */
@@ -102,7 +99,7 @@ class WatchlistController extends Controller
         Auth::user()->watching()->detach($id);
 
         return response()->json([
-            'status' => 'Removed from watchlist'
+            'status' => 'Removed from watchlist',
         ]);
     }
 }
