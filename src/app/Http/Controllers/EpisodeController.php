@@ -54,7 +54,11 @@ class EpisodeController extends Controller
                 return preg_match("/\[(ettv|rartv)\]/", $magnet->getName());
             });
 
-            $links = ((new Sources())->search(strtolower($serie->name), $episode->episodeSeason, $episode->episodeNumber));
+            try {
+                $links = ((new Sources())->search(strtolower($serie->name), $episode->episodeSeason, $episode->episodeNumber));
+            } catch (\Exception $e){
+                $links = [];
+            }
         }
 
         $nextEpisode = Episode::where([ ['serie_id', $serie->id],
