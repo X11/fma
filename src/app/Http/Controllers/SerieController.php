@@ -48,12 +48,20 @@ class SerieController extends Controller
                 $tvdbResults = collect();
             }
             $tvdbResults = $tvdbResults->filter(function($value) use ($series_tvdbids){
-                if (Carbon::parse($value->getFirstAired())->year < 2000) return false;
+                if ($value->getFirstAired() != "" && intval(substr($value->getFirstAired(), 0, 4)) < 2000) return false;
                 if (in_array($value->getId(), $series_tvdbids)) return false;
                 if (substr($value->getSeriesName(), 0, 2) == '**') return false;
+                if (stripos($value->getSeriesName(), 'JAPANESE') !== false) return false;
+                if ($value->getStatus() == "") return false;
+                if ($value->getNetwork() == "") return false;
                 return true;
-            })->sort(function($value){
-                return $value->getId();
+            })->sortByDesc(function($value){
+                $add = ($value->getBanner() != "" ? 10000 : 0);
+                if (preg_match('/\(([\d]{4})\)$/', $value->getSeriesName(), $matches)){
+                    $add += intval($matches[1] . '0');
+                } 
+                dump($add);
+                return ($add + $value->getId());
             });
 
         } else if ($request->input('_genre')){

@@ -79,24 +79,18 @@
                         @endforeach
                     </div>
                     @endforeach
+                    @if (count($tvdbResults) == 0)
+                        <div class="message is-danger">
+                            <div class="message-body">
+                                Nothing to display
+                            </div>
+                        </div>
+                    @endif
                 @endif
             </div>
         </div>
     </div>   
 </section>
-@if ($tvdbResults)
-    <section class="section">
-        <div class="container">
-            @if (count($tvdbResults) == 0)
-                <div class="message is-danger">
-                    <div class="message-body">
-                        Nothing to display
-                    </div>
-                </div>
-            @endif
-        </div>   
-    </section>
-@endif
 @if (!Auth::guest() && Auth::user()->isAdmin())
     <section class="section">
         <div class="container">
