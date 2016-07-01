@@ -60,7 +60,6 @@ class SerieController extends Controller
                 if (preg_match('/\(([\d]{4})\)$/', $value->getSeriesName(), $matches)){
                     $add += intval($matches[1] . '0');
                 } 
-                dump($add);
                 return ($add + $value->getId());
             });
 
