@@ -151,6 +151,7 @@
         {{ method_field('DELETE') }}
         {!! csrf_field() !!}
     </form>
+    <script>window.VIEW = "serie";</script>
 @endsection
 
 @section('scripts')

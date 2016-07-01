@@ -2,6 +2,8 @@
 
     "use strict";
 
+    if (window.VIEW != "watchlist") return;
+
     /**
      * Update filters
      *

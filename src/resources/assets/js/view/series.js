@@ -2,6 +2,8 @@
     
     "use strict";
 
+    if (window.VIEW != "series") return;
+
     var $overview = $('.series');
     var $series = $('.series .serie');
 

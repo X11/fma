@@ -70,3 +70,7 @@
     </div>
 </section>
 @endsection
+
+@section('post-footer')
+    <script>window.VIEW = "watchlist";</script>
+@endsection

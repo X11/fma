@@ -1197,6 +1197,7 @@ $.support.pjax ? enable() : disable()
 }());
 
 (function() {
+    if (window.VIEW != "serie") return;
 
     /**
      * Toggle tracking state from series
@@ -1350,6 +1351,8 @@ $.support.pjax ? enable() : disable()
     
     "use strict";
 
+    if (window.VIEW != "series") return;
+
     var $overview = $('.series');
     var $series = $('.series .serie');
 
@@ -1366,6 +1369,8 @@ $.support.pjax ? enable() : disable()
 (function() {
 
     "use strict";
+
+    if (window.VIEW != "watchlist") return;
 
     /**
      * Update filters

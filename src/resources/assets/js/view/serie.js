@@ -1,4 +1,5 @@
 (function() {
+    if (window.VIEW != "serie") return;
 
     /**
      * Toggle tracking state from series
