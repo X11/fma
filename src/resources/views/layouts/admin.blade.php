@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<section class="section">
+<section class="section" style="overflow:hidden;">
     <div class="container">
         <label id="aside-label" for="aside-checkbox"><i class="fa fa-bars"></i> Menu</label>
         <div class="columns is-mobile">

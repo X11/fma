@@ -5,7 +5,7 @@
 @section('hero.content', 'Manage users')
 
 @section('main')
-<div class="box">
+<div class="box table-responsive">
     <form role="form" method="GET" action="{{ url()->current() }}">
         <p class="control has-addons">
             <input class="input" type="text" value="" name="q" id="name"/>
@@ -40,7 +40,7 @@
     </table>
     @include('partial.pagination', ['items' => $users])
 </div>   
-<div class="box">
+<div class="box table-responsive">
     <div class="heading">
         <h2 class="subtitle">Invite</h2>
     </div>
