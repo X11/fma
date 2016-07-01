@@ -9,6 +9,7 @@
         "kozz/laravel-guzzle-provider": "^6.0",
         "fpn/thetvdb": "^1.0",
         "x11/torrent-search": "dev-master",
+        "x11/php-sources": "dev-master",
         "adrenth/thetvdb2": "^1.0",
         "doctrine/dbal": "^2.5"
     },
@@ -24,6 +25,10 @@
         {
             "type": "vcs",
             "url": "git@github.com:X11/php-torrent-search.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:X11/php-sources.git"
         }
     ],
     "autoload": {

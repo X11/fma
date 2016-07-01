@@ -69,6 +69,30 @@
             </div>
         </div>
         @endif
+        @if (count($links) > 0)
+        <hr>
+        <div class="magnets box">
+            <div class="heading">
+                <h3 class="subtitle">Direct download</h3>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($links as $link)
+                            <tr>
+                                <td><a href="{{ $link }}">{{ parse_url($link)['host'] }}</a></td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        @endif
     </div>
 </section>
 @endsection

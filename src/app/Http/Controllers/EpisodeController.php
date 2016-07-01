@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Episode;
 use TorrentSearch\TorrentSearch;
+use Sources\Sources;
 use App\Serie;
 use Auth;
 use App\Jobs\DownloadEpisodeFile;
@@ -39,6 +40,7 @@ class EpisodeController extends Controller
         //@todo redirect to right url
         if ($serie->id != $episode->serie->id) throw new NotFoundHttpException;
 
+        $links = [];
         $magnets = [];
         $search_query = preg_replace('/\([0-9]+\)/', '', $serie->name) . ' ' . $episode->season_episode;
 
@@ -51,6 +53,8 @@ class EpisodeController extends Controller
             $magnets = array_filter($magnets, function($magnet) use ($episode) {
                 return preg_match("/\[(ettv|rartv)\]/", $magnet->getName());
             });
+
+            $links = ((new Sources())->search(strtolower($serie->name), $episode->episodeSeason, $episode->episodeNumber));
         }
 
         $nextEpisode = Episode::where([ ['serie_id', $serie->id],
@@ -75,6 +79,7 @@ class EpisodeController extends Controller
             ->with('prevEpisode', $prevEpisode)
             ->with('serie', $serie)
             ->with('magnets', $magnets)
+            ->with('links', $links)
             ->with('search_query', $search_query)
             ->with('breadcrumbs', [[
                 'name' => "Series",
