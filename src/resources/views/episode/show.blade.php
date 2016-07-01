@@ -78,4 +78,5 @@
         {{ method_field('DELETE') }}
         {!! csrf_field() !!}
     </form>
+    <script>window.VIEW = "episode";</script>
 @endsection

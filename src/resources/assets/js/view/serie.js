@@ -1,5 +1,5 @@
 (function() {
-    if (window.VIEW != "serie") return;
+    if (window.VIEW != 'serie' && window.VIEW != 'episode') return;
 
     /**
      * Toggle tracking state from series
