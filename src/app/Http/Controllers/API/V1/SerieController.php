@@ -11,7 +11,7 @@ class SerieController extends Controller
 {
     public function index()
     {
-        $series = Serie::paginate(10);
+        $series = Serie::orderBy('name')->paginate(10);
 
         return response()->json($series);
     }

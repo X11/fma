@@ -33,7 +33,7 @@ class EpisodeController extends Controller
         //$serie = Serie::findOrFail($serieId);
         //$episode = $serie->episodes()->findOrFail($episodeId);
         //@todo redirect to right url
-        if ($serie->id != $episode->serie->id) {
+        if ($serie->id != $episode->serie_id) {
             throw new NotFoundHttpException();
         }
 
@@ -58,26 +58,10 @@ class EpisodeController extends Controller
             }
         }
 
-        $nextEpisode = Episode::where([['serie_id', $serie->id],
-                                        ['episodeSeason', $episode->episodeSeason],
-                                        ['episodeNumber', $episode->episodeNumber + 1],
-                                    ])->first()
-                                ?: Episode::where([['serie_id', $serie->id],
-                                                    ['episodeSeason', $episode->episodeSeason + 1],
-                                                ])->orderBy('episodeNumber', 'asc')->first();
-
-        $prevEpisode = Episode::where([['serie_id', $serie->id],
-                                        ['episodeSeason', $episode->episodeSeason],
-                                        ['episodeNumber', $episode->episodeNumber - 1],
-                                    ])->first()
-                                ?: Episode::where([['serie_id', $serie->id],
-                                                    ['episodeSeason', $episode->episodeSeason - 1],
-                                                ])->orderBy('episodeNumber', 'desc')->first();
-
         return view('episode.show')
             ->with('episode', $episode)
-            ->with('nextEpisode', $nextEpisode)
-            ->with('prevEpisode', $prevEpisode)
+            ->with('prevEpisode', $episode->prev())
+            ->with('nextEpisode', $episode->next())
             ->with('serie', $serie)
             ->with('magnets', $magnets)
             ->with('links', $links)

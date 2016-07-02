@@ -127,6 +127,7 @@
 
         $testImg = new Image();
         $testImg.onerror = function(){
+            $img.attr('src', $testImg.src);
             $img.show();
         };
         $testImg.onload = function(){

@@ -9,14 +9,20 @@ use App\Jobs\FetchSerieEpisodes;
 use App\Jobs\UpdateSerieAndEpisodes;
 use App;
 use Auth;
+use App\Repositories\SerieRepository;
 
 class SerieController extends Controller
 {
+
+    private $series;
+
     /**
      * Create a new controller instance.
      */
-    public function __construct()
+    public function __construct(SerieRepository $series)
     {
+        $this->series = $series;
+
         $this->middleware('admin', ['except' => ['index', 'show', 'store']]);
     }
 
@@ -31,10 +37,9 @@ class SerieController extends Controller
         $tvdbResults = null;
 
         if ($request->input('q')) {
-            $series = Serie::where('name', 'like', '%'.$request->input('q').'%')->orderBy('name')->paginate($limit);
+            $series = $this->series->search($request->input('q'), 10);
 
-            $series_tvdbids = $series->pluck('tvdbid')->toArray();
-
+            $series_tvdbids = Serie::select('tvdbid')->get()->pluck('tvdbid')->toArray();
             $client = App::make('tvdb');
             try {
                 $tvdbResults = $client->search()->seriesByName($request->input('q'));
@@ -73,44 +78,27 @@ class SerieController extends Controller
             });
         } elseif ($request->input('_genre')) {
             $genre = Genre::findOrFail($request->input('_genre'));
-            $series = $genre->series()
-                                ->orderBy('name')
-                                ->paginate($limit);
-            $series->appends(['_genre' => $request->input('_genre')]);
+
+            $series = $this->series->allFromGenre($genre, $limit);
         } elseif ($request->input('_sort')) {
             switch ($request->input('_sort')) {
                 case 'name':
-                    $series = Serie::orderBy('name', 'asc')
-                                    ->paginate($limit);
+                    $series = $this->series->sortedByName($limit);
                     break;
                 case 'rating':
-                    $series = Serie::orderBy('rating', 'desc')
-                                    ->orderBy('name', 'asc')
-                                    ->paginate($limit);
+                    $series = $this->series->sortedByRating($limit);
                     break;
                 case 'recent':
-                    $series = Serie::orderBy('created_at', 'desc')
-                                    ->orderBy('name', 'asc')
-                                    ->paginate($limit);
+                    $series = $this->series->sortedByRecent($limit);
                     break;
                 case 'watched':
-                    $serieIds = Auth::user()->watched()
-                                            ->withPivot('id')
-                                            ->orderBy('episodes_watched.id', 'desc')
-                                            ->get()
-                                            ->unique('serie_id')
-                                            ->pluck('serie_id')
-                                            ->toArray();
-
-                    $series = Serie::whereIn('id', $serieIds)
-                                    ->orderByRaw('FIND_IN_SET(id, ?)', [implode(',', $serieIds)])
-                                    ->paginate($limit);
+                    $series = $this->series->sortedByWatched($limit);
                     break;
                 default:
                     return redirect()->action('SerieController@index');
             }
         } else {
-            $series = Serie::orderBy('rating', 'desc')->orderBy('tvdbid', 'desc')->paginate($limit);
+            $series = $this->series->sortedByBest($limit);
         }
 
         $series->appends(['q' => $request->input('q')]);
@@ -236,18 +224,6 @@ class SerieController extends Controller
                 'name' => $serie->name,
                 'url' => url($serie->url),
             ]]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**

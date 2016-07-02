@@ -94,4 +94,37 @@ class Episode extends Model
     {
         return $this->serie->url.'/episode/'.str_slug($this->id.' '.$this->name);
     }
+
+    /**
+     * undocumented function
+     *
+     * @return Episode
+     */
+    public function prev()
+    {
+        return Episode::where([['serie_id', $this->serie_id],
+                                        ['episodeSeason', $this->episodeSeason],
+                                        ['episodeNumber', $this->episodeNumber - 1],
+                                    ])->first()
+                                ?: Episode::where([['serie_id', $this->serie_id],
+                                                    ['episodeSeason', $this->episodeSeason - 1],
+                                                ])->orderBy('episodeNumber', 'desc')->first();
+    }
+
+    /**
+     * undocumented function
+     *
+     * @return Episode
+     */
+    public function next()
+    {
+        return Episode::where([['serie_id', $this->serie_id],
+                                        ['episodeSeason', $this->episodeSeason],
+                                        ['episodeNumber', $this->episodeNumber + 1],
+                                    ])->first()
+                                ?: Episode::where([['serie_id', $this->serie_id],
+                                                    ['episodeSeason', $this->episodeSeason + 1],
+                                                ])->orderBy('episodeNumber', 'asc')->first();
+    }
+    
 }

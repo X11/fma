@@ -1,0 +1,107 @@
+<?php
+
+namespace App\Repositories;
+
+use App\Serie;
+use App\Genre;
+use Auth;
+
+class SerieRepository 
+{
+
+    /**
+     * undocumented function
+     *
+     * @return void
+     */
+    public function search($query, $limit)
+    {
+        return Serie::where('name', 'like', '%'.$query.'%')
+                        ->orderBy('name')
+                        ->paginate($limit);
+    }
+
+    /**
+     * undocumented function
+     *
+     * @return void
+     */
+    public function allFromGenre(Genre $genre, $limit)
+    {
+        $series = $genre->series()
+                            ->orderBy('name')
+                            ->paginate($limit);
+
+        $series->appends(['_genre' => $genre->id]);
+
+        return $series;
+    }
+
+    /**
+     * undocumented function
+     *
+     * @return void
+     */
+    public function sortedByBest($limit)
+    {
+        return Serie::orderBy('rating', 'desc')
+                        ->orderBy('tvdbid', 'desc')
+                        ->paginate($limit);
+    }
+    
+    /**
+     * undocumented function
+     *
+     * @return void
+     */
+    public function sortedByName($limit)
+    {
+        return Serie::orderBy('name', 'asc')
+                        ->paginate($limit);
+    }
+    
+    /**
+     * undocumented function
+     *
+     * @return void
+     */
+    public function sortedByRating($limit)
+    {
+        return Serie::orderBy('rating', 'desc')
+                        ->orderBy('name', 'asc')
+                        ->paginate($limit);
+    }
+
+    /**
+     * undocumented function
+     *
+     * @return void
+     */
+    public function sortedByRecent($limit)
+    {
+        return Serie::orderBy('created_at', 'desc')
+                        ->orderBy('name', 'asc')
+                        ->paginate($limit);
+    }
+    
+    /**
+     * undocumented function
+     *
+     * @return void
+     */
+    public function sortedByWatched($limit)
+    {
+        $serieIds = Auth::user()->watched()
+                                ->withPivot('id')
+                                ->orderBy('episodes_watched.id', 'desc')
+                                ->get()
+                                ->unique('serie_id')
+                                ->pluck('serie_id')
+                                ->toArray();
+
+        return Serie::whereIn('id', $serieIds)
+                        ->orderByRaw('FIND_IN_SET(id, ?)', [implode(',', $serieIds)])
+                        ->paginate($limit);
+    }
+    
+}
