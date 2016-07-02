@@ -8,12 +8,10 @@ use App\Genre;
 use App\Jobs\FetchSerieEpisodes;
 use App\Jobs\UpdateSerieAndEpisodes;
 use App;
-use Auth;
 use App\Repositories\SerieRepository;
 
 class SerieController extends Controller
 {
-
     private $series;
 
     /**
@@ -117,16 +115,6 @@ class SerieController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
@@ -208,10 +196,10 @@ class SerieController extends Controller
     public function show(Serie $serie)
     {
         $seasons = $serie->episodes()
-            ->with('serie')
-            ->get()
-            ->groupBy('episodeSeason')
-            ->sortBy('episodeNumber');
+                            ->with('serie')
+                            ->get()
+                            ->groupBy('episodeSeason')
+                            ->sortBy('episodeNumber');
 
         return view('serie.show')
             ->with('serie', $serie)

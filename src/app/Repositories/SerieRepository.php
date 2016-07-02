@@ -6,13 +6,10 @@ use App\Serie;
 use App\Genre;
 use Auth;
 
-class SerieRepository 
+class SerieRepository
 {
-
     /**
-     * undocumented function
-     *
-     * @return void
+     * undocumented function.
      */
     public function search($query, $limit)
     {
@@ -22,9 +19,7 @@ class SerieRepository
     }
 
     /**
-     * undocumented function
-     *
-     * @return void
+     * undocumented function.
      */
     public function allFromGenre(Genre $genre, $limit)
     {
@@ -38,9 +33,7 @@ class SerieRepository
     }
 
     /**
-     * undocumented function
-     *
-     * @return void
+     * undocumented function.
      */
     public function sortedByBest($limit)
     {
@@ -48,22 +41,18 @@ class SerieRepository
                         ->orderBy('tvdbid', 'desc')
                         ->paginate($limit);
     }
-    
+
     /**
-     * undocumented function
-     *
-     * @return void
+     * undocumented function.
      */
     public function sortedByName($limit)
     {
         return Serie::orderBy('name', 'asc')
                         ->paginate($limit);
     }
-    
+
     /**
-     * undocumented function
-     *
-     * @return void
+     * undocumented function.
      */
     public function sortedByRating($limit)
     {
@@ -73,9 +62,7 @@ class SerieRepository
     }
 
     /**
-     * undocumented function
-     *
-     * @return void
+     * undocumented function.
      */
     public function sortedByRecent($limit)
     {
@@ -83,11 +70,9 @@ class SerieRepository
                         ->orderBy('name', 'asc')
                         ->paginate($limit);
     }
-    
+
     /**
-     * undocumented function
-     *
-     * @return void
+     * undocumented function.
      */
     public function sortedByWatched($limit)
     {
@@ -103,5 +88,4 @@ class SerieRepository
                         ->orderByRaw('FIND_IN_SET(id, ?)', [implode(',', $serieIds)])
                         ->paginate($limit);
     }
-    
 }

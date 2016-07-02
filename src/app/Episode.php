@@ -96,35 +96,34 @@ class Episode extends Model
     }
 
     /**
-     * undocumented function
+     * undocumented function.
      *
      * @return Episode
      */
     public function prev()
     {
-        return Episode::where([['serie_id', $this->serie_id],
+        return self::where([['serie_id', $this->serie_id],
                                         ['episodeSeason', $this->episodeSeason],
                                         ['episodeNumber', $this->episodeNumber - 1],
                                     ])->first()
-                                ?: Episode::where([['serie_id', $this->serie_id],
+                                ?: self::where([['serie_id', $this->serie_id],
                                                     ['episodeSeason', $this->episodeSeason - 1],
                                                 ])->orderBy('episodeNumber', 'desc')->first();
     }
 
     /**
-     * undocumented function
+     * undocumented function.
      *
      * @return Episode
      */
     public function next()
     {
-        return Episode::where([['serie_id', $this->serie_id],
+        return self::where([['serie_id', $this->serie_id],
                                         ['episodeSeason', $this->episodeSeason],
                                         ['episodeNumber', $this->episodeNumber + 1],
                                     ])->first()
-                                ?: Episode::where([['serie_id', $this->serie_id],
+                                ?: self::where([['serie_id', $this->serie_id],
                                                     ['episodeSeason', $this->episodeSeason + 1],
                                                 ])->orderBy('episodeNumber', 'asc')->first();
     }
-    
 }

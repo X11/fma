@@ -254,9 +254,7 @@ class UserController extends Controller
     }
 
     /**
-     * undocumented function
-     *
-     * @return void
+     * undocumented function.
      */
     public function resetApiToken()
     {
@@ -266,5 +264,4 @@ class UserController extends Controller
 
         return redirect()->back();
     }
-    
 }
