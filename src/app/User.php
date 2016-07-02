@@ -8,7 +8,7 @@ use Crypt;
 class User extends Authenticatable
 {
     public static $BASE_SETTINGS = [
-        'theme' => 'default',
+        'theme' => 'green',
         'header' => 'default',
         'tvdb_load_hd' => 'size',
         'serie_overview' => 'default',

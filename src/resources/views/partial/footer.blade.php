@@ -10,6 +10,7 @@
                         <li><a href="{{ url('/calender') }}">Calender</a></li>
                         @if (Auth::check())
                         <li><a href="{{ url('/watchlist') }}">Watchlist</a></li>
+                        <li><a href="{{ url('/profile', [Auth::user()->id]) }}">Profile</a></li>
                         @endif
                     </ul>
                 </div>
@@ -19,8 +20,9 @@
                     <div class="menu">
                         <p class="menu-label">Account</p>
                         <ul class="menu-list">
-                            <li><a href="{{ url('/account/setting') }}">Settings</a></li>
-                            <li><a href="{{ url('/profile', [Auth::user()->id]) }}">Profile</a></li>
+                            <li><a href="{{ url('/account/profile') }}">Profile</a></li>
+                            <li><a href="{{ url('/account/settings') }}">Settings</a></li>
+                            <li><a href="{{ url('/account/api') }}">API</a></li>
                         </ul>
                     </div>
                 </div>
@@ -29,8 +31,10 @@
                         <div class="menu">
                             <p class="menu-label">Admin</p>
                             <ul class="menu-list">
-                                <li><a href="{{ url('/admin/user') }}">Users</a></li>
-                                <li><a href="{{ url('/admin/update') }}">Updates</a></li>
+                                <li><a href="{{ url('/admin/stats') }}">Stats</a></li>
+                                <li><a href="{{ url('/admin/users') }}">Users</a></li>
+                                <li><a href="{{ url('/admin/update') }}">Update</a></li>
+                                <li><a href="{{ url('/admin/cache') }}">Cache</a></li>
                             </ul>
                         </div>
                     </div>
