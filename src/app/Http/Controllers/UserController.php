@@ -252,4 +252,19 @@ class UserController extends Controller
                 'url' => action('UserController@getApi'),
             ]]);
     }
+
+    /**
+     * undocumented function
+     *
+     * @return void
+     */
+    public function resetApiToken()
+    {
+        $user = Auth::user();
+        $user->api_token = str_random(70);
+        $user->save();
+
+        return redirect()->back();
+    }
+    
 }

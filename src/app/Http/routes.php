@@ -113,6 +113,7 @@ Route::group(['middleware' => 'web'], function () {
             Route::get('profile', 'UserController@getProfile');
             Route::get('settings', 'UserController@getSettings');
             Route::get('api', 'UserController@getApi');
+            Route::post('api/reset', 'UserController@resetApiToken');
 
             Route::post('settings', 'UserController@setSettings');
             Route::put('settings', 'UserController@setSettings');
