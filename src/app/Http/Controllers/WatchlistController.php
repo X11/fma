@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Activity;
 
 class WatchlistController extends Controller
 {
@@ -84,6 +85,8 @@ class WatchlistController extends Controller
     {
         Auth::user()->watching()->attach($id);
 
+        Activity::log('serie.track', ['serie_id' => $id]);
+
         return response()->json([
             'status' => 'Added to watchlist',
         ]);
@@ -97,6 +100,8 @@ class WatchlistController extends Controller
     public function delete(Request $request, $id)
     {
         Auth::user()->watching()->detach($id);
+
+        Activity::log('serie.untrack', ['serie_id' => $id]);
 
         return response()->json([
             'status' => 'Removed from watchlist',

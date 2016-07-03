@@ -9,6 +9,7 @@ use Sources\Sources;
 use App\Serie;
 use Auth;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use App\Activity;
 
 class EpisodeController extends Controller
 {
@@ -100,6 +101,8 @@ class EpisodeController extends Controller
     public function markWatched(Request $request, $episodeId)
     {
         Auth::user()->watched()->attach($episodeId);
+
+        Activity::log('episode.watched', ['episode_id' => $episodeId]);
 
         return response()->json([
             'status' => 'Marked as watched',

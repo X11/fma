@@ -9,6 +9,7 @@ use App\Jobs\FetchSerieEpisodes;
 use App\Jobs\UpdateSerieAndEpisodes;
 use App;
 use App\Repositories\SerieRepository;
+use App\Activity;
 
 class SerieController extends Controller
 {
@@ -180,6 +181,8 @@ class SerieController extends Controller
 
         dispatch(new FetchSerieEpisodes($show));
 
+        Activity::log('serie.add', ['serie_id' => $show->id]);
+
         return redirect()
             ->action('SerieController@show', ['id' => $show->id])
             ->with('refresh', true)
@@ -227,6 +230,8 @@ class SerieController extends Controller
         $serie = Serie::findOrFail($id);
         dispatch(new UpdateSerieAndEpisodes($serie));
 
+        Activity::log('serie.update', ['serie_id' => $serie->id]);
+
         return back();
     }
 
@@ -240,6 +245,8 @@ class SerieController extends Controller
     public function destroy(Serie $serie)
     {
         $serie->delete();
+
+        Activity::log('serie.remove', ['serie_id' => $serie->id]);
 
         return redirect('/serie');
     }

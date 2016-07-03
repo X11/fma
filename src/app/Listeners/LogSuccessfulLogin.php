@@ -5,6 +5,7 @@ namespace App\Listeners;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Carbon\Carbon;
+use App\Activity;
 
 class LogSuccessfulLogin implements ShouldQueue
 {
@@ -25,5 +26,7 @@ class LogSuccessfulLogin implements ShouldQueue
     {
         $event->user->last_login = Carbon::now();
         $event->user->save();
+
+        Activity::log('account.login', []);
     }
 }

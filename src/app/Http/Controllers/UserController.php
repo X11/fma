@@ -7,6 +7,7 @@ use App\User;
 use Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
+use App\Activity;
 
 class UserController extends Controller
 {
@@ -56,6 +57,8 @@ class UserController extends Controller
         Mail::send('admin.emails.invite', ['user' => $user], function ($m) use ($user) {
             $m->to($user->email, $user->name)->subject('FMA Invite!');
         });
+
+        Activity::log('admin.invite', ['user_id' => $user->id]);
 
         return back()->with('status', $user->name.' invited!');
     }
@@ -119,6 +122,8 @@ class UserController extends Controller
         $user->settings = array_merge((array) $user->settings, $request->except('_token'));
         $user->save();
 
+        Activity::log('account.change_settings', []);
+
         if ($request->ajax()) {
             return response()->json(['status' => 'Settings updated']);
         } else {
@@ -138,6 +143,8 @@ class UserController extends Controller
         if ($user->role_index < $level && $request->input('role') < $level) {
             $user->role = $request->input('role');
             $user->save();
+
+            Activity::log('account.change_user_role', ['user_id' => $user->id, 'new_role' => $request->input('role')]);
 
             return back()->with('status', 'User updated');
         } else {
@@ -164,6 +171,8 @@ class UserController extends Controller
         if (Hash::check($request->input('old_password'), $user->password)) {
             $user->password = Hash::make($request->input('new_password'));
             $user->save();
+
+            Activity::log('account.change_password', []);
 
             return back()->with('status', 'Password changed');
         } else {
@@ -261,6 +270,8 @@ class UserController extends Controller
         $user = Auth::user();
         $user->api_token = str_random(70);
         $user->save();
+
+        Activity::log('account.change_api_token', []);
 
         return redirect()->back();
     }

@@ -8,6 +8,7 @@ use App\Episode;
 use App\User;
 use Carbon\Carbon;
 use App\Jobs\UpdateSerieAndEpisodes;
+use App\Activity;
 
 class AdminController extends Controller
 {
@@ -106,6 +107,8 @@ class AdminController extends Controller
         }
         $count = $series->count();
 
+        Activity::log('admin.update_series', ['count' => $count]);
+
         return back()
             ->with('status', "$count series updating");
     }
@@ -135,6 +138,8 @@ class AdminController extends Controller
     public function postCache(Request $request)
     {
         \Artisan::call('cache:clear');
+
+        Activity::log('admin.remove_cache', []);
 
         return back()
             ->with('status', 'Cache cleared');
