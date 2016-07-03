@@ -9,6 +9,13 @@ use App\Jobs\LogActivity;
 class Activity extends Model
 {
     /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['created_at', 'updated_at'];
+
+    /**
      * The table associated with the model.
      *
      * @var string
@@ -73,6 +80,14 @@ class Activity extends Model
         $ip = isset($_SERVER["X-Real-IP"]) ? $_SERVER["X-Real-IP"] : $_SERVER["REMOTE_ADDR"];
 
         dispatch(new LogActivity($user_id, $type, $data, $ip));
+    }
+
+    /**
+     * undocumented function.
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\User');
     }
 
     /**

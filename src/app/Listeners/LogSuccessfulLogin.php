@@ -3,11 +3,10 @@
 namespace App\Listeners;
 
 use Illuminate\Auth\Events\Login;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Carbon\Carbon;
 use App\Activity;
 
-class LogSuccessfulLogin implements ShouldQueue
+class LogSuccessfulLogin
 {
     /**
      * Create the event listener.

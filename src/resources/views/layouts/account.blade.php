@@ -12,6 +12,7 @@
                     <li><a class="{{ Request::is('*profile') ? 'is-active' : '' }}" href="{{ action('UserController@getProfile') }}">Profile</a></li>
                     <li><a class="{{ Request::is('*settings') ? 'is-active' : '' }}" href="{{ action('UserController@getSettings') }}">User Interface</a></li>
                     <li><a class="{{ Request::is('*api') ? 'is-active' : '' }}" href="{{ action('UserController@getApi') }}">API</a></li>
+                    <li><a class="{{ Request::is('*security') ? 'is-active' : '' }}" href="{{ action('UserController@getSecurity') }}">Security</a></li>
                 </ul>
             </aside>
             <div class="column push-content">

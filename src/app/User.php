@@ -67,6 +67,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the user activity.
+     */
+    public function activity()
+    {
+        return $this->hasMany('App\Activity');
+    }
+
+    /**
      * Check for existing relation.
      */
     public function have($relation_name, $id)

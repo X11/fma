@@ -1,0 +1,71 @@
+.feed-entry {
+    padding-left: 25px;
+    padding-bottom: 15px;
+    margin: 0 0 0 25px;
+    border-left: 2px solid $primary;
+    position: relative;
+
+    &:before {
+        background: $white;
+        border: 7px solid $primary;
+        border-radius: 50%;
+        content: "";
+        display: block;
+        position: absolute;
+        left: -17px;
+        width: 32px;
+        height: 32px;
+        box-sizing: border-box;
+    }
+
+    &:after {
+        background: $primary;
+        color: $white;
+        content: "\f00c";
+        display: block;
+        font-family: "FontAwesome";
+        line-height: 32px;
+        position: absolute;
+        top: 0;
+        left: -17px;
+        text-align: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        box-sizing: border-box;
+    }
+
+    &.is-last {
+        border-left-color: transparent;
+    }
+
+    .feed {
+        display: block;
+        box-shadow: 0 2px 3px rgba($black, 0.2);
+        border: 0.25em solid #ffffff;
+        border-radius: 3px;
+        padding: 10px;
+        color: inherit;
+
+        h3 {
+            font-weight: bold;
+            margin-top: 3px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            text-transform: uppercase;
+        }
+
+        p {
+            font-size: 0.875em;
+            color: #919FAF;
+            -webkit-font-smoothing: antialiased;
+            margin-right: 0.25em;
+            padding-left: 0.1em;
+            padding-right: 0.5em;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+    }
+}

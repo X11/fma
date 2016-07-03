@@ -275,4 +275,30 @@ class UserController extends Controller
 
         return redirect()->back();
     }
+
+    /**
+     * Get user login activity.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getSecurity(Request $request)
+    {
+
+        $logs = Auth::user()
+                        ->activity()
+                        ->where('type', 'account.login')
+                        ->orderBy('created_at', 'desc')
+                        ->limit(10)
+                        ->get();
+
+        return view('account.security')
+            ->with('logs', $logs)
+            ->with('breadcrumbs', [[
+                'name' => 'Account',
+                'url' => '/account',
+            ], [
+                'name' => 'Security',
+                'url' => action('UserController@getSecurity'),
+            ]]);
+    }
 }
