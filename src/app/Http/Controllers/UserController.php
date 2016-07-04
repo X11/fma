@@ -286,7 +286,7 @@ class UserController extends Controller
 
         $logs = Auth::user()
                         ->activity()
-                        ->where([['type', 'account'], ['action', 'login']])
+                        ->where('type', 'account')
                         ->orderBy('created_at', 'desc')
                         ->limit(10)
                         ->get();

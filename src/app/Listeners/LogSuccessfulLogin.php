@@ -26,6 +26,8 @@ class LogSuccessfulLogin
         $event->user->last_login = Carbon::now();
         $event->user->save();
 
-        Activity::log('account.login');
+        Activity::log('account.login', null, [
+            'user-agent' => $_SERVER["HTTP_USER_AGENT"],
+        ]);
     }
 }

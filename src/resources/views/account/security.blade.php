@@ -11,8 +11,14 @@
             <div class="feed">
                 <span></span>
                 <div>
-                    <h3>{{ $log->type }}</h3>
-                    <p>{{ $log->created_at->diffForHumans() }} from {{ $log->IP }}</p>
+                    <h3>{{ $log->action }}</h3>
+                    <p>{{ $log->created_at->diffForHumans() }} @if($log->type == 'account') from {{ $log->IP }} @endif</p>
+                    @if ($log->data)
+                    <br>
+                        @foreach($log->data as $key => $value)
+                        <p><strong style="text-transform: uppercase;">{{ $key }}:</strong> {{ $value }}</p>
+                        @endforeach
+                    @endif
                 </div>
             </div>
         </li>
