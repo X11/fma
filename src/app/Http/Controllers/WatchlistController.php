@@ -85,7 +85,7 @@ class WatchlistController extends Controller
     {
         Auth::user()->watching()->attach($id);
 
-        Activity::log('serie.track', ['serie_id' => $id]);
+        Activity::log('serie.track', $id);
 
         return response()->json([
             'status' => 'Added to watchlist',
@@ -101,7 +101,7 @@ class WatchlistController extends Controller
     {
         Auth::user()->watching()->detach($id);
 
-        Activity::log('serie.untrack', ['serie_id' => $id]);
+        Activity::log('serie.untrack', $id);
 
         return response()->json([
             'status' => 'Removed from watchlist',

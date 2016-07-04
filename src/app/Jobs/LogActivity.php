@@ -15,6 +15,8 @@ class LogActivity extends Job implements ShouldQueue
     protected $user_id;
     protected $IP;
     protected $type;
+    protected $action;
+    protected $entity_id;
     protected $data;
 
     /**
@@ -22,11 +24,13 @@ class LogActivity extends Job implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($user_id, $type, $data, $IP)
+    public function __construct($user_id, $type, $action, $entity_id, $data, $IP)
     {
         $this->user_id = $user_id; 
         $this->IP = $IP;
         $this->type = $type;
+        $this->action = $action;
+        $this->entity_id = $entity_id;
         $this->data = $data;
     }
 
@@ -41,6 +45,8 @@ class LogActivity extends Job implements ShouldQueue
             'user_id' => $this->user_id,
             'IP' => $this->IP,
             'type' => $this->type,
+            'action' => $this->action,
+            'entity_id' => $this->entity_id,
             'data' => $this->data,
         ]);
     }

@@ -31,6 +31,8 @@ class Activity extends Model
         'user_id',
         'IP',
         'type',
+        'action',
+        'entity_id',
         'data',
     ];
 
@@ -69,7 +71,7 @@ class Activity extends Model
      *
      * @return Activity
      */
-    public static function log($type, $data, $api = false)
+    public static function log($type, $entity_id = null, $data = null, $api = false)
     {
         $parts = explode('.', $type);
         if (!in_array($parts[1], self::$types[$parts[0]])) {
@@ -79,7 +81,7 @@ class Activity extends Model
         $user_id = $api ? Auth::guard('api')->user()->id : Auth::id();
         $ip = isset($_SERVER["X-Real-IP"]) ? $_SERVER["X-Real-IP"] : $_SERVER["REMOTE_ADDR"];
 
-        dispatch(new LogActivity($user_id, $type, $data, $ip));
+        dispatch(new LogActivity($user_id, $parts[0], $parts[1], $entity_id, $data, $ip));
     }
 
     /**

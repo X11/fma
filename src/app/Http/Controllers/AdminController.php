@@ -107,7 +107,7 @@ class AdminController extends Controller
         }
         $count = $series->count();
 
-        Activity::log('admin.update_series', ['count' => $count]);
+        Activity::log('admin.update_series', null, ['count' => $count]);
 
         return back()
             ->with('status', "$count series updating");
@@ -139,7 +139,7 @@ class AdminController extends Controller
     {
         \Artisan::call('cache:clear');
 
-        Activity::log('admin.remove_cache', []);
+        Activity::log('admin.remove_cache');
 
         return back()
             ->with('status', 'Cache cleared');

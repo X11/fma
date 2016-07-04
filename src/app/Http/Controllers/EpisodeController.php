@@ -102,7 +102,7 @@ class EpisodeController extends Controller
     {
         Auth::user()->watched()->attach($episodeId);
 
-        Activity::log('episode.watched', ['episode_id' => $episodeId]);
+        Activity::log('episode.watched', $episodeId);
 
         return response()->json([
             'status' => 'Marked as watched',

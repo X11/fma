@@ -181,7 +181,7 @@ class SerieController extends Controller
 
         dispatch(new FetchSerieEpisodes($show));
 
-        Activity::log('serie.add', ['serie_id' => $show->id]);
+        Activity::log('serie.add', $show->id);
 
         return redirect()
             ->action('SerieController@show', ['id' => $show->id])
@@ -230,7 +230,7 @@ class SerieController extends Controller
         $serie = Serie::findOrFail($id);
         dispatch(new UpdateSerieAndEpisodes($serie));
 
-        Activity::log('serie.update', ['serie_id' => $serie->id]);
+        Activity::log('serie.update', $serie->id);
 
         return back();
     }
@@ -246,7 +246,7 @@ class SerieController extends Controller
     {
         $serie->delete();
 
-        Activity::log('serie.remove', ['serie_id' => $serie->id]);
+        Activity::log('serie.remove', $serie->id);
 
         return redirect('/serie');
     }

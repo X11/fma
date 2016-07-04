@@ -58,7 +58,7 @@ class UserController extends Controller
             $m->to($user->email, $user->name)->subject('FMA Invite!');
         });
 
-        Activity::log('admin.invite', ['user_id' => $user->id]);
+        Activity::log('admin.invite', $user->id);
 
         return back()->with('status', $user->name.' invited!');
     }
@@ -122,7 +122,7 @@ class UserController extends Controller
         $user->settings = array_merge((array) $user->settings, $request->except('_token'));
         $user->save();
 
-        Activity::log('account.change_settings', []);
+        Activity::log('account.change_settings');
 
         if ($request->ajax()) {
             return response()->json(['status' => 'Settings updated']);
@@ -144,7 +144,7 @@ class UserController extends Controller
             $user->role = $request->input('role');
             $user->save();
 
-            Activity::log('account.change_user_role', ['user_id' => $user->id, 'new_role' => $request->input('role')]);
+            Activity::log('account.change_user_role', $user_id, ['new_role' => $request->input('role')]);
 
             return back()->with('status', 'User updated');
         } else {
@@ -172,7 +172,7 @@ class UserController extends Controller
             $user->password = Hash::make($request->input('new_password'));
             $user->save();
 
-            Activity::log('account.change_password', []);
+            Activity::log('account.change_password');
 
             return back()->with('status', 'Password changed');
         } else {
@@ -271,7 +271,7 @@ class UserController extends Controller
         $user->api_token = str_random(70);
         $user->save();
 
-        Activity::log('account.change_api_token', []);
+        Activity::log('account.change_api_token');
 
         return redirect()->back();
     }
@@ -286,7 +286,7 @@ class UserController extends Controller
 
         $logs = Auth::user()
                         ->activity()
-                        ->where('type', 'account.login')
+                        ->where([['type', 'account'], ['action', 'login']])
                         ->orderBy('created_at', 'desc')
                         ->limit(10)
                         ->get();
