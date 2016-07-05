@@ -24,26 +24,35 @@ class AppServiceProvider extends ServiceProvider
 
         view()->creator('partial/header', function ($view) {
             $view->with('header_background', Auth::check()
-                                    ? Auth::user()->settings->header
-                                    : User::$BASE_SETTINGS['header']);
+                                                ? Auth::user()->settings->header
+                                                : User::$BASE_SETTINGS['header']);
         });
 
         view()->creator('serie/index', function ($view) {
             $view->with('overview_container', Auth::check()
-                                    ? Auth::user()->settings->serie_overview
-                                    : User::$BASE_SETTINGS['serie_overview']);
+                                                ? Auth::user()->settings->serie_overview
+                                                : User::$BASE_SETTINGS['serie_overview']);
         });
 
         view()->creator('serie/show', function ($view) {
             $view->with('serie_fanart', Auth::check()
-                                    ? Auth::user()->settings->serie_fanart
-                                    : User::$BASE_SETTINGS['serie_fanart']);
+                                            ? Auth::user()->settings->serie_fanart
+                                            : User::$BASE_SETTINGS['serie_fanart']);
         });
 
-        view()->creator('calender/index', function ($view) {
+        view()->composer('calender/index', function ($view) {
             $view->with('overview_container', Auth::check()
-                                    ? Auth::user()->settings->calender_overview
-                                    : User::$BASE_SETTINGS['calender_overview']);
+                                                ? Auth::user()->settings->calender_overview
+                                                : User::$BASE_SETTINGS['calender_overview']);
+
+            $watching_ids = Auth::check()
+                             ? Auth::user()
+                                    ->watching
+                                    ->pluck('id')
+                                    ->toArray()
+                             : [];
+
+            $view->with('watching_ids', $watching_ids);
         });
     }
 

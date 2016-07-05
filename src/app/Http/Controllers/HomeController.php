@@ -6,14 +6,19 @@ use App\Serie;
 use Carbon\Carbon;
 use App\Episode;
 use Illuminate\Support\Facades\Auth;
+use App\Repositories\EpisodeRepository;
 
 class HomeController extends Controller
 {
+
+    protected $episodes;
+
     /**
      * Create a new controller instance.
      */
-    public function __construct()
+    public function __construct(EpisodeRepository $episodes)
     {
+        $this->episodes = $episodes;
         $this->middleware('auth');
     }
 
@@ -24,32 +29,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $serie_ids = Auth::user()
-            ->watching()
-            ->get()
-            ->pluck('id');
-
         $dates = collect();
         for ($i = -7; $i <= 0; ++$i) {
             $dates->put(Carbon::parse("$i days")->toDateString(), []);
         }
 
-        $episodes = Episode::whereIn('serie_id', $serie_ids)
-            ->whereBetween('aired', [
-                Carbon::parse('7 days ago')->toDateTimeString(),
-                Carbon::parse('today')->toDateTimeString(),
-            ])
-            ->where('episodeSeason', '>', '0')
-            ->with('serie')
-            ->get()
-            ->groupBy('air_date');
-
-        /*
-        $episodes = Episode::where([
-            ['aired', '>', Carbon::parse('7 days ago')->toDateTimeString()],
-            ['aired', '<', Carbon::parse('today')->toDateTimeString()],
-        ])->get();
-        */
+        $episodes = $this->episodes->getEpisodesFromUserBetween(Auth::user(), Carbon::parse('7 days ago'), Carbon::parse('today'));
 
         $days = $dates->merge($episodes);
 
