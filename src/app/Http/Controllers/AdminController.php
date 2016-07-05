@@ -144,4 +144,28 @@ class AdminController extends Controller
         return back()
             ->with('status', 'Cache cleared');
     }
+
+    /**
+     * Get admin activity.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function activity(Request $request)
+    {
+
+        $logs = Activity::where('type', 'admin')
+                            ->orderBy('created_at', 'desc')
+                            ->limit(20)
+                            ->get();
+
+        return view('admin.activity')
+            ->with('logs', $logs)
+            ->with('breadcrumbs', [[
+                'name' => 'Admin',
+                'url' => '/admin',
+            ], [
+                'name' => 'Activity',
+                'url' => action('AdminController@activity'),
+            ]]);
+    }
 }

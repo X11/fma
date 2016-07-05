@@ -137,5 +137,6 @@ Route::group(['middleware' => 'web'], function () {
         Route::put('update', 'AdminController@postUpdate');
         Route::get('cache', 'AdminController@cache');
         Route::put('cache', 'AdminController@postCache');
+        Route::get('activity', 'AdminController@activity');
     });
 });

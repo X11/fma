@@ -13,6 +13,7 @@
                     <li><a class="{{ Request::is('*users') ? 'is-active' : '' }}" href="{{ action('AdminController@users') }}">Users</a></li>
                     <li><a class="{{ Request::is('*update') ? 'is-active' : '' }}" href="{{ action('AdminController@update') }}">Update</a></li>
                     <li><a class="{{ Request::is('*cache') ? 'is-active' : '' }}" href="{{ action('AdminController@cache') }}">Cache</a></li>
+                    <li><a class="{{ Request::is('*activity') ? 'is-active' : '' }}" href="{{ action('AdminController@activity') }}">Activity</a></li>
                 </ul>
             </aside>
             <div class="column push-content">
