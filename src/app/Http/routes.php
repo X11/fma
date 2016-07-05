@@ -8,21 +8,25 @@
 |
 */
 
-Route::group(['prefix' => 'api/v1/', 'middleware' => 'auth:api'], function () {
-    Route::get('series', 'API\V1\SerieController@index');
-    Route::get('serie/{id}', 'API\V1\SerieController@show');
-    Route::post('serie/{id}/track', 'API\V1\SerieController@postTrack');
-    Route::delete('serie/{id}/track', 'API\V1\SerieController@deleteTrack');
-    Route::get('serie/{id}/episodes', 'API\V1\EpisodeController@index');
+Route::group([
+            'prefix' => 'api/v1/',
+            'middleware' => 'auth:api',
+            'namespace' => 'API\V1'
+        ], function () {
+    Route::get('series', 'SerieController@index');
+    Route::get('serie/{id}', 'SerieController@show');
+    Route::post('serie/{id}/track', 'SerieController@postTrack');
+    Route::delete('serie/{id}/track', 'SerieController@deleteTrack');
+    Route::get('serie/{id}/episodes', 'EpisodeController@index');
 
-    Route::get('episode/{id}', 'API\V1\EpisodeController@show');
-    Route::post('episode/{id}/watched', 'API\V1\EpisodeController@postWatched');
-    Route::delete('episode/{id}/watched', 'API\V1\EpisodeController@deleteWatched');
+    Route::get('episode/{id}', 'EpisodeController@show');
+    Route::post('episode/{id}/watched', 'EpisodeController@postWatched');
+    Route::delete('episode/{id}/watched', 'EpisodeController@deleteWatched');
 
-    Route::get('daily', 'API\V1\DailyController@index');
-    Route::get('daily/{user}', 'API\V1\DailyController@user');
+    Route::get('daily', 'DailyController@index');
+    Route::get('daily/{user}', 'DailyController@user');
 
-    Route::get('search/serie/{query}', 'API\V1\SearchController@serie');
+    Route::get('search/serie/{query}', 'SearchController@serie');
 });
 
 /*
@@ -38,23 +42,7 @@ Route::group(['prefix' => 'api/v1/', 'middleware' => 'auth:api'], function () {
 
 Route::group(['middleware' => 'web'], function () {
 
-    Route::get('/', function () {
-        if (Auth::guest()) {
-            $fanarts = [
-                '//thetvdb.com/banners/fanart/original/259765-12.jpg',
-                '//thetvdb.com/banners/fanart/original/248742-8.jpg',
-                '//thetvdb.com/banners/fanart/original/289590-20.jpg',
-                '//thetvdb.com/banners/fanart/original/269533-14.jpg',
-                '//thetvdb.com/banners/fanart/original/248835-3.jpg',
-
-            ];
-
-            return view('welcome')
-                ->with('fanart', $fanarts[array_rand($fanarts)]);
-        } else {
-            return redirect('/home');
-        }
-    });
+    Route::get('/', 'HomeController@welcome');
 
     //Route::auth();
    // Authentication Routes...
@@ -108,7 +96,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::group([
             'prefix' => 'account',
         ], function () {
-            Route::get('/', function () { return redirect()->action('UserController@getProfile'); });
+            Route::get('/', 'UserController@redirectDefault');
 
             Route::get('profile', 'UserController@getProfile');
             Route::get('settings', 'UserController@getSettings');
@@ -125,7 +113,7 @@ Route::group(['middleware' => 'web'], function () {
         'prefix' => 'admin',
         'middleware' => 'admin',
     ], function () {
-        Route::get('/', function () { return redirect()->action('AdminController@stats'); });
+        Route::get('/', 'AdminController@redirectDefault');
 
         Route::get('users', 'AdminController@users');
         Route::post('user/invite', 'UserController@invite');

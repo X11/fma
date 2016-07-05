@@ -13,6 +13,14 @@ use App\Activity;
 class AdminController extends Controller
 {
     /**
+     * undocumented function.
+     */
+    public function redirectDefault()
+    {
+        return redirect()->action('AdminController@stats');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

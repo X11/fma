@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Serie;
 use Carbon\Carbon;
-use App\Episode;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\EpisodeRepository;
 
 class HomeController extends Controller
 {
-
     protected $episodes;
 
     /**
@@ -19,7 +16,7 @@ class HomeController extends Controller
     public function __construct(EpisodeRepository $episodes)
     {
         $this->episodes = $episodes;
-        $this->middleware('auth');
+        $this->middleware('auth', ['only' => 'index']);
     }
 
     /**
@@ -44,5 +41,26 @@ class HomeController extends Controller
                 'name' => 'Home',
                 'url' => action('HomeController@index'),
             ]]);
+    }
+
+    /**
+     * undocumented function.
+     */
+    public function welcome()
+    {
+        if (Auth::guest()) {
+            $fanarts = [
+                '//thetvdb.com/banners/fanart/original/259765-12.jpg',
+                '//thetvdb.com/banners/fanart/original/248742-8.jpg',
+                '//thetvdb.com/banners/fanart/original/289590-20.jpg',
+                '//thetvdb.com/banners/fanart/original/269533-14.jpg',
+                '//thetvdb.com/banners/fanart/original/248835-3.jpg',
+            ];
+
+            return view('welcome')
+                ->with('fanart', $fanarts[array_rand($fanarts)]);
+        } else {
+            return redirect('/home');
+        }
     }
 }

@@ -12,6 +12,16 @@ use App\Activity;
 class UserController extends Controller
 {
     /**
+     * undocumented function
+     *
+     * @return void
+     */
+    public function redirectDefault()
+    {
+        return redirect()->action('UserController@getProfile');
+    }
+    
+    /**
      * Display the resource.
      *
      * @return \Illuminate\Http\Response
