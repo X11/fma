@@ -67,11 +67,13 @@
                         <small><strong>OVERVIEW:</strong></small><br>
                         {{ $serie->overview }}
                     </p>
-                    @if (Auth::check() && Auth::user()->isAdmin())
+                    @if (Auth::check())
                         <div class="is-clearfix">
                             <p class="is-pulled-right">
                                 <button class="button is-link is-small" type="submit" form="updateSerie">Update</button>
+                                @if (Auth::user()->isAdmin())
                                 <button class="button is-danger is-link is-small" type="submit" form="deleteSerie">Delete</button>
+                                @endif
                             </p>
                         </div>
                     @endif

@@ -10,6 +10,8 @@ use App\Jobs\UpdateSerieAndEpisodes;
 use App;
 use App\Repositories\SerieRepository;
 use App\Activity;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class SerieController extends Controller
 {
@@ -22,7 +24,7 @@ class SerieController extends Controller
     {
         $this->series = $series;
 
-        $this->middleware('admin', ['except' => ['index', 'show', 'store']]);
+        $this->middleware('admin', ['only' => 'destroy']);
     }
 
     /**
@@ -228,6 +230,13 @@ class SerieController extends Controller
     public function update(Request $request, $id)
     {
         $serie = Serie::findOrFail($id);
+
+        if (!Auth::user()->isModerator()){
+            if ($serie->updated_at->diffInHours(Carbon::now()) < 24){
+                return redirect()->back()->with('status', 'Serie already updated in the last 24 hous');
+            }
+        }
+        
         dispatch(new UpdateSerieAndEpisodes($serie));
 
         Activity::log('serie.update', $serie->id);
