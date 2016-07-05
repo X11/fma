@@ -61,7 +61,7 @@
                         </div>
                     </div>
                 </div>
-                <hr>
+                <br>
                 <div class="content">
                     <p>
                         <small><strong>OVERVIEW:</strong></small><br>
