@@ -79,7 +79,7 @@ class Activity extends Model
         }
 
         $user_id = $api ? Auth::guard('api')->user()->id : Auth::id();
-        $ip = isset($_SERVER["X-Real-IP"]) ? $_SERVER["X-Real-IP"] : $_SERVER["REMOTE_ADDR"];
+        $ip = isset($_SERVER["HTTP_X_REAL_IP"]) ? $_SERVER["HTTP_X_REAL_IP"] : $_SERVER["REMOTE_ADDR"];
 
         dispatch(new LogActivity($user_id, $parts[0], $parts[1], $entity_id, $data, $ip));
     }
