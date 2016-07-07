@@ -30,7 +30,7 @@ class SearchController extends Controller
             preg_match('/(.*) S.*([0-9]{1,2}) E.*([0-9]{1,2})/i', $query, $matches)){
             $serieQuery = trim($matches[1]);
             $season = intval($matches[2]);
-            $episode = intval($matches[2]);
+            $episode = intval($matches[3]);
 
             $serie = Serie::where('name', 'like', '%'.$serieQuery.'%')->first();
 
