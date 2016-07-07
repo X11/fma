@@ -10,6 +10,7 @@ use App\Serie;
 use App;
 use DB;
 use Cache;
+use Guzzle;
 
 class UpdateSerieAndEpisodes extends Job implements ShouldQueue
 {
@@ -32,32 +33,44 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
     {
         $client = App::make('tvdb');
 
+        // Get serie from TVDB
         $serieExtension = $client->series();
-
         $serie = $serieExtension->get($this->serie->tvdbid);
 
+        // Try getting the poster image
         try {
-            $seriePoster = $client->series()->getImagesWithQuery($this->serie->tvdbid, [
-                'keyType' => 'poster',
-            ])->getData()->sortByDesc(function ($a) {
-                return $a->getRatingsInfo()['average'];
-            })->first()->getFileName();
+            $seriePoster = $client->series()
+                                    ->getImagesWithQuery($this->serie->tvdbid, [
+                                        'keyType' => 'poster',
+                                    ])
+                                    ->getData()
+                                    ->sortByDesc(function ($a) {
+                                        return $a->getRatingsInfo()['average'];
+                                    })
+                                    ->first()
+                                    ->getFileName();
         } catch (\Exception $e) {
             $seriePoster = null;
         }
 
+        // Try getting the serie fanart
         try {
-            $serieFanart = $client->series()->getImagesWithQuery($this->serie->tvdbid, [
-                'keyType' => 'fanart',
-            ])->getData()->sortByDesc(function ($a) {
-                return $a->getRatingsInfo()['average'];
-            })->first()->getFileName();
+            $serieFanart = $client->series()
+                                    ->getImagesWithQuery($this->serie->tvdbid, [
+                                        'keyType' => 'fanart',
+                                    ])
+                                    ->getData()
+                                    ->sortByDesc(function ($a) {
+                                        return $a->getRatingsInfo()['average'];
+                                    })
+                                    ->first()
+                                    ->getFileName();
         } catch (\Exception $e) {
             $serieFanart = null;
         }
 
+        // Get genre lookup
         $genre_lookup = Cache::get('genre_lookup', function () {
-
             $lookup = [];
             $genres = DB::table('genres')
                                 ->select('id', 'name')
@@ -66,21 +79,20 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
             foreach ($genres as $genre) {
                 $lookup[$genre->name] = $genre->id;
             }
-
             Cache::put('genre_lookup', $lookup, 600);
-
             return $lookup;
         });
 
+        // Sync genres
         $genre_ids = [];
         foreach ($serie->getGenre() as $genre) {
             if (isset($genre_lookup[$genre])) {
                 $genre_ids[] = $genre_lookup[$genre];
             }
         }
-
         $this->serie->genres()->sync($genre_ids);
 
+        // Set general information
         $this->serie->overview = $serie->getOverview();
         $this->serie->imdbid = $serie->getImdbId();
         $this->serie->rating = $serie->getSiteRating();
@@ -92,6 +104,7 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
         $this->serie->airday = $serie->getAirsDayOfWeek();
         $this->serie->runtime = $serie->getRuntime();
 
+        // Get episodes
         $episodes = [];
         $episodeIds = [];
         $page = 1;
@@ -116,6 +129,22 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
         } while ($page = $serieEpisodes->getLinks()->getNext());
 
         $this->serie->episodes()->saveMany($episodes);
+
+        // Do we have an TMDB ID?
+        if (!$this->serie->tmdbid){
+            try {
+                $res = Guzzle::request('GET', 'http://api.themoviedb.org/3/find/' . $this->serie->tvdbid. '?external_source=tvdb_id&api_key=' . env('TMDB_KEY'),
+                    [
+                        'Accept' => 'application/json'
+                    ]);
+
+                $body = json_decode($res->getBody());
+                $data = $body->tv_results[0];
+                $this->serie->tmdbid = $data->id;
+            } catch (\Exception $e){ }
+        }
+
+        // Save serie
         $this->serie->touch();
         $this->serie->save();
 

@@ -24,6 +24,7 @@ class Serie extends Model
         'poster',
         'fanart',
         'tvdbid',
+        'tmdbid',
         'imdbid',
         'rating',
         'status',

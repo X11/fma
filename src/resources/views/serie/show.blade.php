@@ -36,6 +36,9 @@
                                     @if ($serie->imdbid)
                                         <tr><th>IMDB:</th><td><a href="http://www.imdb.com/title/{{ $serie->imdbid }}" target="_blank">{{ $serie->imdbid }}</a></td></tr>
                                     @endif
+                                    @if ($serie->tmdbid)
+                                        <tr><th>TMDB:</th><td>{{ $serie->tmdbid }}</td></tr>
+                                    @endif
                                     <tr><th>STATUS:</th><td>{{ $serie->status or 'N/A'}}</td></tr>
                                     @if ($serie->status == "Continuing")
                                         <tr><th>NETWORK:</th><td>{{ $serie->network or 'N/A'}}</td></tr>
