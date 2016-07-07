@@ -27,6 +27,7 @@ Route::group([
     Route::get('daily/{user}', 'DailyController@user');
 
     Route::get('search/serie/{query}', 'SearchController@serie');
+    Route::get('search/discover/{query}', 'SearchController@discover');
 });
 
 /*
