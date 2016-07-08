@@ -54,7 +54,6 @@
                         </a>
                     </li>
                     @endforeach
-                    <p class="has-text-right">Magnets from <a href="https://kat.cr/" target="_blank">KAT</a></p>
                 </ul>
                 @include('partial.pagination', ['items' => $items])
             </div>
