@@ -4024,6 +4024,12 @@ input[class="checkbox"] {
 .has-shadow {
   box-shadow: 0 2px 3px rgba(17, 17, 17, 0.1); }
 
+.text.is-danger {
+  color: #ed6c63; }
+
+.text.is-success {
+  color: #97cd76; }
+
 .landing-info {
   height: 100vh;
   min-height: 500px;
@@ -4217,18 +4223,9 @@ section.serie .heading .title span {
         font-weight: 300;
         font-size: 12px; }
 
-.episode .serie-poster {
-  position: relative;
-  top: -150px; }
-  .episode .serie-poster img {
-    border: 2px solid white;
-    background: white; }
-  @media (max-width: 769px) {
-    .episode .serie-poster {
-      top: 0px; } }
-  .episode .serie-poster button {
-    width: 100%;
-    margin-bottom: 10px; }
+.episode .serie-poster button {
+  width: 100%;
+  margin-bottom: 10px; }
 
 .serie-fanart {
   position: relative;
@@ -4665,6 +4662,52 @@ section.serie .heading .title span {
       white-space: nowrap;
       text-transform: uppercase; }
     .feed-entry .feed p {
+      font-size: 0.875em;
+      color: #919FAF;
+      -webkit-font-smoothing: antialiased;
+      margin-right: 0.25em;
+      padding-left: 0.1em;
+      padding-right: 0.5em;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap; }
+
+.link-list {
+  list-style: none;
+  display: block; }
+  .link-list .item {
+    margin: 4px 0;
+    box-shadow: 0 2px 3px rgba(17, 17, 17, 0.2);
+    border: 0.25em solid #ffffff;
+    border-radius: 3px;
+    padding: 10px; }
+    .link-list .item a {
+      color: inherit;
+      display: inherit; }
+    .link-list .item .date {
+      float: left;
+      padding: 0.125em 0.75em 0 0;
+      margin-left: 0.25em;
+      margin-right: 0.75em;
+      font-weight: bold;
+      text-align: center;
+      border-right: 2px solid #919FAF;
+      width: 50px; }
+    .link-list .item .date .bottom,
+    .link-list .item .date .top {
+      display: block; }
+    .link-list .item .date .top {
+      font-size: 0.75em; }
+    .link-list .item .date .bottom {
+      margin-top: -2px;
+      font-size: 1.3em; }
+    .link-list .item h3 {
+      font-weight: bold;
+      margin-top: 3px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap; }
+    .link-list .item p {
       font-size: 0.875em;
       color: #919FAF;
       -webkit-font-smoothing: antialiased;

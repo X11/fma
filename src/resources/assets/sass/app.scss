@@ -54,6 +54,17 @@ input[class="checkbox"] {
     box-shadow: 0 2px 3px rgba($black, 0.1)
 }
 
+.text {
+
+    &.is-danger {
+        color: $danger;
+    }
+
+    &.is-success {
+        color: $success;
+    }
+}
+
 .landing-info {
     height: 100vh;
     min-height: 500px;
@@ -216,3 +227,4 @@ footer .menu-list a {
 @import 'partials/seasons';
 @import 'partials/profile';
 @import 'partials/feed';
+@import 'partials/link-list';

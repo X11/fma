@@ -39,60 +39,50 @@
                 <button class="button is-loading mark-episode" data-watched-initial="{{ $episode->watched ? 1 : 0 }}" data-watched-content="Mark as watched|Unmark as watched" data-watched-class="is-success|is-danger" data-watched-episode="{{ $episode->id }}"></button>
             </div>
         </div>
-        @if (count($magnets) > 0)
         <hr>
-        <div class="magnets box">
-            <div class="heading">
-                <h3 class="subtitle">Magnets</h3>
+        <div class="columns">
+            @if (count($magnets) > 0)
+            <div class="column is-6">
+                <div class="heading">
+                    <h3><span class="icon"><i class="fa fa-magnet"></i></span> Magnets</h3>
+                </div>
+                <ul class="link-list">
+                    @foreach ($magnets as $magnet)
+                    <li class="item">
+                        <a href="{{ $magnet->getMagnet() }}" title="{{ $magnet->getName() }}">
+                            <label class="date">
+                                <span class="bottom text is-success">{{ $magnet->getSeeds() }}</span>
+                                <span class="top text is-danger">{{ $magnet->getPeers() }}</span>
+                            </label>
+                            <h3>{{ $magnet->getSize() }}</h3>
+                            <p>{{ $magnet->getName() }}</p>
+                        </a>
+                    </li>
+                    @endforeach
+                    <p class="has-text-right">Magnets from <a href="https://kat.cr/" target="_blank">KAT</a></p>
+                </ul>
             </div>
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Size</th>
-                            <th>Seeds</th>
-                            <th>Peers</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($magnets as $magnet)
-                            <tr>
-                                <td><a href="{{ $magnet->getMagnet() }}">{{ $magnet->getName() }}</a></td>
-                                <td>{{ $magnet->getSize() }}</td>
-                                <td>{{ $magnet->getSeeds() }}</td>
-                                <td>{{ $magnet->getPeers() }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+            @endif
+            @if (count($links) > 0)
+            <div class="column is-6">
+                <div class="heading">
+                    <h3><span class="icon"><i class="fa fa-youtube-play"></i></span> Sources</h3>
+                </div>
+                <ul class="link-list">
+                    @foreach ($links as $link)
+                    <li class="item">
+                        <?php $info = parse_url($link) ?>
+                        <a href="{{ $link }}" title="{{ $link }}">
+                            <h3><span class="text {{ $info['scheme'] == 'https' ? 'is-success' : 'is-danger' }}">{{ $info['scheme'] }}://</span>{{$info['host'] }}</h3>
+                            <p>{{ $info['path'] }}</p>
+                        </a>
+                    </li>
+                    @endforeach
+                    <p class="has-text-right">Links from <a href="http://putlocker.systems/" target="_blank">putlocker</a></p>
+                </ul>
             </div>
+            @endif
         </div>
-        @endif
-        @if (count($links) > 0)
-        <hr>
-        <div class="magnets box">
-            <div class="heading">
-                <h3 class="subtitle">Direct download</h3>
-            </div>
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($links as $link)
-                            <tr>
-                                <td><a href="{{ $link }}">{{ parse_url($link)['host'] }}</a></td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        @endif
     </div>
 </section>
 @endsection

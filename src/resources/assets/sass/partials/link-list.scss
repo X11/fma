@@ -1,0 +1,62 @@
+.link-list {
+    list-style: none;
+    display: block;
+
+    .item {
+        margin: 4px 0;
+        box-shadow: 0 2px 3px rgba($black, 0.2);
+        border: 0.25em solid #ffffff;
+        border-radius: 3px;
+        padding: 10px;
+
+        a {
+            color: inherit;
+            display: inherit;
+        }
+
+        .date {
+            float: left;
+            padding: 0.125em 0.75em 0 0;
+            margin-left: 0.25em;
+            margin-right: 0.75em;
+            font-weight: bold;
+            text-align: center;
+            border-right: 2px solid #919FAF;
+            width: 50px;
+        }
+
+        .date .bottom,
+        .date .top {
+          display: block;
+        }
+
+        .date .top {
+          font-size: 0.75em;
+        }
+
+        .date .bottom {
+          margin-top: -2px;
+          font-size: 1.3em;
+        }
+
+        h3 {
+            font-weight: bold;
+            margin-top: 3px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        p {
+            font-size: 0.875em;
+            color: #919FAF;
+            -webkit-font-smoothing: antialiased;
+            margin-right: 0.25em;
+            padding-left: 0.1em;
+            padding-right: 0.5em;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+    }
+}

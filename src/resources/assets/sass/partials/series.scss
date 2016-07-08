@@ -102,17 +102,6 @@ section.serie {
 
 .episode {
     .serie-poster {
-        position: relative;
-        top: -150px;
-
-        img {
-            border: 2px solid white;
-            background: white;
-        }
-
-        @media (max-width: $tablet){
-            top: 0px;
-        }
 
         button {
             width: 100%;
