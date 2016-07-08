@@ -13,7 +13,6 @@
             <input type="checkbox" id="aside-checkbox"/>
             <aside class="column is-6-mobile is-3-tablet">
                 <nav class="panel">
-                    <p class="panel-heading">Filters</p>
                     <div class="panel-block">
                         <p class="control">
                             <input id="watchlist_filter_search" class="input" type="text" placeholder="Search">
@@ -35,30 +34,28 @@
                 </nav>
             </aside>
             <div class="column push-content push-6">
-                <div class="box is-paddingless table-responsive">
-                    <table class="table" style="margin:0;">
-                        <thead>
-                            <tr>
-                                <th>Serie</th>
-                                <th>Episode</th>
-                                <th>Season</th>
-                                <th>Episode</th>
-                                <th>Aired</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($items as $item)
-                                <tr>
-                                    <td><a href="{{ url('/serie', [$item->serie_id]) }}">{{ $item->serie_name }}</td>
-                                    <td><a href="{{ url('/serie', [$item->serie_id, 'episode', $item->episode_id]) }}">{{ $item->episode_name }}</td>
-                                    <td>{{ $item->episode_season }}</td>
-                                    <td>{{ $item->episode_number }}</td>
-                                    <td>{{ Carbon\Carbon::parse($item->episode_aired)->toDateString() }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                <form role="form" method="GET" action="{{ action('WatchlistController@index') }}">
+                    <p class="control has-addons">
+                        <input class="input" type="text" value="{{ $query }}" name="q" id="name"/>
+                        <button type="submit" class="button is-primary"><i class="fa fa-search"></i></button>
+                    </p>
+                </form>
+                <ul class="link-list">
+                    @foreach ($items as $item)
+                    <li class="item">
+                        <a href="{{ url('/serie', [$item->serie_id, 'episode', $item->episode_id]) }}">
+                            <label class="date">
+                                <span class="top">{{ $item->episode_season }}</span>
+                                <span class="bottom">{{ str_pad($item->episode_number, 2, '0', STR_PAD_LEFT) }}</span>
+                            </label>
+                            <h3>{{ $item->serie_name }} <small>{{ $item->episode_name }}</small></h3>
+                            <?php $date = Carbon\Carbon::parse($item->episode_aired) ?>
+                            <p>{{ $date->toDateString() }} - {{ $date->diffForHumans() }}</p>
+                        </a>
+                    </li>
+                    @endforeach
+                    <p class="has-text-right">Magnets from <a href="https://kat.cr/" target="_blank">KAT</a></p>
+                </ul>
                 @include('partial.pagination', ['items' => $items])
             </div>
         </div>

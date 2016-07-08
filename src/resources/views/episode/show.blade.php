@@ -50,7 +50,7 @@
                     @foreach ($magnets as $magnet)
                     <li class="item">
                         <a href="{{ $magnet->getMagnet() }}" title="{{ $magnet->getName() }}">
-                            <label class="date">
+                            <label class="date fixed">
                                 <span class="bottom text is-success">{{ $magnet->getSeeds() }}</span>
                                 <span class="top text is-danger">{{ $magnet->getPeers() }}</span>
                             </label>

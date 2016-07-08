@@ -4691,8 +4691,9 @@ section.serie .heading .title span {
       margin-right: 0.75em;
       font-weight: bold;
       text-align: center;
-      border-right: 2px solid #919FAF;
-      width: 50px; }
+      border-right: 2px solid #919FAF; }
+      .link-list .item .date.fixed {
+        width: 50px; }
     .link-list .item .date .bottom,
     .link-list .item .date .top {
       display: block; }

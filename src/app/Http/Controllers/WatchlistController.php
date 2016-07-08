@@ -19,6 +19,8 @@ class WatchlistController extends Controller
     {
         $filters = collect(Auth::user()->settings->watchlist_filters);
 
+        $series = Auth::user()->watching->sortBy('name');
+
         $items = DB::table('watchlist')
             ->join('series', 'series.id', '=', 'watchlist.serie_id')
             ->join('episodes', 'episodes.serie_id', '=', 'series.id')
@@ -38,10 +40,13 @@ class WatchlistController extends Controller
                 ['episodes.episodeSeason', '>', 0],
                 ['watchlist.user_id', '=', Auth::user()->id],
             ])
-           ->whereNotIn('series.id', $filters)
+            ->whereNotIn('series.id', $filters)
+            ->when($request->input('q'), function($query) use ($request){
+                return $query->where('series.name', 'LIKE', '%' . $request->input('q') . '%');
+            })
             ->whereNull('episodes_watched.episode_id')
             ->orderBy('episodes.aired', 'desc')
-            ->paginate(50);
+            ->paginate(max(10, $series->count()/2));
 
         $series_episode_count = DB::table('watchlist')
             ->join('series', 'series.id', '=', 'watchlist.serie_id')
@@ -66,10 +71,11 @@ class WatchlistController extends Controller
                 return $a->first()->episode_count;
             });
 
-        $series = Auth::user()->watching->sortBy('name');
+        $items->appends(['q' => $request->input('q')]);
 
         return view('watchlist.index')
             ->with('ajax', $request->ajax())
+            ->with('query', $request->input('q'))
             ->with('series', $series)
             ->with('series_episode_count', $series_episode_count)
             ->with('filters', $filters)
