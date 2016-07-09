@@ -71,19 +71,21 @@
                 <div class="content">
                     <p>{{ $serie->overview }}</p>
                 </div>
-                <br>
-                <div class="heading">
-                    <h3 class="title">Videos</h3>
-                </div>
-                <div class="videos">
-                    @foreach($serie->media as $media)
-                        @if ($media->type == 'youtube')
-                            <figure class="image is-16by9">
-                                <iframe data-src="https://www.youtube.com/embed/{{ $media->source }}?modestbranding=1&controls=2&fs=1" frameborder="0"></iframe>
-                            </figure>
-                        @endif
-                    @endforeach
-                </div>
+                @if ($serie->media->count() > 0)
+                    <br>
+                    <div class="heading">
+                        <h3 class="title">VIDEO{{ $serie->media->count() > 1 ? 'S' : '' }}</h3>
+                    </div>
+                    <div class="videos">
+                        @foreach($serie->media as $media)
+                            @if ($media->type == 'youtube')
+                                <figure class="image is-16by9">
+                                    <iframe data-src="https://www.youtube.com/embed/{{ $media->source }}?modestbranding=1&controls=2&fs=1" frameborder="0"></iframe>
+                                </figure>
+                            @endif
+                        @endforeach
+                    </div>
+                @endif
                 <br>
                 <div class="content">
                     @if (Auth::check())
