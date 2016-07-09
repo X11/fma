@@ -207,7 +207,7 @@ class SerieController extends Controller
                             ->sortBy('episodeNumber');
 
         return view('serie.show')
-            ->with('serie', $serie)
+            ->with('serie', $serie->load('media'))
             ->with('seasons_numbers', $seasons->keys()->sort())
             ->with('seasons', $seasons)
             ->with('breadcrumbs', [[

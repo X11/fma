@@ -65,11 +65,27 @@
                     </div>
                 </div>
                 <br>
+                <div class="heading">
+                    <h2 class="title">OVERVIEW</h2>
+                </div>
                 <div class="content">
-                    <p>
-                        <small><strong>OVERVIEW:</strong></small><br>
-                        {{ $serie->overview }}
-                    </p>
+                    <p>{{ $serie->overview }}</p>
+                </div>
+                <br>
+                <div class="heading">
+                    <h3 class="title">Videos</h3>
+                </div>
+                <div class="videos">
+                    @foreach($serie->media as $media)
+                        @if ($media->type == 'youtube')
+                            <figure class="image is-16by9">
+                                <iframe data-src="https://www.youtube.com/embed/{{ $media->source }}?modestbranding=1&controls=2&fs=1" frameborder="0"></iframe>
+                            </figure>
+                        @endif
+                    @endforeach
+                </div>
+                <br>
+                <div class="content">
                     @if (Auth::check())
                         <div class="is-clearfix">
                             <p class="is-pulled-right">

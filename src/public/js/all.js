@@ -1025,7 +1025,7 @@ $.support.pjax ? enable() : disable()
             var source = this.getAttribute(attrib);
             source = source || this.getAttribute("data-src");
             if (source) {
-                if (source.slice(0, 2) == "//"){
+                if (source.slice(0, 2) == "//" && this.nodeName == "IMG"){
                     var img = new Image();
                     img.src = "https:" + source;
                     img.onload = function(){

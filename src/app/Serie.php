@@ -59,6 +59,14 @@ class Serie extends Model
     }
 
     /**
+     * undocumented function.
+     */
+    public function media()
+    {
+        return $this->morphMany('App\Media', 'entity');
+    }
+
+    /**
      * Get url.
      *
      * @return string

@@ -75,7 +75,7 @@
 
     <script type="text/javascript" charset="utf-8">
     $(window).on('load', function(){
-        $("img[data-src]").unveil(null, function(){
+        $("[data-src]").unveil(null, function(){
             $(this).load(function(){
                 this.style.opacity = 1;
             });

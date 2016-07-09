@@ -11,6 +11,7 @@ use App;
 use DB;
 use Cache;
 use Guzzle;
+use App\Media;
 
 class UpdateSerieAndEpisodes extends Job implements ShouldQueue
 {
@@ -21,7 +22,7 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(Serie $serie)
+    public function __construct(\App\Serie $serie)
     {
         $this->serie = $serie;
     }
@@ -143,6 +144,28 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
                 $this->serie->tmdbid = $data->id;
             } catch (\Exception $e){ }
         }
+
+        $medias = [];
+        if ($this->serie->tmdbid){
+            try {
+                $res = Guzzle::request('GET', 'http://api.themoviedb.org/3/tv/' . $this->serie->tmdbid. '/videos?api_key=' . env('TMDB_KEY'), [
+                    'Accept' => 'application/json'
+                ]);
+
+                $body = json_decode($res->getBody());
+                foreach($body->results as $result){
+                    if ($result->site == "YouTube"){
+                        $media = Media::firstOrNew([
+                            'source' => $result->key
+                        ]);
+                        $medias[] = $media;
+                        $media->type = 'youtube';
+                        $media->name = $result->name;
+                    }
+                }
+            } catch (\Exception $e){ \Log::debug($e);}
+        }
+        $this->serie->media()->saveMany($medias);
 
         // Save serie
         $this->serie->touch();
