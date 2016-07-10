@@ -90,6 +90,19 @@
                 </p>
                 @endforeach
             </div>
+
+            <div class="column is-6">
+                <p class="control">
+                    <label class="label">Show serie actor images</label>
+                </p>
+                @foreach(['yes', 'no'] as $option)
+                <p class="control">
+                    <label class="radio">
+                        <input type="radio" value="{{ $option }}" name="serie_actor_images" {{ $settings->serie_actor_images == $option ? 'checked' : '' }} > {{ ucfirst($option) }}
+                    </label>
+                </p>
+                @endforeach
+            </div>
         </div>
 
         <div class="is-clearfix">

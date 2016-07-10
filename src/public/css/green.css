@@ -4163,6 +4163,12 @@ footer .menu-list a {
     max-width: 100%;
     max-height: 100%; }
 
+.cast .card {
+  margin-bottom: 10px; }
+
+.videos .image {
+  margin-bottom: 10px; }
+
 .home .heading .tag {
   display: block; }
 

@@ -13,6 +13,7 @@ class User extends Authenticatable
         'tvdb_load_hd' => 'size',
         'serie_overview' => 'default',
         'serie_fanart' => 'default',
+        'serie_actor_images' => 'yes',
         'calender_overview' => 'default',
         'watchlist_filters' => [],
     ];

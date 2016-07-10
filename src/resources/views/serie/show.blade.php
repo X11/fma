@@ -44,7 +44,7 @@
                                         <tr><th>NETWORK:</th><td>{{ $serie->network or 'N/A'}}</td></tr>
                                         <tr><th>AIRDAY:</th><td>{{ $serie->airday or 'N/A'}}</td></tr>
                                         <tr><th>AIRTIME:</th><td>{{ $serie->airtime or 'N/A'}}</td></tr>
-                                        <tr><th>RUNTIME:</th><td>{{ $serie->runtime or 'N/A'}}</td></tr>
+                                        <tr><th>RUNTIME:</th><td>{{ $serie->runtime or 'N/A'}} minutes</td></tr>
                                     @endif
                                     <tr><th>RATING:</th><td>{{ $serie->rating }}/10</td></tr>
                                     <tr>
@@ -71,6 +71,30 @@
                 <div class="content">
                     <p>{{ $serie->overview }}</p>
                 </div>
+                @if ($serie->cast->count() > 0)
+                    <br>
+                    <div class="heading">
+                        <h3 class="title">Cast</h3>
+                    </div>
+                    <div class="cast columns is-multiline is-marginless is-mobile">
+                        @foreach($serie->cast as $person)
+                        <div class="card column is-half-mobile is-one-third-tablet is-one-quarter-desktop is-paddingless">
+                            @if ($serie_actor_images)
+                            <div class="card-image">
+                                <figure class="image">
+                                    <img width="100%" src="{{ asset('img/poster.png') }}" @if($person->pivot->image) data-src="//thetvdb.com/banners/_cache/{{ $person->pivot->image }}" @endif alt=""/>
+                                </figure>
+                            </div>
+                            @endif
+                            <div class="card-content">
+                                <h4 class="title is-5"><strong>{{ $person->name }}</strong></h4>
+                                <p class="subtitle is-6">{{ $person->pivot->role }}</p>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                    <div class="has-text-centered"><a href="?more={{ !$more }}">{{ $more ? 'Less' : 'More' }}</a></div>
+                @endif
                 @if ($serie->media->count() > 0)
                     <br>
                     <div class="heading">

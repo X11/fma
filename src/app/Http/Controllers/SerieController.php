@@ -198,7 +198,7 @@ class SerieController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Serie $serie)
+    public function show(Request $request, Serie $serie)
     {
         $seasons = $serie->episodes()
                             ->with('serie')
@@ -206,17 +206,32 @@ class SerieController extends Controller
                             ->groupBy('episodeSeason')
                             ->sortBy('episodeNumber');
 
+        $more = $request->get('more');
+
+        $serie->load([
+            'media',
+            'cast' => function($query) use ($more){
+                return $query
+                    ->when(!$more, function($query){
+                        return $query->whereIn('serie_cast.sort', [0, 1,2]);
+                    })
+                    ->orderBy('serie_cast.sort', 'asc')
+                    ->orderBy('name', 'asc');
+            }
+        ]);
+
         return view('serie.show')
-            ->with('serie', $serie->load('media'))
-            ->with('seasons_numbers', $seasons->keys()->sort())
-            ->with('seasons', $seasons)
-            ->with('breadcrumbs', [[
-                'name' => 'Series',
-                'url' => action('SerieController@index'),
-            ], [
-                'name' => $serie->name,
-                'url' => url($serie->url),
-            ]]);
+                ->with('more', $more)
+                ->with('serie', $serie)
+                ->with('seasons_numbers', $seasons->keys()->sort())
+                ->with('seasons', $seasons)
+                ->with('breadcrumbs', [[
+                    'name' => 'Series',
+                    'url' => action('SerieController@index'),
+                ], [
+                    'name' => $serie->name,
+                    'url' => url($serie->url),
+                ]]);
     }
 
     /**

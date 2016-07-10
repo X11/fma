@@ -35,9 +35,12 @@ class AppServiceProvider extends ServiceProvider
         });
 
         view()->creator('serie/show', function ($view) {
-            $view->with('serie_fanart', Auth::check()
-                                            ? Auth::user()->settings->serie_fanart
-                                            : User::$BASE_SETTINGS['serie_fanart']);
+            $settings = Auth::check()
+                        ? Auth::user()->settings
+                        : (object) User::$BASE_SETTINGS;
+
+            $view->with('serie_fanart', $settings->serie_fanart);
+            $view->with('serie_actor_images', $settings->serie_actor_images == 'yes');
         });
 
         view()->composer('calender/index', function ($view) {

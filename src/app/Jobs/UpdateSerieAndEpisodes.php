@@ -12,6 +12,7 @@ use DB;
 use Cache;
 use Guzzle;
 use App\Media;
+use App\Person;
 
 class UpdateSerieAndEpisodes extends Job implements ShouldQueue
 {
@@ -130,6 +131,29 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
         } while ($page = $serieEpisodes->getLinks()->getNext());
 
         $this->serie->episodes()->saveMany($episodes);
+
+        try {
+            $actorIds = [];
+            $actors = $serieExtension->getActors($this->serie->tvdbid);
+
+            foreach($actors->getData() as $actor){
+                if ($actor->getName() != ""){
+                    $person = Person::firstOrNew([
+                        'name' => $actor->getName()
+                    ]);
+                    $person->name = $actor->getName();
+                    $person->save();
+
+                    $actorIds[$person->id] = [
+                        'sort' => $actor->getSortOrder(),
+                        'role' => $actor->getRole(),
+                        'image' => $actor->getImage(),
+                    ];
+                }
+            }
+
+            $this->serie->cast()->sync($actorIds);
+        } catch (\Exception $e) { }
 
         // Do we have an TMDB ID?
         if (!$this->serie->tmdbid){

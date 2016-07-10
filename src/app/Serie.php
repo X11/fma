@@ -67,6 +67,16 @@ class Serie extends Model
     }
 
     /**
+     * undocumented function
+     */
+    public function cast()
+    {
+        return $this->belongsToMany('App\Person', 'serie_cast', 'serie_id', 'person_id')->withPivot('role', 'image', 'sort');
+    }
+    
+    
+
+    /**
      * Get url.
      *
      * @return string
@@ -114,7 +124,7 @@ class Serie extends Model
     public function getFanarthdAttribute($value)
     {
         if ($this->attributes['fanart']) {
-            return 'http://thetvdb.com/banners/'.$this->attributes['fanart'];
+            return '//thetvdb.com/banners/'.$this->attributes['fanart'];
         } else {
             return;
         }
