@@ -232,8 +232,18 @@ footer .menu-list a {
     margin-bottom: 10px;
 }
 
-.videos .image {
-    margin-bottom: 10px;
+.videos .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+#video-modal .modal-content {
+    width: 100%;
+    max-width: 720px;
+    max-height: none;
 }
 
 @import 'partials/home';

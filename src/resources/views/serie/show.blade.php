@@ -100,12 +100,15 @@
                     <div class="heading">
                         <h3 class="title">VIDEO{{ $serie->media->count() > 1 ? 'S' : '' }}</h3>
                     </div>
-                    <div class="videos">
+                    <div class="videos columns is-multiline">
                         @foreach($serie->media as $media)
                             @if ($media->type == 'youtube')
-                                <figure class="image is-16by9">
-                                    <iframe data-src="https://www.youtube.com/embed/{{ $media->source }}?modestbranding=1&controls=2&fs=1" frameborder="0"></iframe>
-                                </figure>
+                                <div class="column is-half">
+                                    <figure class="image is-16by9">
+                                        <iframe data-src="https://www.youtube.com/embed/{{ $media->source }}?modestbranding=1&controls=2" frameborder="0"></iframe>
+                                        <div class="overlay" iframe-src="https://www.youtube.com/embed/{{ $media->source }}?modestbranding=1&controls=2&fs=1&autoplay=1"></div>
+                                   </figure>
+                                </div>
                             @endif
                         @endforeach
                     </div>
@@ -187,6 +190,15 @@
         <button class="modal-close"></button>
     </div>
 @endif
+<div class="modal" id="video-modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <figure class="image is-16by9">
+            <iframe src="" frameborder="0"></iframe>
+       </figure>
+    </div>
+    <button class="modal-close"></button>
+</div>
 @endsection
 
 @section('post-footer')

@@ -1346,6 +1346,18 @@ $.support.pjax ? enable() : disable()
     $('.serie-fanart img').dblclick(imageModal);
     $('.serie-poster img').dblclick(imageModal);
 
+    $('.videos .overlay').click(function(){
+        var $modal = $('#video-modal');
+        $modal.addClass('is-active');
+
+        $frame = $modal.find('iframe');
+        $frame.attr('src', $(this).attr('iframe-src'));
+
+        $modal.find('.modal-close').one('click', function(){
+            $modal.removeClass('is-active');
+            $frame.attr('src', '');
+        });
+    });
 }());
 
 (function() {
