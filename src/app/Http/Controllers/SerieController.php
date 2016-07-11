@@ -181,7 +181,8 @@ class SerieController extends Controller
         $show->runtime = $tvshow->getRuntime();
         $show->save();
 
-        dispatch(new FetchSerieEpisodes($show));
+        //dispatch(new FetchSerieEpisodes($show));
+        dispatch(new UpdateSerieAndEpisodes($show));
 
         Activity::log('serie.add', $show->id);
 

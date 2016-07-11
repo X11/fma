@@ -6,10 +6,20 @@
 
 @section('main')
 <div class="box">
-    <form role="form" method="POST" action="{{ url('/admin/update') }}">
+    <form role="form" method="POST" action="{{ url('/admin/update/serie') }}">
         {{ method_field('PUT') }}
         {!! csrf_field() !!}
         <label>Update series before</label>
+        <p class="control has-addons">
+            <input class="input" type="text" value="last week" name="q" id="name" placeholder="7 days ago"/>
+            <button type="submit" class="button is-primary"> UPDATE </button>
+        </p>
+    </form>
+    <br>
+    <form role="form" method="POST" action="{{ url('/admin/update/episode') }}">
+        {{ method_field('PUT') }}
+        {!! csrf_field() !!}
+        <label>Update episodes before</label>
         <p class="control has-addons">
             <input class="input" type="text" value="last week" name="q" id="name" placeholder="7 days ago"/>
             <button type="submit" class="button is-primary"> UPDATE </button>

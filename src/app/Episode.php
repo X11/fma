@@ -21,8 +21,39 @@ class Episode extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'overview', 'aired', 'episodeNumber', 'episodeSeason', 'episodeid',
+        'name', 
+        'overview', 
+        'aired', 
+        'episodeNumber', 
+        'episodeSeason', 
+        'episodeid', 
+        'imdbid',
+        'image',
     ];
+
+    /**
+     * undocumented function
+     */
+    public function guests()
+    {
+        return $this->belongsToMany('App\Person', 'episode_guests', 'episode_id', 'person_id');
+    }
+
+    /**
+     * undocumented function
+     */
+    public function writers()
+    {
+        return $this->belongsToMany('App\Person', 'episode_writers', 'episode_id', 'person_id');
+    }
+
+    /**
+     * undocumented function
+     */
+    public function directors()
+    {
+        return $this->belongsToMany('App\Person', 'episode_directors', 'episode_id', 'person_id');
+    }
 
     /**
      *
@@ -92,7 +123,19 @@ class Episode extends Model
      */
     public function getUrlAttribute()
     {
-        return $this->serie->url.'/episode/'.str_slug($this->id.' '.$this->name);
+        return $this->serie->url.'/'.str_slug($this->id.' '.$this->name);
+    }
+
+    /**
+     * Get poster URL.
+     */
+    public function getImageAttribute($value)
+    {
+        if ($value) {
+            return '//thetvdb.com/banners/_cache/'.$value;
+        } else {
+            return;
+        }
     }
 
     /**

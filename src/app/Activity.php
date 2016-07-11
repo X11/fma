@@ -51,6 +51,7 @@ class Activity extends Model
         ],
         'episode' => [
             'watched',
+            'update',
         ],
         'account' => [
             'login',
@@ -62,6 +63,7 @@ class Activity extends Model
             'invite',
             'remove_cache',
             'update_series',
+            'update_episodes',
             'change_user_role',
         ],
     ];

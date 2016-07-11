@@ -83,8 +83,10 @@ Route::group(['middleware' => 'web'], function () {
 
         // EPISODE
         Route::get('serie/{SerieSlug}/episode/{EpisodeSlug}', 'EpisodeController@show');
+        Route::get('serie/{SerieSlug}/{EpisodeSlug}', 'EpisodeController@show');
         Route::post('episode/{episodeId}/watched', 'EpisodeController@markWatched');
         Route::delete('episode/{episodeId}/watched', 'EpisodeController@unmarkWatched');
+        Route::put('episode/{episode}', 'EpisodeController@update');
         Route::delete('episode/{episode}', 'EpisodeController@destroy');
 
         Route::post('serie/{id}/track', 'WatchlistController@add');
@@ -123,7 +125,8 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('stats', 'AdminController@stats');
 
         Route::get('update', 'AdminController@update');
-        Route::put('update', 'AdminController@postUpdate');
+        Route::put('update/serie', 'AdminController@postUpdateSerie');
+        Route::put('update/episode', 'AdminController@postUpdateEpisode');
         Route::get('cache', 'AdminController@cache');
         Route::put('cache', 'AdminController@postCache');
         Route::get('activity', 'AdminController@activity');

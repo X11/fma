@@ -10,6 +10,7 @@ use App\Serie;
 use Auth;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use App\Activity;
+use App\Jobs\UpdateEpisode;
 
 class EpisodeController extends Controller
 {
@@ -38,6 +39,12 @@ class EpisodeController extends Controller
             throw new NotFoundHttpException();
         }
 
+        $refresh = false;
+        if (!$episode->imdbid && $episode->rating === null){
+            $refresh = true;
+            dispatch(new UpdateEpisode($episode));
+        }
+
         $links = [];
         $magnets = [];
         $search_query = preg_replace('/\([0-9]+\)/', '', $serie->name).' '.$episode->season_episode;
@@ -59,7 +66,10 @@ class EpisodeController extends Controller
             }
         }
 
+        $episode->load('guests', 'writers', 'directors');
+
         return view('episode.show')
+            ->with('refresh', $refresh)
             ->with('episode', $episode)
             ->with('prevEpisode', $episode->prev())
             ->with('nextEpisode', $episode->next())
@@ -77,6 +87,21 @@ class EpisodeController extends Controller
                 'name' => $episode->season_episode,
                 'url' => url($episode->url),
             ]]);
+    }
+
+    public function update(Request $request, Episode $episode)
+    {
+        if (!Auth::user()->isModerator()){
+            if ($episode->updated_at->diffInHours(Carbon::now()) < 24){
+                return redirect()->back()->with('status', 'Serie already updated in the last 24 hous');
+            }
+        }
+        
+        dispatch(new UpdateEpisode($episode));
+
+        Activity::log('episode.update', $episode->id);
+
+        return back();
     }
 
     /**

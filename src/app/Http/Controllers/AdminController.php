@@ -9,6 +9,7 @@ use App\User;
 use Carbon\Carbon;
 use App\Jobs\UpdateSerieAndEpisodes;
 use App\Activity;
+use App\Jobs\UpdateEpisode;
 
 class AdminController extends Controller
 {
@@ -99,7 +100,7 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function postUpdate(Request $request)
+    public function postUpdateSerie(Request $request)
     {
         $series = Serie::where([
             ['updated_at', '<', Carbon::parse($request->input('q'))->toDateTimeString()],
@@ -119,6 +120,36 @@ class AdminController extends Controller
 
         return back()
             ->with('status', "$count series updating");
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int                      $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function postUpdateEpisode(Request $request)
+    {
+        $episodes = Episode::whereNotNull('imdbid')->where([
+            ['updated_at', '<', Carbon::parse($request->input('q'))->toDateTimeString()],
+        ])->orWhere('updated_at', null)->get();
+
+        if (!$episodes) {
+            return back()
+                ->with('status', 'No episodes selected');
+        }
+
+        foreach ($episodes as $episode) {
+            dispatch(new UpdateEpisode($episode));
+        }
+        $count = $episodes->count();
+
+        Activity::log('admin.update_episodes', null, ['count' => $count]);
+
+        return back()
+            ->with('status', "$count episodes updating");
     }
 
     /**

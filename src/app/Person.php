@@ -25,8 +25,32 @@ class Person extends Model
     /**
      * undocumented function
      */
-    public function series()
+    public function cast()
     {
         return $this->belongsToMany('App\Serie', 'serie_cast')->withPivot('role', 'image', 'sort');
+    }
+
+    /**
+     * undocumented function
+     */
+    public function guest()
+    {
+        return $this->belongsToMany('App\Episode', 'episode_guests');
+    }
+
+    /**
+     * undocumented function
+     */
+    public function writer()
+    {
+        return $this->belongsToMany('App\Episode', 'episode_writers');
+    }
+
+    /**
+     * undocumented function
+     */
+    public function directed()
+    {
+        return $this->belongsToMany('App\Episode', 'episode_directors');
     }
 }
