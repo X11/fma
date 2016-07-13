@@ -39,7 +39,7 @@
     </script>
 </head>
 <body id="app-layout">
-    @if (isset($onlyContent))
+    @if (!isset($onlyContent))
         @include('partial.header')
         @if (isset($breadcrumbs))
             @include('partial.breadcrumbs')
@@ -59,7 +59,7 @@
 
     @yield('content')
 
-    @if (isset($onlyContent))
+    @if (!isset($onlyContent))
         @if (isset($breadcrumbs))
             @include('partial.breadcrumbs')
         @endif
