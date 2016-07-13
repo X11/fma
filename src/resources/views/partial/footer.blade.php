@@ -54,9 +54,9 @@
             @endif
             <div class="column">
                 <div class="content has-text-right">
-                    <p><strong>FMA</strong> build to feed the addiction</p>
+                    <p>Build to feed the addiction</p>
                     @if (Auth::check())
-                    <p>Content provided by <a href="https://www.thetvdb.com">The TVDB</a></p>
+                    <p>Content provided by <a href="https://www.thetvdb.com">The TVDB</a> and <a href="https://www.themoviedb.org/">TMDB</a></p>
                     @endif
                 </div>
             </div>

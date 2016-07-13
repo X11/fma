@@ -47,12 +47,12 @@ Route::group(['middleware' => 'web'], function () {
 
     //Route::auth();
    // Authentication Routes...
-    Route::get('login', 'Auth\AuthController@showLoginForm');
+    Route::get('login', 'HomeController@welcome');
     Route::post('login', 'Auth\AuthController@login');
     Route::get('logout', 'Auth\AuthController@logout');
 
     if (env('ALLOW_REGISTER')) {
-        Route::get('register', 'Auth\AuthController@showRegistrationForm');
+        Route::get('register', 'HomeController@welcome');
         Route::post('register', 'Auth\AuthController@register');
     }
     // Password Reset Routes...

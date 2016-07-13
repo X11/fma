@@ -58,6 +58,7 @@ class HomeController extends Controller
             ];
 
             return view('welcome')
+                ->with('excludeContent', true)
                 ->with('fanart', $fanarts[array_rand($fanarts)]);
         } else {
             return redirect('/home');

@@ -39,27 +39,27 @@
     </script>
 </head>
 <body id="app-layout">
-    @if (!Request::is('/'))
+    @if (isset($onlyContent))
         @include('partial.header')
         @if (isset($breadcrumbs))
             @include('partial.breadcrumbs')
         @endif
-    @endif
 
-    @if (session('status'))
-        <section class="section">
-            <div class="container">
-                <div class="notification is-primary">
-                    <button class="delete"></button>
-                    {{ session('status') }}
+        @if (session('status'))
+            <section class="section">
+                <div class="container">
+                    <div class="notification is-primary">
+                        <button class="delete"></button>
+                        {{ session('status') }}
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        @endif
     @endif
 
     @yield('content')
 
-    @if (!Request::is('/'))
+    @if (isset($onlyContent))
         @if (isset($breadcrumbs))
             @include('partial.breadcrumbs')
         @endif

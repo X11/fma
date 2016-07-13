@@ -4041,16 +4041,15 @@ input[class="checkbox"] {
   color: #97cd76; }
 
 .landing-info {
-  height: 100vh;
-  min-height: 500px;
   padding: 0;
   overflow: hidden;
   background: black;
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0; }
+  height: 100vh;
+  width: 100vw;
+  min-height: 500px; }
   .landing-info .img-parent {
     position: absolute;
     top: -50%;
@@ -4067,21 +4066,37 @@ input[class="checkbox"] {
       min-width: 50%;
       min-height: 50%; }
   .landing-info .landing-column {
-    position: relative;
     padding: 40px;
     background: white;
-    height: 100%;
-    width: 66%;
-    min-width: 250px;
-    max-width: 400px;
-    box-shadow: 1px 0 1px #333;
+    position: absolute;
+    overflow: auto;
+    left: 10%;
+    width: 80%;
+    max-width: 360px;
+    top: 66%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
     z-index: 3; }
+    @media (max-width: 400px) {
+      .landing-info .landing-column {
+        top: 50%; } }
+    @media (max-height: 500px) {
+      .landing-info .landing-column {
+        position: relative;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        -webkit-transform: none;
+        transform: none;
+        width: 66%; } }
   .landing-info footer {
     position: absolute;
     bottom: 0;
     right: 0;
-    padding: 40px;
-    width: 100%; }
+    padding: 20px;
+    width: 100%;
+    color: white;
+    text-shadow: 1px 1px black; }
 
 footer .menu-list a {
   border-bottom: none !important; }
