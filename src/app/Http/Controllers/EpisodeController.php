@@ -39,11 +39,6 @@ class EpisodeController extends Controller
             throw new NotFoundHttpException();
         }
 
-        $refresh = false;
-        if (!$episode->imdbid && $episode->rating === null){
-            $refresh = true;
-            dispatch(new UpdateEpisode($episode));
-        }
 
         $links = [];
         $magnets = [];
@@ -69,7 +64,7 @@ class EpisodeController extends Controller
         $episode->load('guests', 'writers', 'directors');
 
         return view('episode.show')
-            ->with('refresh', $refresh)
+            ->with('refresh', false)
             ->with('episode', $episode)
             ->with('prevEpisode', $episode->prev())
             ->with('nextEpisode', $episode->next())
