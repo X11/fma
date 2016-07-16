@@ -25,14 +25,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        //
-
         parent::boot($router);
-
-        $router->bind('SerieSlug', function ($value) {
-            return Serie::where('id', explode('-', $value)[0])
-                ->first() ?: abort(404);
-        });
 
         $router->bind('EpisodeSlug', function ($value) {
             return Episode::where('id', explode('-', $value)[0])

@@ -30,7 +30,7 @@ class EpisodeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $serie, $episode)
+    public function show(Request $request, Serie $serie, Episode $episode)
     {
         //$serie = Serie::findOrFail($serieId);
         //$episode = $serie->episodes()->findOrFail($episodeId);

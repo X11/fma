@@ -133,7 +133,7 @@ class SerieController extends Controller
         $show = Serie::where('tvdbid', $request->input('tvdbid'))->first();
 
         if ($show) {
-            return redirect()->action('SerieController@show', ['id' => $show->id]);
+            return redirect()->action('SerieController@show', ['id' => $show->slug]);
         }
 
         // Move this in a job so it doesn't block the request
@@ -168,6 +168,7 @@ class SerieController extends Controller
 
         $show = Serie::firstOrNew(['tvdbid' => $request->input('tvdbid')]);
         $show->name = $tvshow->getSeriesName();
+        $show->slug = str_slug($show->name);
         $show->overview = $tvshow->getOverview();
         $show->tvdbid = $request->input('tvdbid');
         $show->imdbid = $tvshow->getImdbId();
@@ -187,7 +188,7 @@ class SerieController extends Controller
         Activity::log('serie.add', $show->id);
 
         return redirect()
-            ->action('SerieController@show', ['id' => $show->id])
+            ->action('SerieController@show', ['id' => $show->slug])
             ->with('refresh', true)
             ->with('status', 'Serie is fetching the episodes, auto refreshing in a few seconds..');
     }

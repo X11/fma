@@ -34,6 +34,12 @@ class Serie extends Model
         'runtime',
     ];
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+    
+
     /**
      * Get the episodes for the serie.
      */
@@ -83,7 +89,7 @@ class Serie extends Model
      */
     public function getUrlAttribute()
     {
-        return '/serie/'.str_slug($this->id.' '.$this->name);
+        return '/serie/'.$this->slug;
     }
 
     /**
