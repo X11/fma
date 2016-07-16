@@ -67,6 +67,10 @@ Route::group(['middleware' => 'web'], function () {
     Route::put('/serie/{id}', 'SerieController@update');
     Route::delete('/serie/{serie}', 'SerieController@destroy');
 
+    // EPISODE
+    Route::get('serie/{SerieSlug}/episode/{EpisodeSlug}', 'EpisodeController@show');
+    Route::get('serie/{SerieSlug}/{EpisodeSlug}', 'EpisodeController@show');
+
     // CALENDER
     Route::get('calender', 'CalenderController@index');
 
@@ -82,8 +86,6 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('home', 'HomeController@index');
 
         // EPISODE
-        Route::get('serie/{SerieSlug}/episode/{EpisodeSlug}', 'EpisodeController@show');
-        Route::get('serie/{SerieSlug}/{EpisodeSlug}', 'EpisodeController@show');
         Route::post('episode/{episodeId}/watched', 'EpisodeController@markWatched');
         Route::delete('episode/{episodeId}/watched', 'EpisodeController@unmarkWatched');
         Route::put('episode/{episode}', 'EpisodeController@update');

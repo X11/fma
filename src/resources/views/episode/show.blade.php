@@ -21,7 +21,9 @@
                 <figure class="has-text-centered is-hidden-mobile">
                     <img data-src="{{ $serie->poster }}" alt=""/>
                 </figure>
-                <button class="button is-loading mark-episode" data-watched-initial="{{ $episode->watched ? 1 : 0 }}" data-watched-content="Mark as watched|Unmark as watched" data-watched-class="is-success|is-danger" data-watched-episode="{{ $episode->id }}"></button>
+                @if (Auth::check())
+                    <button class="button is-loading mark-episode" data-watched-initial="{{ $episode->watched ? 1 : 0 }}" data-watched-content="Mark as watched|Unmark as watched" data-watched-class="is-success|is-danger" data-watched-episode="{{ $episode->id }}"></button>
+                @endif
                 <figure class="has-text-centered is-hidden-mobile">
                     <img data-src="{{ $episode->image }}" alt=""/>
                 </figure>
@@ -85,50 +87,55 @@
                 </div>
             </div>
         </div>
-        <hr>
-        <div class="columns">
-            @if (count($magnets) > 0)
-            <div class="column is-6">
-                <div class="heading">
-                    <h3><span class="icon"><i class="fa fa-magnet"></i></span> Magnets</h3>
+        @if (count($magnets) > 0 || count($links) > 0)
+            <hr>
+            <div class="columns">
+                @if (count($magnets) > 0)
+                <div class="column is-6">
+                    <div class="heading">
+                        <h3><span class="icon"><i class="fa fa-magnet"></i></span> Magnets</h3>
+                    </div>
+                    <ul class="link-list">
+                        @foreach ($magnets as $magnet)
+                        <li class="item">
+                            <a href="{{ $magnet->getMagnet() }}" title="{{ $magnet->getName() }}">
+                                <label class="date fixed">
+                                    <span class="bottom text is-success">{{ $magnet->getSeeds() }}</span>
+                                    <span class="top text is-danger">{{ $magnet->getPeers() }}</span>
+                                </label>
+                                <h3>{{ $magnet->getSize() }}</h3>
+                                <p>{{ $magnet->getName() }}</p>
+                            </a>
+                        </li>
+                        @endforeach
+                        <p class="has-text-right">Magnets from <a href="https://kat.cr/" target="_blank">KAT</a></p>
+                    </ul>
                 </div>
-                <ul class="link-list">
-                    @foreach ($magnets as $magnet)
-                    <li class="item">
-                        <a href="{{ $magnet->getMagnet() }}" title="{{ $magnet->getName() }}">
-                            <label class="date fixed">
-                                <span class="bottom text is-success">{{ $magnet->getSeeds() }}</span>
-                                <span class="top text is-danger">{{ $magnet->getPeers() }}</span>
-                            </label>
-                            <h3>{{ $magnet->getSize() }}</h3>
-                            <p>{{ $magnet->getName() }}</p>
-                        </a>
-                    </li>
-                    @endforeach
-                    <p class="has-text-right">Magnets from <a href="https://kat.cr/" target="_blank">KAT</a></p>
-                </ul>
-            </div>
-            @endif
-            @if (count($links) > 0)
-            <div class="column is-6">
-                <div class="heading">
-                    <h3><span class="icon"><i class="fa fa-youtube-play"></i></span> Sources</h3>
+                @endif
+                @if (count($links) > 0)
+                <div class="column is-6">
+                    <div class="heading">
+                        <h3><span class="icon"><i class="fa fa-youtube-play"></i></span> Sources</h3>
+                    </div>
+                    <ul class="link-list">
+                        @foreach ($links as $link)
+                        <li class="item">
+                            <?php $info = parse_url($link) ?>
+                            <a href="{{ $link }}" title="{{ $link }}">
+                                <h3><span class="text {{ $info['scheme'] == 'https' ? 'is-success' : 'is-danger' }}">{{ $info['scheme'] }}://</span>{{$info['host'] }}</h3>
+                                <p>{{ $info['path'] }}</p>
+                            </a>
+                        </li>
+                        @endforeach
+                        <p class="has-text-right">Links from <a href="http://putlocker.systems/" target="_blank">putlocker</a></p>
+                    </ul>
                 </div>
-                <ul class="link-list">
-                    @foreach ($links as $link)
-                    <li class="item">
-                        <?php $info = parse_url($link) ?>
-                        <a href="{{ $link }}" title="{{ $link }}">
-                            <h3><span class="text {{ $info['scheme'] == 'https' ? 'is-success' : 'is-danger' }}">{{ $info['scheme'] }}://</span>{{$info['host'] }}</h3>
-                            <p>{{ $info['path'] }}</p>
-                        </a>
-                    </li>
-                    @endforeach
-                    <p class="has-text-right">Links from <a href="http://putlocker.systems/" target="_blank">putlocker</a></p>
-                </ul>
+                @endif
             </div>
+            @if (Auth::check() && Auth::user()->isModerator())
+                <a class="is-pulled-right" href="?_t={{ base64_encode(time()) }}"><i class="fa fa-link"></i></a>
             @endif
-        </div>
+        @endif
     </div>
 </section>
 @endsection

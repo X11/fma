@@ -30,7 +30,7 @@ class EpisodeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($serie, $episode)
+    public function show(Request $request, $serie, $episode)
     {
         //$serie = Serie::findOrFail($serieId);
         //$episode = $serie->episodes()->findOrFail($episodeId);
@@ -39,12 +39,18 @@ class EpisodeController extends Controller
             throw new NotFoundHttpException();
         }
 
+        $validToken = false;
+        if ($request->has('_t')){
+            $baseToken = $request->input('_t');
+            $testToken = base64_decode($baseToken);
+            $validToken = ($testToken+3600) > time();
+        }
 
         $links = [];
         $magnets = [];
         $search_query = preg_replace('/\([0-9]+\)/', '', $serie->name).' '.$episode->season_episode;
 
-        if (Auth::user()->isMember()) {
+        if ((Auth::check() && Auth::user()->isMember()) || $validToken) {
             $ts = new TorrentSearch();
             $magnets = $ts->search(strtolower($search_query), '1');
             $magnets = array_filter($magnets, function ($magnet) use ($episode) {
