@@ -4001,11 +4001,28 @@ input[class="checkbox"] {
 .scroll-row {
   overflow: auto; }
 
+.header {
+  padding-top: 50px; }
+  .header .hero-head {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    z-index: 4;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    -webkit-transition: all .4s ease;
+    transition: all .4s ease; }
+  .header.hide .hero-head {
+    -webkit-transform: translateY(-100%);
+    transform: translateY(-100%); }
+
 .nav {
   z-index: initial; }
 
 .nav-menu {
-  z-index: 3; }
+  z-index: 6; }
 
 .table-responsive {
   width: 100%;

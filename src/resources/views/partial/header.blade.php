@@ -1,8 +1,8 @@
-<section class="hero is-{{ $header_background }} is-small">
+<section class="hero is-{{ $header_background }} is-small header">
     <!-- Hero header: will stick at the top -->
     <div class="hero-head">
         <div class="container">
-            <nav class="nav">
+            <header class="nav">
                 <!-- Left side -->
                 <div class="nav-left">
                     <a class="nav-item is-tab" href="{{ url('/') }}">FMA</a>
@@ -37,7 +37,7 @@
                         </span>
                     @endif
                 </div>
-            </nav>
+            </header>
         </div>
     </div>
 
