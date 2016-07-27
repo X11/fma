@@ -19,6 +19,8 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
     use InteractsWithQueue, SerializesModels;
 
     protected $serie;
+    protected $client;
+    protected $serieExtension;
 
     /**
      * Create a new job instance.
@@ -34,42 +36,12 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
     public function handle()
     {
         $client = App::make('tvdb');
+        $this->client = $client;
+        $serieExtension = $client->series();
+        $this->serieExtension = $serieExtension;
 
         // Get serie from TVDB
-        $serieExtension = $client->series();
         $serie = $serieExtension->get($this->serie->tvdbid);
-
-        // Try getting the poster image
-        try {
-            $seriePoster = $client->series()
-                                    ->getImagesWithQuery($this->serie->tvdbid, [
-                                        'keyType' => 'poster',
-                                    ])
-                                    ->getData()
-                                    ->sortByDesc(function ($a) {
-                                        return $a->getRatingsInfo()['average'];
-                                    })
-                                    ->first()
-                                    ->getFileName();
-        } catch (\Exception $e) {
-            $seriePoster = null;
-        }
-
-        // Try getting the serie fanart
-        try {
-            $serieFanart = $client->series()
-                                    ->getImagesWithQuery($this->serie->tvdbid, [
-                                        'keyType' => 'fanart',
-                                    ])
-                                    ->getData()
-                                    ->sortByDesc(function ($a) {
-                                        return $a->getRatingsInfo()['average'];
-                                    })
-                                    ->first()
-                                    ->getFileName();
-        } catch (\Exception $e) {
-            $serieFanart = null;
-        }
 
         // Get genre lookup
         $genre_lookup = Cache::get('genre_lookup', function () {
@@ -98,21 +70,84 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
         $this->serie->overview = $serie->getOverview();
         $this->serie->imdbid = $serie->getImdbId();
         $this->serie->rating = $serie->getSiteRating();
-        $this->serie->poster = $seriePoster;
-        $this->serie->fanart = $serieFanart;
         $this->serie->status = $serie->getStatus();
         $this->serie->network = $serie->getNetwork();
         $this->serie->airtime = $serie->getAirsTime();
         $this->serie->airday = $serie->getAirsDayOfWeek();
         $this->serie->runtime = $serie->getRuntime();
 
+        // Try getting the poster image
+        $this->getPoster();
+        $this->getFanart();
+
+        $episodeIds = $this->getEpisodes();
+
+        $this->getActors();
+
+        // Do we have an TMDB ID?
+        if (!$this->serie->tmdbid){
+            $this->getTMDBID();
+        }
+
+        $this->getMedia();
+
+        // Save serie
+        $this->serie->touch();
+        $this->serie->save();
+
+        \DB::table('episodes')->where('serie_id', $this->serie->id)->whereNotIn('episodeid', $episodeIds)->delete();
+    }
+
+    public function getFanart()
+    {
+        try {
+            $serieFanart = $this->client->series()
+                                    ->getImagesWithQuery($this->serie->tvdbid, [
+                                        'keyType' => 'fanart',
+                                    ])
+                                    ->getData()
+                                    ->sortByDesc(function ($a) {
+                                        return $a->getRatingsInfo()['average'];
+                                    })
+                                    ->first()
+                                    ->getFileName();
+
+            $this->serie->fanart = $serieFanart;
+        } catch (\Exception $e) {
+            $serieFanart = null;
+        }
+    }
+
+    public function getPoster()
+    {
+        try {
+            $seriePoster = $this->client->series()
+                                    ->getImagesWithQuery($this->serie->tvdbid, [
+                                        'keyType' => 'poster',
+                                    ])
+                                    ->getData()
+                                    ->sortByDesc(function ($a) {
+                                        return $a->getRatingsInfo()['average'];
+                                    })
+                                    ->first()
+                                    ->getFileName();
+
+            $this->serie->poster = $seriePoster;
+        } catch (\Exception $e) {
+            $seriePoster = null;
+        }
+    }
+    
+
+    public function getEpisodes()
+    {
         // Get episodes
         $episodes = [];
         $episodeIds = [];
         $page = 1;
         do {
             try {
-                $serieEpisodes = $serieExtension->getEpisodes($this->serie->tvdbid, $page);
+                $serieEpisodes = $this->serieExtension->getEpisodes($this->serie->tvdbid, $page);
             } catch (\Exception $e) {
                 break;
             }
@@ -132,9 +167,15 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
 
         $this->serie->episodes()->saveMany($episodes);
 
+        return $episodeIds;
+    }
+    
+
+    public function getActors()
+    {
         try {
             $actorIds = [];
-            $actors = $serieExtension->getActors($this->serie->tvdbid);
+            $actors = $this->serieExtension->getActors($this->serie->tvdbid);
 
             foreach($actors->getData() as $actor){
                 if ($actor->getName() != ""){
@@ -154,21 +195,26 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
 
             $this->serie->cast()->sync($actorIds);
         } catch (\Exception $e) { }
+    }
+    
 
-        // Do we have an TMDB ID?
-        if (!$this->serie->tmdbid){
-            try {
-                $res = Guzzle::request('GET', 'http://api.themoviedb.org/3/find/' . $this->serie->tvdbid. '?external_source=tvdb_id&api_key=' . env('TMDB_KEY'),
-                    [
-                        'Accept' => 'application/json'
-                    ]);
+    public function getTMDBID()
+    {
+        try {
+            $res = Guzzle::request('GET', 'http://api.themoviedb.org/3/find/' . $this->serie->tvdbid. '?external_source=tvdb_id&api_key=' . env('TMDB_KEY'),
+                [
+                    'Accept' => 'application/json'
+                ]);
 
-                $body = json_decode($res->getBody());
-                $data = $body->tv_results[0];
-                $this->serie->tmdbid = $data->id;
-            } catch (\Exception $e){ }
-        }
+            $body = json_decode($res->getBody());
+            $data = $body->tv_results[0];
+            $this->serie->tmdbid = $data->id;
+        } catch (\Exception $e){ }
+    }
+    
 
+    public function getMedia()
+    {
         $medias = [];
         if ($this->serie->tmdbid){
             try {
@@ -190,11 +236,6 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
             } catch (\Exception $e){ \Log::debug($e);}
         }
         $this->serie->media()->saveMany($medias);
-
-        // Save serie
-        $this->serie->touch();
-        $this->serie->save();
-
-        \DB::table('episodes')->where('serie_id', $this->serie->id)->whereNotIn('episodeid', $episodeIds)->delete();
     }
+    
 }

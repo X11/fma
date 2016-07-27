@@ -159,7 +159,7 @@
                                             <span class="bottom">{{ str_pad($episode->episodeNumber, 2, '0', STR_PAD_LEFT) }}</span>
                                         </label>
                                         <h3>{{ ($episode->name ? $episode->name : '') !== '' ? $episode->name : 'N/A' }}</h3>
-                                        <p>{{ $episode->air_date }}</p>
+                                        <p>{{ $episode->air_date or 'N/A' }}</p>
                                     </a>
                                 </div>
                             @endforeach

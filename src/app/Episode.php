@@ -93,7 +93,7 @@ class Episode extends Model
      */
     public function getAirDateAttribute()
     {
-        return Carbon::parse($this->aired)->toDateString();
+        return $this->aired ? Carbon::parse($this->aired)->toDateString() : null;
     }
 
     /**

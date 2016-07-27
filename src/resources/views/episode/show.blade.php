@@ -108,7 +108,6 @@
                             </a>
                         </li>
                         @endforeach
-                        <p class="has-text-right">Magnets from <a href="https://kat.cr/" target="_blank">KAT</a></p>
                     </ul>
                 </div>
                 @endif
@@ -127,7 +126,6 @@
                             </a>
                         </li>
                         @endforeach
-                        <p class="has-text-right">Links from <a href="http://putlocker.systems/" target="_blank">putlocker</a></p>
                     </ul>
                 </div>
                 @endif
