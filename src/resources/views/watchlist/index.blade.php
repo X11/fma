@@ -43,7 +43,7 @@
                 <ul class="link-list">
                     @foreach ($items as $item)
                     <li class="item">
-                        <a href="{{ url('/serie', [$item->serie_id, 'episode', $item->episode_id]) }}">
+                        <a href="{{ url('/serie', [$item->serie_slug, 'episode', $item->episode_id]) }}">
                             <label class="date">
                                 <span class="top">{{ $item->episode_season }}</span>
                                 <span class="bottom">{{ str_pad($item->episode_number, 2, '0', STR_PAD_LEFT) }}</span>

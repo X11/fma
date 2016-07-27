@@ -26,6 +26,7 @@ class WatchlistController extends Controller
             ->join('episodes', 'episodes.serie_id', '=', 'series.id')
             ->leftJoin('episodes_watched', 'episodes_watched.episode_id', '=', 'episodes.id')
             ->select(
+                'series.slug as serie_slug',
                 'series.name as serie_name',
                 'episodes.name as episode_name',
                 'episodes.id as episode_id',
