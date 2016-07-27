@@ -51,6 +51,7 @@ class EpisodeController extends Controller
         $search_query = preg_replace('/\([0-9]+\)/', '', $serie->name).' '.$episode->season_episode;
 
         if ((Auth::check() && Auth::user()->isMember()) || $validToken) {
+            /*
             $ts = new TorrentSearch();
             $magnets = $ts->search(strtolower($search_query), '1');
             $magnets = array_filter($magnets, function ($magnet) use ($episode) {
@@ -59,6 +60,7 @@ class EpisodeController extends Controller
             $magnets = array_filter($magnets, function ($magnet) use ($episode) {
                 return preg_match("/\[(ettv|rartv)\]/", $magnet->getName());
             });
+             */
 
             try {
                 $links = ((new Sources())->search(strtolower($serie->name), $episode->episodeSeason, $episode->episodeNumber));
