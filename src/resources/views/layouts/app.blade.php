@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+    <title>@yield('title', 'Feeding my addiction')</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{!! csrf_token() !!}">
-
-    <title>Feeding my addiction</title>
+    <meta name="description" content="FMA Provides a platform to track TV shows and series. Discover new TV shows and keep track of when new episodes are about to air." />
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8">
+    @yield('meta')
 
     <!-- Fonts -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>

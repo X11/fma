@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('title', 'Calender - FMA')
 @section('hero.icon', 'calendar')
 @section('hero.title', 'Calender')
 @section('hero.content', 'Airdates calender')

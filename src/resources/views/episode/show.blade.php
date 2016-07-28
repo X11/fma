@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('title', $serie->name.' '.$episode->name.' - FMA')
 @section('hero.icon', 'tv')
 @section('hero.title', $episode->name)
 @section('hero.content', '#'.$episode->id)

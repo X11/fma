@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('title', $serie->name . ' - FMA')
 @section('hero.display', 'none')
 
 @if ($serie_fanart === 'default') 

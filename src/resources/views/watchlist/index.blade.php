@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('title', 'Watchlist - FMA')
 @section('hero.icon', 'list')
 @section('hero.title', 'Watchlist')
 @section('hero.content', '')
