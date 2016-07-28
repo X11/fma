@@ -1068,6 +1068,378 @@ $.support.pjax ? enable() : disable()
 
 })(window.jQuery || window.Zepto);
 
+var Creator = {};
+
+/**
+ * Creates a new controller given an data set of elements, events and functions
+ *
+ * Example controller
+ * {
+ *      elements: {
+ *          "#button": "$button",
+ *          ".buttons": "$buttons"
+ *      },
+ *      events: {
+ *          "$button": {
+ *              click: function(){},
+ *          }
+ *      },
+ *      init: function(){},
+ *      customSuff: function(){}
+ * }
+ *
+ * @param Object
+ *
+ * @return Object
+ */
+Creator.controller = function(options){
+
+    // Initialize the controller
+    var Controller = function(){
+        this.options = options;
+
+        if(this.elements) this._refreshElements();
+
+        this.init.apply(this, arguments);
+    };
+
+    // Shorter name for working on the prototype;
+    Controller.fn = Controller.prototype;
+    Controller.fn.elements = {};
+
+    // Default init function does nothing, Can be overwriten by giving an 'init' property with the options;
+    Controller.fn.init = function(){};
+
+    // Shorten the search area for selectors;
+    Controller.fn.$ = function(selector){
+        return $(selector, this.el);
+    };
+
+    // Populates the elements from the options
+    Controller.fn._refreshElements = function(){
+        for (var key in this.elements){
+            // Bind the element to the controller
+            this[this.elements[key]] = this.$(key);
+
+            // Do we have events for this element?
+            if (this.events && this.events[this.elements[key]]){
+
+                // Add the events for the element
+                for (var event in this.events[this.elements[key]]){
+                    this[this.elements[key]].on(event, this.events[this.elements[key]][event].bind(this));
+                }
+            }
+        }
+    };
+
+    // Include all of the options into the new controller
+    if (options){
+        for (var key in options){
+            Controller.fn[key] = options[key];
+        }
+    }
+
+    return Controller;
+};
+
+/**
+ * Creates an trigger when a specific elements gets loaded into the DOM
+ *
+ * @param Object
+ *
+ * @return Object
+ */
+Creator.trigger = function(options){
+
+    var Trigger = function(){
+        this.options = options;
+
+        Triggers.register(this.options.id, this.options.on.bind(this));
+
+        this.init.apply(this, arguments);
+    };
+
+    // Shorter name for working on the prototype;
+    Trigger.fn = Trigger.prototype;
+
+    // Default init function does nothing, Can be overwriten by giving an 'init' property with the options;
+    Trigger.fn.init = function(){};
+
+    // Default do nothing
+    Trigger.fn.on = function(){};
+
+    Trigger.fn.done = false;
+
+    if (options){
+        for (var key in options){
+            Trigger.fn[key] = options[key];
+        }
+    }
+
+    return (new Trigger(options));
+};
+
+
+/**
+ * Holds all the triggers
+ *
+ */
+var Triggers = {
+
+    /**
+     * Holds all the triggers
+     *
+     * @var Object
+     */
+    triggers: {},
+
+    /**
+     * Register an trigger with a callback
+     *
+     * @param string
+     * @param Function
+     */
+    register: function(id, cb){
+        this.triggers[id] = cb;  
+    },
+
+    /**
+     * Remove an trigger
+     *
+     * @param string
+     */
+    unregister: function(id){
+        delete this.triggers[id];
+    },
+
+    /**
+     * Executes a trigger
+     *
+     * @param string
+     */
+    execute: function(id){
+        if (this.triggers[id]){
+            this.triggers[id]();
+        }
+    },
+
+    /**
+     * Shortname for execute
+     *
+     * @param string
+     */
+    exec: function(id){
+        this.execute(id);
+    },
+
+    /**
+     * Listens for events when to check for triggers
+     */
+    listen: function(){
+        window.addEventListener('load', this.checkTriggers.bind(this));
+    },
+
+    /**
+     * Handle the triggers
+     */
+    checkTriggers: function(){
+        var self = this;
+        $('[triggers]').each(function(){
+            var id = $(this).attr('triggers');
+            self.execute(id);
+            self.unregister(id);
+        });
+    }
+};
+
+// Bootstrap
+Triggers.listen();
+
+var Controllers = {};
+
+Controllers.HeaderController = Creator.controller({
+    elements: {
+        '#header': 'el',
+        '.nav-toggle': '$navToggle',
+        '.nav-menu': '$navMenu',
+    },
+    events: {
+        '$navToggle': {
+            click: function(){
+                this.$navMenu.toggleClass('is-active');
+            }
+        }
+    },
+    init: function(){
+        this.oldPos = 0;
+        $(window).on('scroll', this.onScroll.bind(this));
+    },
+    onScroll: function(e){
+        if (this.oldPos < e.originalEvent.pageY && e.originalEvent.pageY > 100){
+            this.el.addClass('hide');
+        } else {
+            this.el.removeClass('hide');
+        }
+        this.oldPos = e.originalEvent.pageY;
+    }
+});
+
+Controllers.SerieController = new Creator.controller({
+    elements: {
+        ".serie-fanart img": "$fanartImage",
+        ".serie-poster img": "$posterImage",
+        ".videos .overlay": "$videoOverlays",
+    },
+
+    events: {
+        "$fanartImage": {
+            dblclick: function(){
+                this.imageModal(this.$fanartImage);
+            }
+        },
+        "$posterImage": {
+            dblclick: function(){
+                this.imageModal(this.$posterImage);
+            }
+        },
+        "$videoOverlays": {
+            click: function(e){
+                var $modal = $('#video-modal');
+                $modal.addClass('is-active');
+
+                var $frame = $modal.find('iframe');
+                $frame.attr('src', $(e.currentTarget).attr('iframe-src'));
+
+                $modal.find('.modal-close').one('click', function(){
+                    $modal.removeClass('is-active');
+                    $frame.attr('src', '');
+                });
+            }
+        }
+    },
+
+    init: function(){
+
+    },
+
+    imageModal: function(clickSource){
+        var $modal = $('#image-modal');
+        $modal.addClass('is-active');
+
+        var $img = $modal.find('img');
+        $img.attr('src', clickSource.attr('src'));
+
+        $modal.find('.modal-close').one('click', function(){
+            $modal.removeClass('is-active');
+        });
+
+        $modal.find('.modal-prev').on('click', prev); function prev() { setNumber(-1); }
+        $modal.find('.modal-next').on('click', next); function next() { setNumber(1); }
+
+        var $testImg = new Image();
+        $testImg.onerror = function(){
+            $img.attr('src', $testImg.src);
+            $img.show();
+        };
+        $testImg.onload = function(){
+            $img.attr('src', $testImg.src);
+            $img.show();
+        };
+
+        function setNumber(add) {
+            var src = $img.attr('src');
+            var matches = /([\d]+)\.jpg$/.exec(src);
+            if (matches){
+                $testImg.src = src.replace('-' + matches[1] + '.jpg', '-' + (add + parseInt(matches[1])) + '.jpg');
+                $img.hide();
+            }
+        }
+    },
+});
+
+Controllers.SeriesController = new Creator.controller({
+    elements: {
+        ".series": "$overview",
+        ".series .serie": "$series"
+    },
+    events: {
+        "$overview": {
+            mouseover: function(){
+                this.$series.addClass('selected');
+                this.$overview.addClass('darken');
+            },
+            mouseout: function(){
+                this.$series.removeClass('selected');
+                this.$overview.removeClass('darken');
+            }
+        },
+    },
+    init: function(){},
+});
+
+Controllers.WatchlistController = new Creator.controller({
+    elements: {
+        "#watchlist_filter_search_style": "$style",
+        "#watchlist_filter_search": "$search",
+        "[watchlist-reset-filters]": "$resetFilters",
+        "[watchlist-filter]": "$filters"
+    },
+
+    events: {
+        "$search": {
+            keyup: function(){
+                if (this.$search.val() === ''){
+                    this.$style.html('');
+                    localStorage.setItem('watchlist_filter_search', '');
+                } else {
+                    this.$style.html('[watchlist-serie]{display:none;}[watchlist-serie*="' + this.$search.val() + '"]{display:block;}');
+                    localStorage.setItem('watchlist_filter_search', this.$search.val());
+                }
+            }
+        },
+        "$resetFilters": {
+            click: function(){
+                this.$filters.each(function(){
+                    $(this).prop('checked', 'true');
+                });
+                this.updateFilters([]);
+            }
+        },
+        "$filters": {
+            change: function(){
+                var filters = [];
+                this.$filters.each(function(){
+                    var $checkbox = $(this);
+                    var checked = $checkbox.prop('checked');
+                    if (!checked){
+                        filters.push(parseInt($checkbox.attr('watchlist-filter')));
+                    }
+                });
+
+                this.updateFilters(filters);
+            }
+        }
+    },
+
+    init: function(){
+        var value = localStorage.getItem('watchlist_filter_search') || '';
+        if (value !== '') this.$style.html('[watchlist-serie]{display:none;}[watchlist-serie*="' + value + '"]{display:block;}');
+        this.$search.val(value);
+    },
+
+    updateFilters: function(filters){
+        $.request(  "POST", 
+                    '/account/settings', 
+                    JSON.stringify({
+                        watchlist_filters: filters
+                    }), function(res){
+                        location.reload();
+                    }, function(res){
+                        $.notify("Something went wrong", "error");
+                    });
+    }
+});
+
 (function() {
 
     "use strict";
@@ -1092,7 +1464,6 @@ $.support.pjax ? enable() : disable()
         $('.calender-item').removeClass('is-hidden');
     });
 
-
 }());
 
 (function() {
@@ -1107,107 +1478,8 @@ $.support.pjax ? enable() : disable()
 }());
 
 (function() {
-    // Setup all listeners
-    $('.tabs a[tab-href]').on('click', function() {
-        // Split the target to get the main & sub id
-        var target = $(this).attr('tab-href');
-        var parts = target.split('/');
 
-        // Find the good tab
-        $('#'+ parts[0] + '> *').each(function(){
-            var c = $(this);
-            c.removeClass('is-active');
-            if (parts[1] == c.attr('tab-id')) c.addClass('is-active');
-        });
-
-        // Remove all active
-        $(this).parents('ul').find('li').each(function(){
-            $(this).removeClass('is-active');
-        });
-
-        // Set active to the good one
-        $(this).parent('li').addClass('is-active');
-
-        history.replaceState(parts, "", '#' + target);
-    });
-
-    window.addEventListener('load', function(e) {
-        var hash = location.hash.slice(1);
-        $('[tab-href="' + hash + '"]').click();
-    });
-}());
-
-(function() {
-
-    var IMAGE_URL = "//thetvdb.com/banners/";
-    var IMAGE_CACHE_URL = "//thetvdb.com/banners/_cache/";
-    var check;
-    switch(window.tvdb_load_hd){
-        case 'not_on_mobile':
-            check = function(){
-                return !(/Mobi/i.test(navigator.userAgent));
-            };
-            break;
-        case 'size':
-            check = function(element){
-                return element.width() >= 300;
-            };
-            break;
-        case 'always':
-            check = function(){return true;};
-            break;
-        default:
-            check = function(){return false;};
-    }
-
-    $('img[data-src^="' + IMAGE_CACHE_URL + '"]').on('load', function(){
-        var elm = $(this);
-        var src = elm.attr('src');
-
-        src = src.slice(0, 5) === "https" ? src.slice(6) : src.slice(5);
-        if (src.slice(0, IMAGE_CACHE_URL.length) == IMAGE_CACHE_URL){
-            if (check(elm)){
-                var after = src.slice(IMAGE_CACHE_URL.length);
-
-                var img = new Image();
-                img.src = "https:" + IMAGE_URL + after;
-                img.onload = function(){
-                    elm[0].src = this.getAttribute('src');
-                    //console.log("Loaded HD", this.getAttribute('src'));
-                };
-                img.onerror = function(){
-                    img.src = "http:" + IMAGE_URL + after;
-                };
-            }
-        }
-    });
-}());
-
-(function() {
     "use strict";
-
-    /**
-     * Handle navbar click on mobile
-     *
-     */
-    $(".nav-toggle").click(function(){
-        $(this).parent().find('.nav-menu').toggleClass('is-active');
-    });
-
-    var oldPos = 0;
-    var $header = $('.header');
-    $(window).scroll(function(e){
-        if (oldPos < e.originalEvent.pageY && e.originalEvent.pageY > 100){
-            $header.addClass('hide');
-        } else {
-            $header.removeClass('hide');
-        }
-        oldPos = e.originalEvent.pageY;
-    });
-}());
-
-(function() {
-    if (window.VIEW != 'serie' && window.VIEW != 'episode') return;
 
     /**
      * Toggle tracking state from series
@@ -1319,54 +1591,82 @@ $.support.pjax ? enable() : disable()
         });
     });
 
-    function imageModal() {
-        var $modal = $('#image-modal');
-        $modal.addClass('is-active');
+}());
 
-        $img = $modal.find('img');
-        $img.attr('src', $(this).attr('src'));
+(function() {
+    // Setup all listeners
+    $('.tabs a[tab-href]').on('click', function() {
+        // Split the target to get the main & sub id
+        var target = $(this).attr('tab-href');
+        var parts = target.split('/');
 
-        $modal.find('.modal-close').one('click', function(){
-            $modal.removeClass('is-active');
+        // Find the good tab
+        $('#'+ parts[0] + '> *').each(function(){
+            var c = $(this);
+            c.removeClass('is-active');
+            if (parts[1] == c.attr('tab-id')) c.addClass('is-active');
         });
 
-        $modal.find('.modal-prev').on('click', prev); function prev() { setNumber(-1); }
-        $modal.find('.modal-next').on('click', next); function next() { setNumber(1); }
+        // Remove all active
+        $(this).parents('ul').find('li').each(function(){
+            $(this).removeClass('is-active');
+        });
 
-        $testImg = new Image();
-        $testImg.onerror = function(){
-            $img.attr('src', $testImg.src);
-            $img.show();
-        };
-        $testImg.onload = function(){
-            $img.attr('src', $testImg.src);
-            $img.show();
-        };
+        // Set active to the good one
+        $(this).parent('li').addClass('is-active');
 
-        function setNumber(add) {
-            var src = $img.attr('src');
-            var matches = /([\d]+)\.jpg$/.exec(src);
-            if (matches){
-                $testImg.src = src.replace('-' + matches[1] + '.jpg', '-' + (add + parseInt(matches[1])) + '.jpg');
-                $img.hide();
-            }
-        }
+        history.replaceState(parts, "", '#' + target);
+    });
+
+    window.addEventListener('load', function(e) {
+        var hash = location.hash.slice(1);
+        $('[tab-href="' + hash + '"]').click();
+    });
+}());
+
+(function() {
+
+    var IMAGE_URL = "//thetvdb.com/banners/";
+    var IMAGE_CACHE_URL = "//thetvdb.com/banners/_cache/";
+    var check;
+    switch(window.tvdb_load_hd){
+        case 'not_on_mobile':
+            check = function(){
+                return !(/Mobi/i.test(navigator.userAgent));
+            };
+            break;
+        case 'size':
+            check = function(element){
+                return element.width() >= 300;
+            };
+            break;
+        case 'always':
+            check = function(){return true;};
+            break;
+        default:
+            check = function(){return false;};
     }
 
-    $('.serie-fanart img').dblclick(imageModal);
-    $('.serie-poster img').dblclick(imageModal);
+    $('img[data-src^="' + IMAGE_CACHE_URL + '"]').on('load', function(){
+        var elm = $(this);
+        var src = elm.attr('src');
 
-    $('.videos .overlay').click(function(){
-        var $modal = $('#video-modal');
-        $modal.addClass('is-active');
+        src = src.slice(0, 5) === "https" ? src.slice(6) : src.slice(5);
+        if (src.slice(0, IMAGE_CACHE_URL.length) == IMAGE_CACHE_URL){
+            if (check(elm)){
+                var after = src.slice(IMAGE_CACHE_URL.length);
 
-        $frame = $modal.find('iframe');
-        $frame.attr('src', $(this).attr('iframe-src'));
-
-        $modal.find('.modal-close').one('click', function(){
-            $modal.removeClass('is-active');
-            $frame.attr('src', '');
-        });
+                var img = new Image();
+                img.src = "https:" + IMAGE_URL + after;
+                img.onload = function(){
+                    elm[0].src = this.getAttribute('src');
+                    //console.log("Loaded HD", this.getAttribute('src'));
+                };
+                img.onerror = function(){
+                    img.src = "http:" + IMAGE_URL + after;
+                };
+            }
+        }
     });
 }());
 
@@ -1374,98 +1674,40 @@ $.support.pjax ? enable() : disable()
     
     "use strict";
 
-    if (window.VIEW != "series") return;
-
-    var $overview = $('.series');
-    var $series = $('.series .serie');
-
-    $series.hover(function(e){
-        $series.addClass('selected');
-        $overview.addClass('darken');
-    }, function(e) {
-        $series.removeClass('selected');
-        $overview.removeClass('darken');
-    });
-
-}());
-
-(function() {
-
-    "use strict";
-
-    if (window.VIEW != "watchlist") return;
-
-    /**
-     * Update filters
-     *
-     * @param Array filters
-     */
-    function updateFilters(filters){
-        $.request("POST", '/account/settings', JSON.stringify({
-                                                                watchlist_filters: filters
-                                                            }), function(res){
-                                                                location.reload();
-                                                            }, function(res){
-                                                                $.notify("Something went wrong", "error");
-                                                            });
-    }
-
-    /**
-     * Handle on filter click
-     *
-     */
-    $('[watchlist-filter]').on('change', function(){
-        var filters = [];
-        $('[watchlist-filter]').each(function(){
-            var $checkbox = $(this);
-            var checked = $checkbox.prop('checked');
-            if (!checked){
-                filters.push(parseInt($checkbox.attr('watchlist-filter')));
-            }
-        });
-
-        updateFilters(filters);
-    });
-
-    /**
-     * Remove all filters
-     *
-     */
-    $('[watchlist-reset-filters]').click(function(){
-        $('[watchlist-filter]').each(function(){
-            $(this).prop('checked', 'true');
-        });
-        updateFilters([]);
-    });
-
-    /*
-    $("#selectAll").click(function(){
-        var checked = $(this).prop('checked');
-        $(this).parents('form').find('input[type="checkbox"]').each(function(){
-            $(this).prop('checked', checked);
-        });
-    });
-    */
-
-    /**
-     * Find filters by name
-     *
-     */
-    var $style = $('#watchlist_filter_search_style');
-    var value = localStorage.getItem('watchlist_filter_search') || '';
-    if (value !== '') $style.html('[watchlist-serie]{display:none;}[watchlist-serie*="' + value + '"]{display:block;}');
-    $('#watchlist_filter_search').val(value);
-
-    $('#watchlist_filter_search').on('keyup', function(){
-        if (this.value === ''){
-            $style.html('');
-            localStorage.setItem('watchlist_filter_search', '');
-        } else {
-            $style.html('[watchlist-serie]{display:none;}[watchlist-serie*="' + this.value + '"]{display:block;}');
-            localStorage.setItem('watchlist_filter_search', this.value);
+    Creator.trigger({
+        id: 'initHeader',
+        on: function(){
+            new Controllers.HeaderController();
         }
     });
 
+    Creator.trigger({
+        id: 'initSerie',
+        on: function(){
+            new Controllers.SerieController();
+        }
+    });
+
+    Creator.trigger({
+        id: 'initEpisode',
+        on: function(){
+
+        }
+    });
+
+    Creator.trigger({
+        id: 'initSeries',
+        on: function(){
+            new Controllers.SeriesController();
+        }
+    });
+
+    Creator.trigger({
+        id: 'initWatchlist',
+        on: function(){
+            new Controllers.WatchlistController();
+        }
+    });
 }());
 
 //# sourceMappingURL=all.js.map

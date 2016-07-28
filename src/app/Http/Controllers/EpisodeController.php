@@ -8,6 +8,7 @@ use TorrentSearch\TorrentSearch;
 use Sources\Sources;
 use App\Serie;
 use Auth;
+use Cache;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use App\Activity;
 use App\Jobs\UpdateEpisode;
@@ -39,36 +40,57 @@ class EpisodeController extends Controller
             throw new NotFoundHttpException();
         }
 
+        // Is token valid?
         $validToken = false;
-        if ($request->has('_t')){
+        if ($request->has('_t')) {
             $baseToken = $request->input('_t');
             $testToken = base64_decode($baseToken);
-            $validToken = ($testToken+3600) > time();
+            $validToken = ($testToken + 3600) > time();
         }
 
-        $links = [];
-        $magnets = [];
         $search_query = preg_replace('/\([0-9]+\)/', '', $serie->name).' '.$episode->season_episode;
 
+        // Check for a valid user or a valid share token
         if ((Auth::check() && Auth::user()->isMember()) || $validToken) {
-            try {
-                $ts = new TorrentSearch();
-                $magnets = $ts->search(strtolower($search_query), '1');
-                $magnets = array_filter($magnets, function ($magnet) use ($episode) {
-                    return preg_match("/$episode->season_episode/", $magnet->getName());
-                });
-                $magnets = array_filter($magnets, function ($magnet) use ($episode) {
-                    return preg_match("/\[(ettv|rartv)\]/", $magnet->getName());
-                });
-            } catch (\Exception $e) {
-                $magnets = [];
-            }
 
-            try {
-                $links = ((new Sources())->search(strtolower($serie->name), $episode->episodeSeason, $episode->episodeNumber));
-            } catch (\Exception $e) {
+            // Get magnets from the cache else populate the cache 
+            $magnets = Cache::get('magnets_e'.$episode->id, function () use ($search_query, $episode) {
+                $magnets = [];
+                try {
+                    $ts = new TorrentSearch();
+                    $magnets = $ts->search(strtolower($search_query), '1');
+                    $magnets = array_filter($magnets, function ($magnet) use ($episode) {
+                        return preg_match("/$episode->season_episode/", $magnet->getName());
+                    });
+                    /*
+                    $magnets = array_filter($magnets, function ($magnet) use ($episode) {
+                        return preg_match("/\[(ettv|rartv)\]/", $magnet->getName());
+                    });
+                    */
+
+                    Cache::put('magnets_e'.$episode->id, $magnets, 600);
+                } catch (\Exception $e) {
+                    // Fall throu, Nothing we can do.
+                }
+
+                return $magnets;
+            });
+
+            // Get links from cache
+            $links = Cache::get('links_e'.$episode->id, function () use ($serie, $episode) {
                 $links = [];
-            }
+                try {
+                    $links = ((new Sources())->search(strtolower($serie->name), $episode->episodeSeason, $episode->episodeNumber));
+                    Cache::put('links_e'.$episode->id, $links, 600);
+                } catch (\Exception $e) {
+                    // Fall throu, Nothing we can do.
+                }
+
+                return $links;
+            });
+        } else {
+            $links = [];
+            $magnets = [];
         }
 
         $episode->load('guests', 'writers', 'directors');
@@ -96,12 +118,12 @@ class EpisodeController extends Controller
 
     public function update(Request $request, Episode $episode)
     {
-        if (!Auth::user()->isModerator()){
-            if ($episode->updated_at->diffInHours(Carbon::now()) < 24){
+        if (!Auth::user()->isModerator()) {
+            if ($episode->updated_at->diffInHours(Carbon::now()) < 24) {
                 return redirect()->back()->with('status', 'Serie already updated in the last 24 hous');
             }
         }
-        
+
         dispatch(new UpdateEpisode($episode));
 
         Activity::log('episode.update', $episode->id);

@@ -5,7 +5,7 @@
 @section('hero.content', '')
 
 @section('content')
-<section class="section">
+<section class="section" triggers="initWatchlist">
     <div class="container">
         @if( count($series) > 0 )
         <label id="aside-label" for="aside-checkbox"><i class="fa fa-bars"></i> Filters</label>
@@ -50,11 +50,12 @@
                             </label>
                             <h3>{{ $item->serie_name }} <small>{{ $item->episode_name }}</small></h3>
                             <?php $date = Carbon\Carbon::parse($item->episode_aired) ?>
-                            <p>{{ $date->toDateString() }} - {{ $date->diffForHumans() }}</p>
+                            <p>{{ $date->toDateString() }}  -  {{ $date->diffForHumans() }}</p>
                         </a>
                     </li>
                     @endforeach
                 </ul>
+                <br>
                 @include('partial.pagination', ['items' => $items])
             </div>
         </div>

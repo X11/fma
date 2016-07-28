@@ -4,14 +4,14 @@
 
 @if ($serie_fanart === 'default') 
     @section('header.after')
-        <section class="section  serie-fanart">
+        <section class="section serie-fanart">
             <img width="100%" src="{{ asset('img/poster.png') }}" data-src="{{ $serie->fanart }}" alt=""/>
         </section>
     @endsection
 @endif
 
 @section('content')
-<section class="section serie">
+<section class="section serie" triggers="initSerie">
     <div class="container">
         <div class="columns">
             <div class="column is-8">
@@ -32,21 +32,21 @@
                         <div style="max-width:600px">
                             <table class="serie-info">
                                 <tbody>
-                                    <tr><th>TVDB:</th><td>{{ $serie->tvdbid }}</td></tr>
                                     @if ($serie->imdbid)
                                         <tr><th>IMDB:</th><td><a href="http://www.imdb.com/title/{{ $serie->imdbid }}" target="_blank">{{ $serie->imdbid }}</a></td></tr>
                                     @endif
-                                    @if ($serie->tmdbid)
-                                        <tr><th>TMDB:</th><td>{{ $serie->tmdbid }}</td></tr>
-                                    @endif
                                     <tr><th>STATUS:</th><td>{{ $serie->status or 'N/A'}}</td></tr>
+                                    <tr><th>RATING:</th><td>{{ $serie->rating or '-' }}/10</td></tr>
                                     @if ($serie->status == "Continuing")
                                         <tr><th>NETWORK:</th><td>{{ $serie->network or 'N/A'}}</td></tr>
                                         <tr><th>AIRDAY:</th><td>{{ $serie->airday or 'N/A'}}</td></tr>
                                         <tr><th>AIRTIME:</th><td>{{ $serie->airtime or 'N/A'}}</td></tr>
                                         <tr><th>RUNTIME:</th><td>{{ $serie->runtime or 'N/A'}} minutes</td></tr>
                                     @endif
-                                    <tr><th>RATING:</th><td>{{ $serie->rating }}/10</td></tr>
+                                    <tr><th>TVDB:</th><td>{{ $serie->tvdbid }}</td></tr>
+                                    @if ($serie->tmdbid)
+                                        <tr><th>TMDB:</th><td>{{ $serie->tmdbid }}</td></tr>
+                                    @endif
                                     <tr>
                                         <th>GENRE{{ $serie->genres->count() > 1 ? 'S' : '' }}:</th>
                                         <td class="content">

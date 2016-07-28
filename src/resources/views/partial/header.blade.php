@@ -1,4 +1,4 @@
-<section class="hero is-{{ $header_background }} is-small header">
+<section class="hero is-{{ $header_background }} is-small header" id="header" triggers="initHeader">
     <!-- Hero header: will stick at the top -->
     <div class="hero-head">
         <div class="container">

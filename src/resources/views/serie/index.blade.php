@@ -15,7 +15,7 @@
         </form>
     </div>
 </section>
-<section class="section series" style="overflow:hidden;">
+<section class="section series" style="overflow:hidden;" triggers="initSeries">
     <div class="container is-{{ $overview_container }}">
         <label id="aside-label" for="aside-checkbox" style="padding: 20px;"><i class="fa fa-bars"></i> Menu</label>
         <div class="columns is-mobile">

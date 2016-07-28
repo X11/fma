@@ -36,11 +36,12 @@
                 <div class="content">
                     <table class="serie-info">
                         <tbody>
-                            <tr><th>TVDB:</th><td>{{ $episode->episodeid }}</td></tr>
                             @if ($episode->imdbid)
                                 <tr><th>IMDB:</th><td><a href="http://www.imdb.com/title/{{ $episode->imdbid }}" target="_blank">{{ $episode->imdbid }}</a></td></tr>
                             @endif
-                            <tr><th>RATING:</th><td>{{ $episode->rating }}/10</td></tr>
+                            <tr><th>RATING:</th><td>{{ $episode->rating or '-' }}/10</td></tr>
+                            <tr><th>RUNTIME:</th><td>{{ $serie->runtime or 'N/A'}} minutes</td></tr>
+                            <tr><th>TVDB:</th><td>{{ $episode->episodeid }}</td></tr>
                         </tbody>
                     </table>
                     <br>
@@ -74,6 +75,9 @@
                     @if (Auth::check())
                         <div class="is-clearfix">
                             <p class="is-pulled-right">
+                                @if (Auth::user()->isModerator())
+                                    <a class="button is-link is-small" href="?_t={{ base64_encode(time()) }}">Share</a>
+                                @endif
                                 <button class="button is-link is-small" type="submit" form="updateEpisode">Update</button>
                                 @if (Auth::user()->isAdmin())
                                 <button class="button is-danger is-link is-small" type="submit" form="deleteEpisode">Delete</button>
@@ -100,7 +104,7 @@
                         <li class="item">
                             <a href="{{ $magnet->getMagnet() }}" title="{{ $magnet->getName() }}">
                                 <label class="date fixed">
-                                    <span class="bottom text is-success">{{ $magnet->getSeeds() }}</span>
+                                    <span class="bottom text is-success">{{ $magnet->getSeeds() > 9999 ? round($magnet->getSeeds()/1000) . 'K' : $magnet->getSeeds() }}</span>
                                     <span class="top text is-danger">{{ $magnet->getPeers() }}</span>
                                 </label>
                                 <h3>{{ $magnet->getSize() }}</h3>
@@ -130,9 +134,6 @@
                 </div>
                 @endif
             </div>
-            @if (Auth::check() && Auth::user()->isModerator())
-                <a class="is-pulled-right" href="?_t={{ base64_encode(time()) }}"><i class="fa fa-link"></i></a>
-            @endif
         @endif
     </div>
 </section>

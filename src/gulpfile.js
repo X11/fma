@@ -16,6 +16,8 @@ elixir(function(mix) {
     mix.sass('green.scss', 'public/css/green.css');
     mix.scripts([
         'jquery/**/jquery.*.js',
+        'utils/Creator.js',
+        'utils/Creator.*.js',
         '**/*.js',
     ]);
     mix.copy('resources/assets/img', 'public/img');

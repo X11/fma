@@ -22,5 +22,4 @@
         $('.calender-item').removeClass('is-hidden');
     });
 
-
 }());
