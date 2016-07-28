@@ -40,49 +40,51 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
         $serieExtension = $client->series();
         $this->serieExtension = $serieExtension;
 
-        // Get serie from TVDB
-        $serie = $serieExtension->get($this->serie->tvdbid);
+        if ($s->updated_at < $serieExtension->getLastModified($s->tvdbid) || !$this->serie->status){
+            // Get serie from TVDB
+            $serie = $serieExtension->get($this->serie->tvdbid);
 
-        // Get genre lookup
-        $genre_lookup = Cache::get('genre_lookup', function () {
-            $lookup = [];
-            $genres = DB::table('genres')
-                                ->select('id', 'name')
-                                ->get();
+            // Get genre lookup
+            $genre_lookup = Cache::get('genre_lookup', function () {
+                $lookup = [];
+                $genres = DB::table('genres')
+                                    ->select('id', 'name')
+                                    ->get();
 
-            foreach ($genres as $genre) {
-                $lookup[$genre->name] = $genre->id;
+                foreach ($genres as $genre) {
+                    $lookup[$genre->name] = $genre->id;
+                }
+                Cache::put('genre_lookup', $lookup, 600);
+                return $lookup;
+            });
+
+            // Sync genres
+            $genre_ids = [];
+            foreach ($serie->getGenre() as $genre) {
+                if (isset($genre_lookup[$genre])) {
+                    $genre_ids[] = $genre_lookup[$genre];
+                }
             }
-            Cache::put('genre_lookup', $lookup, 600);
-            return $lookup;
-        });
+            $this->serie->genres()->sync($genre_ids);
 
-        // Sync genres
-        $genre_ids = [];
-        foreach ($serie->getGenre() as $genre) {
-            if (isset($genre_lookup[$genre])) {
-                $genre_ids[] = $genre_lookup[$genre];
-            }
+            // Set general information
+            $this->serie->overview = $serie->getOverview();
+            $this->serie->imdbid = $serie->getImdbId();
+            $this->serie->rating = $serie->getSiteRating();
+            $this->serie->status = $serie->getStatus();
+            $this->serie->network = $serie->getNetwork();
+            $this->serie->airtime = $serie->getAirsTime();
+            $this->serie->airday = $serie->getAirsDayOfWeek();
+            $this->serie->runtime = $serie->getRuntime();
+
+            // Try getting the poster image
+            $this->getPoster();
+            $this->getFanart();
+
+            $episodeIds = $this->getEpisodes();
+
+            $this->getActors();
         }
-        $this->serie->genres()->sync($genre_ids);
-
-        // Set general information
-        $this->serie->overview = $serie->getOverview();
-        $this->serie->imdbid = $serie->getImdbId();
-        $this->serie->rating = $serie->getSiteRating();
-        $this->serie->status = $serie->getStatus();
-        $this->serie->network = $serie->getNetwork();
-        $this->serie->airtime = $serie->getAirsTime();
-        $this->serie->airday = $serie->getAirsDayOfWeek();
-        $this->serie->runtime = $serie->getRuntime();
-
-        // Try getting the poster image
-        $this->getPoster();
-        $this->getFanart();
-
-        $episodeIds = $this->getEpisodes();
-
-        $this->getActors();
 
         // Do we have an TMDB ID?
         if (!$this->serie->tmdbid){

@@ -20,6 +20,14 @@
                 <p class="heading">Users</p>
                 <p class="title">{{ $userCount }}</p>
             </div>
+            <div class="level-item has-text-centered">
+                <p class="heading">People</p>
+                <p class="title">{{ $peopleCount }}</p>
+            </div>
+            <div class="level-item has-text-centered">
+                <p class="heading">Jobs</p>
+                <p class="title">{{ $jobCount }}</p>
+            </div>
         </div>
     </div>   
 </section>

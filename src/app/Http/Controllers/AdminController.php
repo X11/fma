@@ -6,10 +6,14 @@ use Illuminate\Http\Request;
 use App\Serie;
 use App\Episode;
 use App\User;
+use App\Person;
 use Carbon\Carbon;
 use App\Jobs\UpdateSerieAndEpisodes;
 use App\Activity;
 use App\Jobs\UpdateEpisode;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Cache;
 
 class AdminController extends Controller
 {
@@ -66,6 +70,8 @@ class AdminController extends Controller
             ->with('serieCount', Serie::count())
             ->with('episodeCount', Episode::count())
             ->with('userCount', User::count())
+            ->with('peopleCount', Person::count())
+            ->with('jobCount', DB::table('jobs')->selectRaw('COUNT(*) as aggregate')->first()->aggregate)
             ->with('breadcrumbs', [[
                 'name' => 'Admin',
                 'url' => '/admin',
@@ -82,7 +88,26 @@ class AdminController extends Controller
      */
     public function update(Request $request)
     {
+
+        $needUpdate = Cache::get('series_need_update', function(){
+            $needUpdate = [];
+            $series = Serie::select('id', 'tvdbid', 'updated_at')->get();
+            foreach($series as $serie){
+                $client = App::make('tvdb');
+                $serieExtension = $client->series();
+
+                if ($serie->updated_at < $serieExtension->getLastModified($serie->tvdbid)){
+                    $needUpdate[] = $serie->id;
+                }
+            }
+
+            Cache::put('series_need_update', $needUpdate, 3600);
+
+            return $needUpdate;
+        });
+
         return view('admin.update')
+            ->with('needUpdate', $needUpdate)
             ->with('breadcrumbs', [[
                 'name' => 'Admin',
                 'url' => '/admin',
@@ -102,9 +127,19 @@ class AdminController extends Controller
      */
     public function postUpdateSerie(Request $request)
     {
-        $series = Serie::where([
-            ['updated_at', '<', Carbon::parse($request->input('q'))->toDateTimeString()],
-        ])->orWhere('updated_at', null)->get();
+        $cache = $request->get('cache');
+        if ($cache){
+            $needUpdate = Cache::get('series_need_update', function(){
+                return [];
+            });
+            $series = Serie::whereIn('id', $needUpdate)->get();
+        } else {
+            $series = Serie::where([
+                ['updated_at', '<', Carbon::parse($request->input('q'))->toDateTimeString()],
+            ])->orWhere('updated_at', null)->get();
+        }
+
+        Cache::forget('series_need_update');
 
         if (!$series) {
             return back()
