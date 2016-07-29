@@ -69,37 +69,37 @@ class AdminController extends Controller
         $serieCountStats = DB::table('stats')
                                 ->where('key', 'serie.count')
                                 ->orderBy('created_at')
-                                ->limit(5)
+                                ->limit(10)
                                 ->get();
 
         $episodeCountStats = DB::table('stats')
                                 ->where('key', 'episode.count')
                                 ->orderBy('created_at')
-                                ->limit(5)
+                                ->limit(10)
                                 ->get();
 
         $userCountStats = DB::table('stats')
                                 ->where('key', 'user.count')
                                 ->orderBy('created_at')
-                                ->limit(5)
+                                ->limit(10)
                                 ->get();
 
         $peopleCountStats = DB::table('stats')
                                 ->where('key', 'person.count')
                                 ->orderBy('created_at')
-                                ->limit(5)
+                                ->limit(10)
                                 ->get();
 
         $loginStats = DB::table('stats')
                             ->where('key', 'logins')
                             ->orderBy('created_at')
-                                ->limit(5)
+                                ->limit(10)
                             ->get();
 
         $episodeWatchedStats = DB::table('stats')
                                 ->where('key', 'episode.watched')
                                 ->orderBy('created_at')
-                                ->limit(5)
+                                ->limit(10)
                                 ->get();
 
         return view('admin.stats')
