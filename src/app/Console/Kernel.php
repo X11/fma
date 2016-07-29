@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
         Commands\CreateAdmin::class,
         Commands\tvdbtoken::class,
         Commands\UpdateSeries::class,
+        Commands\StatsGenerate::class,
     ];
 
     /**
@@ -27,6 +28,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('update:series')
+                 ->daily();
+
+        $schedule->command('stats:generate')
                  ->daily();
     }
 }
