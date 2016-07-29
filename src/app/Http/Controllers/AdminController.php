@@ -88,26 +88,7 @@ class AdminController extends Controller
      */
     public function update(Request $request)
     {
-
-        $needUpdate = Cache::get('series_need_update', function(){
-            $needUpdate = [];
-            $series = Serie::select('id', 'tvdbid', 'updated_at')->get();
-            foreach($series as $serie){
-                $client = App::make('tvdb');
-                $serieExtension = $client->series();
-
-                if ($serie->updated_at < $serieExtension->getLastModified($serie->tvdbid)){
-                    $needUpdate[] = $serie->id;
-                }
-            }
-
-            Cache::put('series_need_update', $needUpdate, 3600);
-
-            return $needUpdate;
-        });
-
         return view('admin.update')
-            ->with('needUpdate', $needUpdate)
             ->with('breadcrumbs', [[
                 'name' => 'Admin',
                 'url' => '/admin',
@@ -127,19 +108,9 @@ class AdminController extends Controller
      */
     public function postUpdateSerie(Request $request)
     {
-        $cache = $request->get('cache');
-        if ($cache){
-            $needUpdate = Cache::get('series_need_update', function(){
-                return [];
-            });
-            $series = Serie::whereIn('id', $needUpdate)->get();
-        } else {
-            $series = Serie::where([
-                ['updated_at', '<', Carbon::parse($request->input('q'))->toDateTimeString()],
-            ])->orWhere('updated_at', null)->get();
-        }
-
-        Cache::forget('series_need_update');
+        $series = Serie::where([
+            ['updated_at', '<', Carbon::parse($request->input('q'))->toDateTimeString()],
+        ])->orWhere('updated_at', null)->get();
 
         if (!$series) {
             return back()

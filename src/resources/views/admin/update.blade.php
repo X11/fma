@@ -9,15 +9,6 @@
     <form role="form" method="POST" action="{{ url('/admin/update/serie') }}">
         {{ method_field('PUT') }}
         {!! csrf_field() !!}
-        <input type="hidden" value="true" name="cache" id="cache"/>
-        <div class="content">
-            <p>{{ count($needUpdate) }} series needs updating. <button type="submit">Update now!</button></p>
-        </div>
-    </form>
-    <br>
-    <form role="form" method="POST" action="{{ url('/admin/update/serie') }}">
-        {{ method_field('PUT') }}
-        {!! csrf_field() !!}
         <label>Series updated before</label>
         <p class="control has-addons">
             <input class="input" type="text" value="last week" name="q" id="name" placeholder="7 days ago"/>
