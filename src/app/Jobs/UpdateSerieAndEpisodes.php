@@ -82,6 +82,7 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
             $this->getFanart();
 
             $episodeIds = $this->getEpisodes();
+            \DB::table('episodes')->where('serie_id', $this->serie->id)->whereNotIn('episodeid', $episodeIds)->delete();
 
             $this->getActors();
         }
@@ -97,7 +98,6 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
         $this->serie->touch();
         $this->serie->save();
 
-        \DB::table('episodes')->where('serie_id', $this->serie->id)->whereNotIn('episodeid', $episodeIds)->delete();
     }
 
     public function getFanart()
