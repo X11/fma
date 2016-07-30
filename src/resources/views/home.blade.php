@@ -7,19 +7,23 @@
 @section('content')
 <section class="section">
     <div class="container">
-        <div class="is-clearfix">
-            <p class="control heading is-pulled-right">
-                <label class="checkbox">
-                    Hide watched
-                    <input class="checkbox" type="checkbox" id="hide-watched">
-                </label>
-            </p>
+        <div class="columns is-gapless">
+            <div class="column">
+                <p class="control heading" style="text-align:right;">
+                    <label class="checkbox">
+                        Hide watched
+                        <input class="checkbox" type="checkbox" id="hide-watched">
+                    </label>
+                </p>
+            </div>
+            <div class="column is-10-tablet"></div>
         </div>
         <div class="home">
             @foreach($days as $day => $episodes)
                 <div class="columns is-gapless">
                     <div class="column">
-                        <h2><span class="tag is-primary is-large" style="justify-content:left;width:100%;border-radius: 0;">{{ $day }}</span></h2>
+                        <h2 class="day-heading">{{ Carbon\Carbon::parse($day)->format('l') }}</h2>
+                        <small class="day-subheading">{{ $day }}</small>
                     </div>
                     <div class="column is-10-tablet">
                         <div class="columns is-multiline is-gapless is-mobile">
@@ -36,7 +40,6 @@
                         </div>
                     </div>
                 </div>
-                <hr>
             @endforeach
         </div>
     </div>
