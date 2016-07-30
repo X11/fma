@@ -207,7 +207,7 @@
         {{ method_field('PUT') }}
         {!! csrf_field() !!}
     </form>
-    <form id="deleteSerie" action="{{ url('/serie', [$serie->id]) }}" method="POST">
+    <form id="deleteSerie" action="{{ url('/serie', [$serie->slug]) }}" method="POST">
         {{ method_field('DELETE') }}
         {!! csrf_field() !!}
     </form>
