@@ -175,7 +175,6 @@ class SerieController extends Controller
         $show->poster = $tvshowPoster;
         $show->fanart = $tvshowFanart;
         $show->rating = $tvshow->getSiteRating();
-        $show->status = $tvshow->getStatus();
         $show->network = $tvshow->getNetwork();
         $show->airtime = $tvshow->getAirsTime();
         $show->airday = $tvshow->getAirsDayOfWeek();
