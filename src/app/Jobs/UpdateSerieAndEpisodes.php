@@ -40,7 +40,7 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
         $serieExtension = $client->series();
         $this->serieExtension = $serieExtension;
 
-        if ($s->updated_at < $serieExtension->getLastModified($s->tvdbid) || !$this->serie->status){
+        if ($this->serie->updated_at < $serieExtension->getLastModified($this->serie->tvdbid) || !$this->serie->status){
             // Get serie from TVDB
             $serie = $serieExtension->get($this->serie->tvdbid);
 
