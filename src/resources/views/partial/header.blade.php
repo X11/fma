@@ -1,8 +1,8 @@
-<section class="hero is-{{ $header_background }} is-small header" id="header" triggers="initHeader">
+<header class="hero is-{{ $header_background }} is-small header" id="header" triggers="initHeader">
     <!-- Hero header: will stick at the top -->
     <div class="hero-head">
         <div class="container">
-            <header class="nav">
+            <nav class="nav">
                 <!-- Left side -->
                 <div class="nav-left">
                     <a class="nav-item is-tab" href="{{ url('/') }}">FMA</a>
@@ -37,7 +37,7 @@
                         </span>
                     @endif
                 </div>
-            </header>
+            </nav>
         </div>
     </div>
 
@@ -61,5 +61,5 @@
         </div>
     </div>
 
-</section>
+</header>
 @yield('header.after')
