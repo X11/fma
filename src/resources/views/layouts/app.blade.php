@@ -9,6 +9,8 @@
     <meta http-equiv="content-type" content="text/html;charset=UTF-8">
     @yield('meta')
 
+    <title>@yield('title', 'Feeding my addiction')</title>
+
     <!-- Fonts -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel='stylesheet' type='text/css'>
