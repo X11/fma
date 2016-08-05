@@ -71,8 +71,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('serie/{serie}/episode/{EpisodeSlug}', 'EpisodeController@show');
     Route::get('serie/{serie}/{EpisodeSlug}', 'EpisodeController@show');
 
-    // CALENDER
-    Route::get('calender', 'CalenderController@index');
+    // CALENDAR
+    Route::get('calendar', 'CalendarController@index');
 
     // User profile
     Route::get('profile/{User}', 'UserController@show');

@@ -105,7 +105,7 @@
     <footer>
         <nav style="display:none;">
             <a href="{{ url('/serie') }}">Series</a>
-            <a href="{{ url('/calender') }}">Calender</a>
+            <a href="{{ url('/calendar') }}">Calendar</a>
         </nav>
         <div class="content has-text-right">
             <p>Build to feed the addiction</p>

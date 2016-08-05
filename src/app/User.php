@@ -14,7 +14,7 @@ class User extends Authenticatable
         'serie_overview' => 'default',
         'serie_fanart' => 'default',
         'serie_actor_images' => 'yes',
-        'calender_overview' => 'default',
+        'calendar_overview' => 'default',
         'watchlist_filters' => [],
     ];
 

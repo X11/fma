@@ -21,7 +21,7 @@
                         <a class="nav-item is-tab {{ Request::is('home') ? 'is-active' : '' }}" href="{{ url('/home') }}">Home</a>
                     @endif
                     <a class="nav-item is-tab {{ Request::is('serie*') ? 'is-active' : '' }}" href="{{ url('/serie') }}">Series</a>
-                    <a class="nav-item is-tab {{ Request::is('calender*') ? 'is-active' : '' }}" href="{{ url('/calender') }}">Calender</a>
+                    <a class="nav-item is-tab {{ Request::is('calendar*') ? 'is-active' : '' }}" href="{{ url('/calendar') }}">Calendar</a>
                     @if (Auth::guest())
                         <span class="nav-item">
                             <a class="button is-primary" href="{{ url('/login') }}">Login</a>

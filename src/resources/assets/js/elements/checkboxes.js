@@ -13,13 +13,13 @@
     });
 
     /**
-     * Calender
+     * Calendar
      *
      */
-    $("#show-important").check('calender-show-special', function(){
-        $('.calender-item:not(.is-watching,is-premier,is-returning)').addClass('is-hidden');
+    $("#show-important").check('calendar-show-special', function(){
+        $('.calendar-item:not(.is-watching,is-premier,is-returning)').addClass('is-hidden');
     }, function(){
-        $('.calender-item').removeClass('is-hidden');
+        $('.calendar-item').removeClass('is-hidden');
     });
 
 }());

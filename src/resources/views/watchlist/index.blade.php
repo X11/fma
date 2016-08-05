@@ -62,7 +62,7 @@
         </div>
         @else
         <div class="notification is-primary">
-            No series on your watchlist, Discover some on the calender!
+            No series on your watchlist, Discover some on the calendar!
         </div>
         @endif
     </div>

@@ -8,7 +8,7 @@ use App\Episode;
 use Carbon\Carbon;
 use App\Repositories\EpisodeRepository;
 
-class CalenderController extends Controller
+class CalendarController extends Controller
 {
 
     protected $episodes;
@@ -44,13 +44,13 @@ class CalenderController extends Controller
             $dates->push($week);
         }
 
-        return view('calender.index')
+        return view('calendar.index')
             ->with('today', Carbon::now()->toDateString())
             ->with('dates', $dates)
             ->with('episodes', $episodes)
             ->with('breadcrumbs', [[
-                'name' => 'Calender',
-                'url' => action('CalenderController@index'),
+                'name' => 'Calendar',
+                'url' => action('CalendarController@index'),
             ]]);
     }
 }

@@ -7,7 +7,7 @@
                     <ul class="menu-list">
                         <li><a href="{{ url('/') }}">Home</a></li>
                         <li><a href="{{ url('/serie') }}">Series</a></li>
-                        <li><a href="{{ url('/calender') }}">Calender</a></li>
+                        <li><a href="{{ url('/calendar') }}">Calendar</a></li>
                         @if (Auth::check())
                         <li><a href="{{ url('/watchlist') }}">Watchlist</a></li>
                         <li><a href="{{ url('/profile', [Auth::user()->id]) }}">Profile</a></li>

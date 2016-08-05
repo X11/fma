@@ -39,12 +39,12 @@
 
             <div class="column is-6">
                 <p class="control">
-                    <label class="label">Calender overview</label>
+                    <label class="label">Calendar overview</label>
                 </p>
                 @foreach(['default', 'fluid'] as $option)
                 <p class="control">
                     <label class="radio">
-                        <input type="radio" value="{{ $option }}" name="calender_overview" {{ $settings->calender_overview == $option ? 'checked' : '' }} > {{ ucfirst(str_replace('_', ' ', $option)) }}
+                        <input type="radio" value="{{ $option }}" name="calendar_overview" {{ $settings->calendar_overview == $option ? 'checked' : '' }} > {{ ucfirst(str_replace('_', ' ', $option)) }}
                     </label>
                 </p>
                 @endforeach

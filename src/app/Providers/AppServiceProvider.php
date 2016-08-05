@@ -43,10 +43,10 @@ class AppServiceProvider extends ServiceProvider
             $view->with('serie_actor_images', $settings->serie_actor_images == 'yes');
         });
 
-        view()->composer('calender/index', function ($view) {
+        view()->composer('calendar/index', function ($view) {
             $view->with('overview_container', Auth::check()
-                                                ? Auth::user()->settings->calender_overview
-                                                : User::$BASE_SETTINGS['calender_overview']);
+                                                ? Auth::user()->settings->calendar_overview
+                                                : User::$BASE_SETTINGS['calendar_overview']);
 
             $watching_ids = Auth::check()
                              ? Auth::user()
