@@ -9,6 +9,7 @@ use App\Jobs\FetchSerieEpisodes;
 use App\Jobs\UpdateSerieAndEpisodes;
 use App;
 use App\Repositories\SerieRepository;
+use App\Repositories\TvdbRepository;
 use App\Activity;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -16,13 +17,15 @@ use Illuminate\Support\Facades\Auth;
 class SerieController extends Controller
 {
     private $series;
+    private $tvdb;
 
     /**
      * Create a new controller instance.
      */
-    public function __construct(SerieRepository $series)
+    public function __construct(SerieRepository $series, TvdbRepository $tvdb)
     {
         $this->series = $series;
+        $this->tvdb = $tvdb;
 
         $this->middleware('admin', ['only' => 'destroy']);
     }
@@ -38,66 +41,13 @@ class SerieController extends Controller
         $tvdbResults = null;
 
         if ($request->input('q')) {
-            $series = $this->series->search($request->input('q'), 10);
-
-            $series_tvdbids = Serie::select('tvdbid')->get()->pluck('tvdbid')->toArray();
-            $client = App::make('tvdb');
-            try {
-                $tvdbResults = $client->search()->seriesByName($request->input('q'));
-                $tvdbResults = $tvdbResults->getData();
-            } catch (\Exception $e) {
-                $tvdbResults = collect();
-            }
-            $tvdbResults = $tvdbResults->filter(function ($value) use ($series_tvdbids) {
-                if ($value->getFirstAired() != '' && intval(substr($value->getFirstAired(), 0, 4)) < 2000) {
-                    return false;
-                }
-                if (in_array($value->getId(), $series_tvdbids)) {
-                    return false;
-                }
-                if (substr($value->getSeriesName(), 0, 2) == '**') {
-                    return false;
-                }
-                if (stripos($value->getSeriesName(), 'JAPANESE') !== false) {
-                    return false;
-                }
-                if ($value->getStatus() == '') {
-                    return false;
-                }
-                if ($value->getNetwork() == '') {
-                    return false;
-                }
-
-                return true;
-            })->sortByDesc(function ($value) {
-                $add = ($value->getBanner() != '' ? 10000 : 0);
-                if (preg_match('/\(([\d]{4})\)$/', $value->getSeriesName(), $matches)) {
-                    $add += intval($matches[1].'0');
-                }
-
-                return $add + $value->getId();
-            });
+            $series = $this->series->search($request->input('q'), $limit);
+            $tvdbResults = $this->tvdb->search($request->input('q'));
         } elseif ($request->input('_genre')) {
             $genre = Genre::findOrFail($request->input('_genre'));
-
             $series = $this->series->allFromGenre($genre, $limit);
         } elseif ($request->input('_sort')) {
-            switch ($request->input('_sort')) {
-                case 'name':
-                    $series = $this->series->sortedByName($limit);
-                    break;
-                case 'rating':
-                    $series = $this->series->sortedByRating($limit);
-                    break;
-                case 'recent':
-                    $series = $this->series->sortedByRecent($limit);
-                    break;
-                case 'watched':
-                    $series = $this->series->sortedByWatched($limit);
-                    break;
-                default:
-                    return redirect()->action('SerieController@index');
-            }
+            $series = $this->series->sortedFromInput($request->input('_sort'), $limit);
         } else {
             $series = $this->series->sortedByBest($limit);
         }
@@ -105,10 +55,6 @@ class SerieController extends Controller
         $series->appends(['q' => $request->input('q')]);
 
         return view('serie.index')
-            ->with('genres', Genre::has('series')->get())
-            ->with('query', $request->input('q'))
-            ->with('_sort', $request->input('_sort'))
-            ->with('_genre', $request->input('_genre'))
             ->with('series', $series)
             ->with('tvdbResults', $tvdbResults)
             ->with('breadcrumbs', [[

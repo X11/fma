@@ -66,54 +66,8 @@ class AdminController extends Controller
      */
     public function stats(Request $request)
     {
-        $serieCountStats = DB::table('stats')
-                                ->where('key', 'serie.count')
-                                ->orderBy('created_at')
-                                ->limit(10)
-                                ->get();
-
-        $episodeCountStats = DB::table('stats')
-                                ->where('key', 'episode.count')
-                                ->orderBy('created_at')
-                                ->limit(10)
-                                ->get();
-
-        $userCountStats = DB::table('stats')
-                                ->where('key', 'user.count')
-                                ->orderBy('created_at')
-                                ->limit(10)
-                                ->get();
-
-        $peopleCountStats = DB::table('stats')
-                                ->where('key', 'person.count')
-                                ->orderBy('created_at')
-                                ->limit(10)
-                                ->get();
-
-        $loginStats = DB::table('stats')
-                            ->where('key', 'logins')
-                            ->orderBy('created_at')
-                                ->limit(10)
-                            ->get();
-
-        $episodeWatchedStats = DB::table('stats')
-                                ->where('key', 'episode.watched')
-                                ->orderBy('created_at')
-                                ->limit(10)
-                                ->get();
 
         return view('admin.stats')
-            ->with('serieCountStats', collect($serieCountStats)->each(function($item){$item->created_at = '"'.$item->created_at.'"';return $item;}))
-            ->with('episodeCountStats', collect($episodeCountStats)->each(function($item){$item->created_at = '"'.$item->created_at.'"';return $item;}))
-            ->with('userCountStats', collect($userCountStats)->each(function($item){$item->created_at = '"'.$item->created_at.'"';return $item;}))
-            ->with('peopleCountStats', collect($peopleCountStats)->each(function($item){$item->created_at = '"'.$item->created_at.'"';return $item;}))
-            ->with('episodeWatchedStats', collect($episodeWatchedStats)->each(function($item){$item->created_at = '"'.$item->created_at.'"';return $item;}))
-            ->with('loginStats', collect($loginStats)->each(function($item){$item->created_at = '"'.$item->created_at.'"';return $item;}))
-            ->with('serieCount', Serie::count())
-            ->with('episodeCount', Episode::count())
-            ->with('userCount', User::count())
-            ->with('peopleCount', Person::count())
-            ->with('jobCount', DB::table('jobs')->selectRaw('COUNT(*) as aggregate')->first()->aggregate)
             ->with('breadcrumbs', [[
                 'name' => 'Admin',
                 'url' => '/admin',

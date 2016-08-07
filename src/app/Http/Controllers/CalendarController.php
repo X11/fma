@@ -34,19 +34,7 @@ class CalendarController extends Controller
 
         $episodes = $this->episodes->getEpisodesBetween($start, $stop);
 
-        $dates = collect();
-        for ($k = 0; $k < 4; ++$k) {
-            $week = collect();
-            for ($i = 0; $i < 7; ++$i) {
-                $week->put($start->toDateString(), ($i * 4) + ($k + 1));
-                $start->modify('+1 day');
-            }
-            $dates->push($week);
-        }
-
         return view('calendar.index')
-            ->with('today', Carbon::now()->toDateString())
-            ->with('dates', $dates)
             ->with('episodes', $episodes)
             ->with('breadcrumbs', [[
                 'name' => 'Calendar',

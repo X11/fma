@@ -4,23 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Episode;
-use TorrentSearch\TorrentSearch;
-use Sources\Sources;
 use App\Serie;
 use Auth;
 use Cache;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use App\Activity;
 use App\Jobs\UpdateEpisode;
+use App\Repositories\SourcesRepository;
 
 class EpisodeController extends Controller
 {
+    private $sources;
+
     /**
      * Create a new controller instance.
      */
-    public function __construct()
+    public function __construct(SourcesRepository $sources)
     {
         $this->middleware('admin', ['only' => ['destroy']]);
+
+        $this->sources = $sources;
     }
 
     /**
@@ -54,40 +57,13 @@ class EpisodeController extends Controller
         if ((Auth::check() && Auth::user()->isMember()) || $validToken) {
 
             // Get magnets from the cache else populate the cache 
-            $magnets = Cache::get('magnets_e'.$episode->id, function () use ($search_query, $episode) {
-                $magnets = [];
-                try {
-                    $ts = new TorrentSearch();
-                    $magnets = $ts->search(strtolower($search_query), '1');
-                    $magnets = array_filter($magnets, function ($magnet) use ($episode) {
-                        return preg_match("/$episode->season_episode/", $magnet->getName());
-                    });
-                    /*
-                    $magnets = array_filter($magnets, function ($magnet) use ($episode) {
-                        return preg_match("/\[(ettv|rartv)\]/", $magnet->getName());
-                    });
-                    */
-
-                    Cache::put('magnets_e'.$episode->id, $magnets, 600);
-                } catch (\Exception $e) {
-                    // Fall throu, Nothing we can do.
-                }
-
-                return $magnets;
+            $magnets = $this->sources->searchMagnets($search_query, function ($magnet) use ($episode) {
+                return preg_match("/$episode->season_episode/", $magnet->getName());
             });
 
             // Get links from cache
-            $links = Cache::get('links_e'.$episode->id, function () use ($serie, $episode) {
-                $links = [];
-                try {
-                    $links = ((new Sources())->search(strtolower($serie->name), $episode->episodeSeason, $episode->episodeNumber));
-                    Cache::put('links_e'.$episode->id, $links, 600);
-                } catch (\Exception $e) {
-                    // Fall throu, Nothing we can do.
-                }
+            $links = $this->sources->searchLinks(strtolower($serie->name), $episode->episodeSeason, $episode->episodeNumber);
 
-                return $links;
-            });
         } else {
             $links = [];
             $magnets = [];

@@ -17,6 +17,7 @@ class SerieRepository
                         ->orderBy('name')
                         ->paginate($limit);
     }
+    
 
     /**
      * undocumented function.
@@ -70,6 +71,28 @@ class SerieRepository
                         ->orderBy('name', 'asc')
                         ->paginate($limit);
     }
+
+    /**
+     * Return serie sorted by the given input
+     *
+     * @return void
+     */
+    public function sortedFromInput($input, $limit)
+    {
+        switch ($input) {
+            case 'name':
+                return $this->series->sortedByName($limit);
+            case 'rating':
+                return $this->series->sortedByRating($limit);
+            case 'recent':
+                return $this->series->sortedByRecent($limit);
+            case 'watched':
+                return $this->series->sortedByWatched($limit);
+            default:
+                return null;
+        }
+    }
+    
 
     /**
      * undocumented function.

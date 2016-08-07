@@ -6,6 +6,22 @@
 
 @section('main')
 <section class="section is-paddingless">
+    <div class="columns">
+        <div class="column">
+            <div class="heading">
+                <h2 class="title">Jobs</h2>
+                <p class="subtitle">Current: <strong>{{ $jobCount }}</strong></p>
+            </div>
+        </div>
+        <div class="column">
+            <div class="heading">
+                <h2 class="title">Failed</h2>
+                <p class="subtitle">Current: <strong>{{ $failedJobCount }}</strong></p>
+            </div>
+        </div>
+    </div>
+    <br>
+
     <div class="heading">
         <h2 class="title">Series</h2>
         <p class="subtitle">Current: <strong>{{ $serieCount }}</strong></p>
@@ -50,12 +66,6 @@
     <div class="content">
         <canvas id="peopleChart" width="200" height="75"></canvas>
     </div>
-
-    <div class="heading">
-        <h2 class="title">Jobs</h2>
-        <p class="subtitle">Current: <strong>{{ $jobCount }}</strong></p>
-    </div>
-    <br>
 </section>
 @endsection
 

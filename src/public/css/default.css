@@ -4592,25 +4592,25 @@ section.serie .heading .title span {
       right: 0;
       top: 0; }
 
-.calender-column h2 {
+.calendar-column h2 {
   margin: 1.875em 0 0 0;
   font-weight: 500;
   color: #919FAF; }
 
-.calender-column.is-active h2 {
+.calendar-column.is-active h2 {
   color: #ed6c63;
   font-weight: 700; }
 
-.calender-item {
+.calendar-item {
   margin: 4px 0;
   box-shadow: 0 2px 3px rgba(17, 17, 17, 0.2);
   border: 0.25em solid #ffffff;
   border-radius: 3px;
   padding: 10px; }
-  .calender-item a {
+  .calendar-item a {
     color: inherit;
     display: inherit; }
-  .calender-item .date {
+  .calendar-item .date {
     float: left;
     padding: 0.125em 0.75em 0 0;
     margin-left: 0.25em;
@@ -4618,21 +4618,21 @@ section.serie .heading .title span {
     font-weight: bold;
     text-align: center;
     border-right: 2px solid #919FAF; }
-  .calender-item .date .bottom,
-  .calender-item .date .top {
+  .calendar-item .date .bottom,
+  .calendar-item .date .top {
     display: block; }
-  .calender-item .date .top {
+  .calendar-item .date .top {
     font-size: 0.75em; }
-  .calender-item .date .bottom {
+  .calendar-item .date .bottom {
     margin-top: -2px;
     font-size: 1.3em; }
-  .calender-item h3 {
+  .calendar-item h3 {
     font-weight: bold;
     margin-top: 3px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap; }
-  .calender-item p {
+  .calendar-item p {
     font-size: 0.875em;
     color: #919FAF;
     -webkit-font-smoothing: antialiased;
@@ -4642,18 +4642,18 @@ section.serie .heading .title span {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap; }
-  .calender-item.is-premier .date,
-  .calender-item.is-returning .date {
+  .calendar-item.is-premier .date,
+  .calendar-item.is-returning .date {
     border-width: 0.25em;
     margin-right: 0.75em;
     padding-right: 0.625em; }
-  .calender-item.is-watching {
+  .calendar-item.is-watching {
     border-left-color: #1fc8db; }
-  .calender-item.is-premier .date {
+  .calendar-item.is-premier .date {
     border-right-color: #ed6c63; }
-  .calender-item.is-returning .date {
+  .calendar-item.is-returning .date {
     border-right-color: #fce473; }
-  .calender-item:first-child {
+  .calendar-item:first-child {
     margin-top: 2px; }
 
 .seasons .watched {

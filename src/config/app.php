@@ -156,6 +156,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\TvdbServiceProvider::class,
+        App\Providers\ComposerServiceProvider::class,
+        App\Providers\CreatorServiceProvider::class,
         Kozz\Laravel\Providers\Guzzle::class,
         Barryvdh\Debugbar\ServiceProvider::class,
     ],

@@ -49,17 +49,7 @@ class HomeController extends Controller
     public function welcome()
     {
         if (Auth::guest()) {
-            $fanarts = [
-                '//thetvdb.com/banners/fanart/original/259765-12.jpg',
-                '//thetvdb.com/banners/fanart/original/248742-8.jpg',
-                '//thetvdb.com/banners/fanart/original/289590-20.jpg',
-                '//thetvdb.com/banners/fanart/original/269533-14.jpg',
-                '//thetvdb.com/banners/fanart/original/248835-3.jpg',
-            ];
-
-            return view('welcome')
-                ->with('onlyContent', true)
-                ->with('fanart', $fanarts[array_rand($fanarts)]);
+            return view('welcome');
         } else {
             return redirect('/home');
         }
