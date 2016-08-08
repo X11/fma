@@ -51,7 +51,6 @@
 
     <div class="heading">
         <h2 class="title">Logins</h2>
-        <p class="subtitle">Current: <strong>N/A</strong></p>
     </div>
     <br>
     <div class="content">
@@ -65,6 +64,14 @@
     <br>
     <div class="content">
         <canvas id="peopleChart" width="200" height="75"></canvas>
+    </div>
+
+    <div class="heading">
+        <h2 class="title">Episodes watched</h2>
+    </div>
+    <br>
+    <div class="content">
+        <canvas id="episodeWatchedChart" width="200" height="75"></canvas>
     </div>
 </section>
 @endsection
@@ -240,6 +247,43 @@ var myChart = new Chart(ctx, {
             pointHitRadius: 10,
             label: 'Count',
             data: [{{ $peopleCountStats->implode('value', ',') }}],
+        }]
+    },
+    options: {
+        legend: {
+            display: false,
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+</script>
+<script type="text/javascript" charset="utf-8">
+var ctx = document.getElementById("episodeWatchedChart");
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+    labels: [{!! $episodeWatchedStats->implode('created_at', ',') !!}],
+        datasets: [{
+            fill: false,
+            borderColor: "rgba(75,192,192,1)",
+            pointBorderColor: "rgba(75,192,192,1)",
+            pointBackgroundColor: "#fff",
+            pointBorderWidth: 1,
+            pointHoverBackgroundColor: "rgba(75,192,192,1)",
+            pointHoverBorderColor: "rgba(220,220,220,1)",
+            pointHoverBorderWidth: 2,
+            pointRadius: 6,
+            spanGaps: false,
+            pointHoverRadius: 8,
+            pointHitRadius: 10,
+            label: 'Count',
+            data: [{{ $episodeWatchedStats->implode('value', ',') }}],
         }]
     },
     options: {

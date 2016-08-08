@@ -92,14 +92,13 @@
                 </div>
             </div>
         </div>
-        @if (count($magnets) > 0 || count($links) > 0)
-            <hr>
-            <div class="columns">
+        <hr>
+        <div class="columns">
+            <div class="column is-6">
+                <div class="heading">
+                    <h3><span class="icon"><i class="fa fa-magnet"></i></span> Magnets</h3>
+                </div>
                 @if (count($magnets) > 0)
-                <div class="column is-6">
-                    <div class="heading">
-                        <h3><span class="icon"><i class="fa fa-magnet"></i></span> Magnets</h3>
-                    </div>
                     <ul class="link-list">
                         @foreach ($magnets as $magnet)
                         <li class="item">
@@ -114,13 +113,17 @@
                         </li>
                         @endforeach
                     </ul>
-                </div>
-                @endif
-                @if (count($links) > 0)
-                <div class="column is-6">
-                    <div class="heading">
-                        <h3><span class="icon"><i class="fa fa-youtube-play"></i></span> Sources</h3>
+                @else
+                    <div class="content">
+                        <p>No magnets found</p>
                     </div>
+                @endif
+            </div>
+            <div class="column is-6">
+                <div class="heading">
+                    <h3><span class="icon"><i class="fa fa-youtube-play"></i></span> Sources</h3>
+                </div>
+                @if (count($links) > 0)
                     <ul class="link-list">
                         @foreach ($links as $link)
                         <li class="item">
@@ -132,10 +135,13 @@
                         </li>
                         @endforeach
                     </ul>
-                </div>
+                @else
+                    <div class="content">
+                        <p>No sources found</p>
+                    </div>
                 @endif
             </div>
-        @endif
+        </div>
     </div>
 </section>
 @endsection

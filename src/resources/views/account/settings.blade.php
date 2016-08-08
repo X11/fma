@@ -106,7 +106,7 @@
         </div>
 
         <div class="is-clearfix">
-            <button type="submit" class="button is-success is-pulled-right is-small"><span class="icon is-small"><i class="fa fa-pencil"></i></span></button>
+            <button type="submit" class="button is-success is-pulled-right">Save</button>
         </div>
     </form>
 </div>
