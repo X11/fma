@@ -64,6 +64,7 @@ Controllers.SerieController = new Creator.controller({
             var src = $img.attr('src');
             var matches = /([\d]+)\.jpg$/.exec(src);
             if (matches){
+                if (matches[1] == '1' && add == -1) return;
                 $testImg.src = src.replace('-' + matches[1] + '.jpg', '-' + (add + parseInt(matches[1])) + '.jpg');
                 $img.hide();
             }

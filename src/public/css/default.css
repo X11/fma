@@ -4319,7 +4319,8 @@ section.serie .heading .title span {
 .serie-fanart {
   position: relative;
   padding: 0 0 30% 0;
-  overflow: hidden; }
+  overflow: hidden;
+  cursor: pointer; }
   .serie-fanart img {
     position: absolute;
     top: 75%;
