@@ -4226,7 +4226,7 @@ footer .menu-list a {
 
 .home .is-watched {
   position: relative; }
-  .home .is-watched:after {
+  .home .is-watched a:after {
     position: absolute;
     top: 50%;
     left: 50%;

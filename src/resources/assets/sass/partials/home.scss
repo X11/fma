@@ -18,7 +18,7 @@
     .is-watched {
         position: relative;
 
-        &:after {
+        a:after {
             position: absolute;
             top: 50%;
             left: 50%;
