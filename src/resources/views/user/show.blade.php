@@ -5,24 +5,6 @@
 @section('hero.content', $profile->role)
 
 @section('content')
-<?php /*
-    @if (Auth::user()->isAdmin() && $profile->role_index < Auth::user()->role_index)
-        <form role="form" method="POST" action="{{ url('/admin/user', [$profile->id, 'role']) }}">
-            {!! csrf_field() !!}
-            <label class="label">User role</label>
-            <p class="control has-addons">
-                <span class="select">
-                    <select name="role">
-                        @foreach ($profile->USER_ROLES as $i => $role)
-                            <option {{ $i < Auth::user()->role_index ? '' : 'disabled' }} {{ $role == $profile->role ? 'selected' : '' }} value="{{$i}}">{{ $role }}</option>
-                        @endforeach
-                    </select>
-                </span>
-                <button class="button is-primary" type="submit"><span class="icon"><i class="fa fa-edit"></i></span></button>
-            </p>
-        </form>
-    @endif
- */ ?>
 <section class="section profile">
     <div class="container">
         <div class="columns is-vcentered">
@@ -71,6 +53,7 @@
                     <h2 class="title">Activity feed</h2>
                 </div>
                 <br>
+                @if (count($logs) > 0)
                 <ul class="feeds">
                     @foreach($logs as $log)
                     <li class="feed-entry is-empty {{ $log == $logs->last() ? 'is-last' : '' }}">
@@ -80,30 +63,62 @@
                     </li>
                     @endforeach
                 </ul>
+                @else
+                <div class="content">
+                    <p>Nothing to display</p>
+                </div>
+                @endif
             </div>
             <div class="column is-half-tablet is-one-third-desktop">
                 <div class="heading">
                     <h2 class="title">Track list</h2>
                 </div>
                 <br>
-                @foreach ($series as $serie)
-                    <div class="serie box is-paddingless">
-                        <div class="columns is-gapless is-mobile">
-                            <div class="column is-narrow">
-                                <img width="100%" src="{{ asset('img/poster.png') }}"  data-src="{{ $serie->poster }}" alt=""/>
-                            </div>
-                            <div class="column">
-                                <div class="content">
-                                    <h2><a href="{{ url('/serie', [$serie->slug]) }}">{{ $serie->name }}</a></h2>
-                                    <p>{{ str_limit($serie->overview, 180) }}</p>
+                @if (count($series) > 0)
+                    @foreach ($series as $serie)
+                        <div class="serie box is-paddingless">
+                            <div class="columns is-gapless is-mobile">
+                                <div class="column is-narrow">
+                                    <img width="100%" src="{{ asset('img/poster.png') }}"  data-src="{{ $serie->poster }}" alt=""/>
+                                </div>
+                                <div class="column">
+                                    <div class="content">
+                                        <h2><a href="{{ url('/serie', [$serie->slug]) }}">{{ $serie->name }}</a></h2>
+                                        <p>{{ str_limit($serie->overview, 180) }}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
-                @include('partial.pagination', ['items' => $series])
+                    @endforeach
+                    @include('partial.pagination', ['items' => $series])
+                @else
+                <div class="content">
+                    <p>Nothing on this watchlist at this moment.</p>
+                </div>
+                @endif
             </div>
         </div>
     </div>
 </section>
+@if (Auth::user()->isAdmin() && $profile->role_index < Auth::user()->role_index)
+    <section class="section">
+        <div class="heading">
+            <h2 class="title">Admin CP</h2>
+        </div>
+        <form role="form" method="POST" action="{{ url('/admin/user', [$profile->id, 'role']) }}">
+            {!! csrf_field() !!}
+            <label class="label">User role</label>
+            <p class="control has-addons">
+                <span class="select">
+                    <select name="role">
+                        @foreach ($profile->USER_ROLES as $i => $role)
+                            <option {{ $i < Auth::user()->role_index ? '' : 'disabled' }} {{ $role == $profile->role ? 'selected' : '' }} value="{{$i}}">{{ $role }}</option>
+                        @endforeach
+                    </select>
+                </span>
+                <button class="button is-primary" type="submit"><span class="icon"><i class="fa fa-edit"></i></span></button>
+            </p>
+        </form>
+    </section>
+@endif
 @endsection
