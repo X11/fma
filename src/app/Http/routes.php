@@ -75,7 +75,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('calendar', 'CalendarController@index');
 
     // User profile
-    Route::get('profile/{User}', 'UserController@show');
+    Route::get('user/{username}', 'UserController@show');
 
     // USER THINGS
     Route::group(['middleware' => 'user'], function () {

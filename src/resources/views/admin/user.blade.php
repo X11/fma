@@ -30,7 +30,7 @@
             @endif
             @foreach ($users as $user)
             <tr>
-                <td><a href="{{ url()->action('UserController@show', [$user->id]) }}">{{ $user->name }}</a></td>
+                <td><a href="{{ url()->action('UserController@show', [$user->name]) }}">{{ $user->name }}</a></td>
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->last_login }}</td>
                 <td><span class="tag {{ $role_tags[$user->role] }}"> {{ $user->role  }}</span></td>
@@ -40,6 +40,7 @@
     </table>
     @include('partial.pagination', ['items' => $users])
 </div>   
+<?php /*
 <div class="box table-responsive">
     <div class="heading">
         <h2 class="subtitle">Invite</h2>
@@ -59,4 +60,5 @@
         </div>
     </form>
 </div>
+ */ ?>
 @endsection

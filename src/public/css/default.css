@@ -4018,6 +4018,14 @@ input[class="checkbox"] {
     -webkit-transform: translateY(-100%);
     transform: translateY(-100%); }
 
+.columns.is-vbottom {
+  -webkit-box-align: end;
+  align-items: flex-end; }
+
+.columns.is-vcentered {
+  -webkit-box-align: center;
+  align-items: center; }
+
 .nav {
   z-index: initial; }
 
@@ -4689,19 +4697,51 @@ section.serie .heading .title span {
 .seasons .is-danger {
   color: #ed6c63; }
 
-.profile .profile-image {
-  position: relative;
-  top: -100px; }
-  .profile .profile-image img {
-    border-radius: 50%;
-    border: 2px solid white;
-    background: white; }
-  @media screen and (max-width: 769px) {
-    .profile .profile-image {
-      top: 0px; } }
+.profile .profile-image img {
+  border-radius: 5px;
+  background: white;
+  width: 100%;
+  max-width: 200px; }
 
-.profile .serie h2 {
-  font-size: 20px; }
+.profile .profile-info {
+  margin-bottom: 2px;
+  font-size: 14px; }
+  .profile .profile-info tr {
+    text-transform: uppercase; }
+  .profile .profile-info th {
+    color: #69707a;
+    font-weight: 500;
+    width: 120px;
+    font-size: 14px; }
+  .profile .profile-info td {
+    padding-left: 10px;
+    color: #69707a;
+    font-weight: 300;
+    font-size: 14px; }
+    .profile .profile-info td ul {
+      margin: 0;
+      margin-left: 15px; }
+      .profile .profile-info td ul a {
+        color: #69707a;
+        font-weight: 300;
+        font-size: 12px; }
+
+.profile .serie {
+  margin-bottom: 10px;
+  overflow: hidden; }
+  .profile .serie img {
+    max-width: 100px;
+    min-height: 100%; }
+  .profile .serie .content {
+    padding: 10px; }
+    .profile .serie .content h2 {
+      margin-bottom: 2px;
+      font-size: 22px; }
+    .profile .serie .content p {
+      font-size: 14px; }
+    .profile .serie .content a {
+      text-decoration: none;
+      border: none; }
 
 .feed-entry {
   padding-left: 25px;
@@ -4720,7 +4760,7 @@ section.serie .heading .title span {
     width: 32px;
     height: 32px;
     box-sizing: border-box; }
-  .feed-entry:after {
+  .feed-entry:not(.is-empty):after {
     background: #1fc8db;
     color: #fff;
     content: "\f00c";

@@ -26,13 +26,17 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($userId)
+    public function show($username)
     {
-        $profile = User::find($userId);
+        $profile = User::where('name', $username)->firstOrFail();
+
+        $logs = $profile->activity()->whereIn('type', ['serie', 'episode'])->orderBy('created_at', 'desc')->limit(10)->get();
+
         $series = $profile->watching()->orderBy('name')->paginate(5);
 
         return view('user.show')
             ->with('profile', $profile)
+            ->with('logs', $logs)
             ->with('series', $series)
             ->with('role_tags', [
                 'User' => 'is-primary',
@@ -154,7 +158,7 @@ class UserController extends Controller
             $user->role = $request->input('role');
             $user->save();
 
-            Activity::log('account.change_user_role', $user_id, ['new_role' => $request->input('role')]);
+            Activity::log('account.change_user_role', Auth::user()->id, ['new_role' => $request->input('role')]);
 
             return back()->with('status', 'User updated');
         } else {

@@ -43,6 +43,14 @@ input[class="checkbox"] {
     }
 }
 
+.columns.is-vbottom {
+    align-items: flex-end;
+}
+
+.columns.is-vcentered {
+    align-items: center;
+}
+
 .nav {
     z-index: initial;
 }

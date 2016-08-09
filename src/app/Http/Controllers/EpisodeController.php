@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Episode;
 use App\Serie;
 use Auth;
-use Cache;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use App\Activity;
 use App\Jobs\UpdateEpisode;

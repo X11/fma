@@ -33,9 +33,9 @@ class AdminController extends Controller
     public function users(Request $request)
     {
         if ($request->input('q')) {
-            $users = User::where('name', 'like', '%'.$request->input('q').'%')->paginate(10);
+            $users = User::where('name', 'like', '%'.$request->input('q').'%')->paginate(20);
         } else {
-            $users = User::paginate(10);
+            $users = User::paginate(20);
         }
 
         $users->appends(['q' => $request->input('q')]);

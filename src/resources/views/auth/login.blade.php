@@ -41,7 +41,9 @@
             </p>
             <div class="is-clearfix">
                 <button type="submit" class="button is-primary is-pulled-right">Login</button>
+                <!--
                 <a class="button is-link is-pulled-right" href="{{ url('/password/reset') }}"><small>Forgot Your Password?</small></a>
+                -->
             </div>
         </form>
     </div>

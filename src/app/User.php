@@ -33,6 +33,10 @@ class User extends Authenticatable
         'api_token',
     ];
 
+    protected $dates = [
+        'last_login',
+    ];
+
     /**
      * The attributes excluded from the model's JSON form.
      *
