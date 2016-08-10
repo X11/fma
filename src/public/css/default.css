@@ -4155,6 +4155,7 @@ footer .menu-list a {
     #aside-checkbox:checked ~ aside {
       left: 0; }
     #aside-checkbox ~ .push-content {
+      max-width: 100%;
       position: relative;
       left: 0;
       -webkit-transition: left .4s ease-in;

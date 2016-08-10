@@ -213,6 +213,7 @@ footer .menu-list a {
         }
 
         & ~ .push-content {
+            max-width: 100%;
             position: relative;
             left: 0;
             transition: left .4s ease-in;
