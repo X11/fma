@@ -27,7 +27,9 @@
                     <li><a class="{{ $_sort == 'name' ? 'is-active' : '' }}" href="{{ action('SerieController@index') }}?_sort=name">Name</a></li>
                     <li><a class="{{ $_sort == 'rating' ? 'is-active' : '' }}" href="{{ action('SerieController@index') }}?_sort=rating">Rating</a></li>
                     <li><a class="{{ $_sort == 'recent' ? 'is-active' : '' }}" href="{{ action('SerieController@index') }}?_sort=recent">Recently added</a></li>
+                    @if (Auth::check())
                     <li><a class="{{ $_sort == 'watched' ? 'is-active' : '' }}" href="{{ action('SerieController@index') }}?_sort=watched">Last watched</a></li>
+                    @endif
                 </ul>
                 <p class="menu-label">Genres</p>
                 <ul class="menu-list">

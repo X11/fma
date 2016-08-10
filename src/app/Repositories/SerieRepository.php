@@ -81,13 +81,13 @@ class SerieRepository
     {
         switch ($input) {
             case 'name':
-                return $this->series->sortedByName($limit);
+                return $this->sortedByName($limit);
             case 'rating':
-                return $this->series->sortedByRating($limit);
+                return $this->sortedByRating($limit);
             case 'recent':
-                return $this->series->sortedByRecent($limit);
+                return $this->sortedByRecent($limit);
             case 'watched':
-                return $this->series->sortedByWatched($limit);
+                return Auth::check() ? $this->sortedByWatched($limit) : $this->sortedByName($limit);
             default:
                 return null;
         }
