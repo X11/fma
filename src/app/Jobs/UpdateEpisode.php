@@ -9,6 +9,7 @@ use App\Jobs\Job;
 use App\Episode;
 use App;
 use App\Person;
+use Cache;
 
 class UpdateEpisode extends Job implements ShouldQueue
 {
@@ -34,6 +35,15 @@ class UpdateEpisode extends Job implements ShouldQueue
     public function handle()
     {
         $client = App::make('tvdb');
+
+        $token = Cache::get('tvdb_token', function () use ($client) {
+            $t = $client->authentication()->login(env('TVDB_KEY'), null, null);
+            Cache::put('tvdb_token', $t, 1200);
+
+            return $t;
+        }, 1200);
+
+        $client->setToken($token);
 
         // Get serie from TVDB
         $episodeExtension = $client->episodes();

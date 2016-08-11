@@ -36,6 +36,16 @@ class UpdateSerieAndEpisodes extends Job implements ShouldQueue
     public function handle()
     {
         $client = App::make('tvdb');
+
+        $token = Cache::get('tvdb_token', function () use ($client) {
+            $t = $client->authentication()->login(env('TVDB_KEY'), null, null);
+            Cache::put('tvdb_token', $t, 1200);
+
+            return $t;
+        }, 1200);
+
+        $client->setToken($token);
+
         $this->client = $client;
         $serieExtension = $client->series();
         $this->serieExtension = $serieExtension;
