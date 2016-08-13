@@ -51,7 +51,7 @@
                         <p class="controler">
                             <label class="checkbox">
                                 <input type="checkbox" name="accept_terms">
-                                I accept the terms and conditions
+                                I have read <a target="_blank" href="{{ url('/tos') }}">the terms of service</a>
                             </label>
                         </p>
                         @if ($errors->has('accept_terms'))

@@ -58,6 +58,7 @@
                     @if (Auth::check())
                     <p>Content provided by <a href="https://www.thetvdb.com">The TVDB</a> and <a href="https://www.themoviedb.org/">TMDB</a></p>
                     @endif
+                    <p><a href="{{ url('/tos') }}" target="_blank">Terms of service</a></p>
                 </div>
             </div>
         </div>

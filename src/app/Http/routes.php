@@ -44,6 +44,7 @@ Route::group([
 Route::group(['middleware' => 'web'], function () {
 
     Route::get('/', 'HomeController@welcome');
+    Route::get('/tos', 'HomeController@tos');
 
     //Route::auth();
    // Authentication Routes...

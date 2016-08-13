@@ -44,6 +44,15 @@ class HomeController extends Controller
     }
 
     /**
+     * undocumented function
+     */
+    public function tos()
+    {
+        return view('tos');
+    }
+    
+
+    /**
      * undocumented function.
      */
     public function welcome()
