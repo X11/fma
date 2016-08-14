@@ -101,7 +101,7 @@
                 @if (count($magnets) > 0)
                     <ul class="link-list">
                         @foreach ($magnets as $magnet)
-                        <li class="item">
+                        <li class="item magnet">
                             <a href="{{ $magnet->getMagnet() }}" title="{{ $magnet->getName() }}">
                                 <label class="date fixed">
                                     <span class="bottom text is-success">{{ $magnet->getSeeds() > 9999 ? round($magnet->getSeeds()/1000) . 'K' : $magnet->getSeeds() }}</span>
@@ -109,6 +109,7 @@
                                 </label>
                                 <h3>{{ $magnet->getSize() }}</h3>
                                 <p>{{ $magnet->getName() }}</p>
+                                
                             </a>
                         </li>
                         @endforeach
@@ -124,12 +125,15 @@
                     <h3><span class="icon"><i class="fa fa-youtube-play"></i></span> Sources</h3>
                 </div>
                 @if (count($links) > 0)
+                    <div class="content">
+                        <p>Stream {{ $serie->name }} directly by clicking on one of the links below</p>
+                    </div>
                     <ul class="link-list">
                         @foreach ($links as $link)
-                        <li class="item">
-                            <?php $info = parse_url($link) ?>
+                        <li class="item source">
+                            <?php $info = parse_url($link); ?>
                             <a href="{{ $link }}" title="{{ $link }}">
-                                <h3><span class="text {{ $info['scheme'] == 'https' ? 'is-success' : 'is-danger' }}">{{ $info['scheme'] }}://</span>{{$info['host'] }}</h3>
+                                <h3><span class="text {{ $info['scheme'] == 'https' ? 'is-success' : 'is-danger' }}">{{ $info['scheme'] }}://</span>{{$info['host'] }} <span style="vertical-align:bottom;" class="is-small icon"><i class="fa fa-external-link"></i></span></h3>
                                 <p>{{ $info['path'] }}</p>
                             </a>
                         </li>
@@ -146,7 +150,7 @@
 </section>
 @endsection
 
-@section('post-footer')
+@push('post-footer')
     <form id="updateEpisode" action="{{ url('/episode', [$episode->id]) }}" method="POST">
         {{ method_field('PUT') }}
         {!! csrf_field() !!}
@@ -155,13 +159,12 @@
         {{ method_field('DELETE') }}
         {!! csrf_field() !!}
     </form>
-    <script>window.VIEW = "episode";</script>
-@endsection
+@endpush
 
-@section('scripts')
+@push('scripts')
     @if ($refresh)
         <script type="text/javascript" charset="utf-8">
             setTimeout(function(){location.reload()}, 5000);
         </script>
     @endif
-@endsection
+@endpush

@@ -112,7 +112,3 @@
     </section>
 @endif
 @endsection
-
-@section('post-footer')
-    <script>window.VIEW = "series";</script>
-@endsection

@@ -76,7 +76,7 @@
 </section>
 @endsection
 
-@section('scripts')
+@push('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.0/Chart.min.js"></script>
 <script type="text/javascript" charset="utf-8">
 var ctx = document.getElementById("serieChart");
@@ -300,4 +300,4 @@ var myChart = new Chart(ctx, {
     }
 });
 </script>
-@endsection
+@endpush

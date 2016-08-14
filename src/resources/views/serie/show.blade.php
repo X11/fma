@@ -202,7 +202,7 @@
 </div>
 @endsection
 
-@section('post-footer')
+@push('post-footer')
     <form id="updateSerie" action="{{ url('/serie', [$serie->id]) }}" method="POST">
         {{ method_field('PUT') }}
         {!! csrf_field() !!}
@@ -211,13 +211,12 @@
         {{ method_field('DELETE') }}
         {!! csrf_field() !!}
     </form>
-    <script>window.VIEW = "serie";</script>
-@endsection
+@endpush
 
-@section('scripts')
+@push('scripts')
     @if (session('refresh'))
         <script type="text/javascript" charset="utf-8">
             setTimeout(function(){location.reload()}, 5000);
         </script>
     @endif
-@endsection
+@endpush

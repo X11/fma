@@ -69,13 +69,11 @@
 
         @include('partial.footer')
     @endif
-    @yield('post-footer')
 
+    @stack('post-footer')
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://rawgit.com/notifyjs/notifyjs/master/dist/notify.js"></script>
-    <script src="{{ elixir('js/all.js') }}"></script>
-
     <script type="text/javascript" charset="utf-8">
     $(window).on('load', function(){
         $("[data-src]").unveil(null, function(){
@@ -85,6 +83,7 @@
         });
     });
     </script>
-    @yield('scripts')
+    <script src="{{ elixir('js/all.js') }}"></script>
+    @stack('scripts')
 </body>
 </html>

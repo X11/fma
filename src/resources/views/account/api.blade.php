@@ -29,8 +29,8 @@
 </section>
 @endsection
 
-@section('post-footer')
+@push('post-footer')
     <form id="resetApi" action="{{ action('UserController@resetApiToken') }}" method="POST">
         {!! csrf_field() !!}
     </form>
-@endsection
+@endpush

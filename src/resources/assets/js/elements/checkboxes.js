@@ -17,7 +17,7 @@
      *
      */
     $("#show-important").check('calendar-show-special', function(){
-        $('.calendar-item:not(.is-watching,is-premier,is-returning)').addClass('is-hidden');
+        $('.calendar-item:not(.is-watching):not(.is-premier):not(.is-returning)').addClass('is-hidden');
     }, function(){
         $('.calendar-item').removeClass('is-hidden');
     });
