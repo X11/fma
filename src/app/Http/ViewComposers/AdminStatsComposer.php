@@ -31,39 +31,45 @@ class AdminStatsComposer
 
         $serieCountStats = DB::table('stats')
                                 ->where('key', 'serie.count')
-                                ->orderBy('created_at')
+                                ->orderBy('created_at', 'desc')
                                 ->limit($limit)
-                                ->get();
+                                ->get()
+                                ->reverse();
 
         $episodeCountStats = DB::table('stats')
                                 ->where('key', 'episode.count')
-                                ->orderBy('created_at')
+                                ->orderBy('created_at', 'desc')
                                 ->limit($limit)
-                                ->get();
+                                ->get()
+                                ->reverse();
 
         $userCountStats = DB::table('stats')
                                 ->where('key', 'user.count')
-                                ->orderBy('created_at')
+                                ->orderBy('created_at', 'desc')
                                 ->limit($limit)
-                                ->get();
+                                ->get()
+                                ->reverse();
 
         $peopleCountStats = DB::table('stats')
                                 ->where('key', 'person.count')
-                                ->orderBy('created_at')
+                                ->orderBy('created_at', 'desc')
                                 ->limit($limit)
-                                ->get();
+                                ->get()
+                                ->reverse();
 
         $loginStats = DB::table('stats')
                             ->where('key', 'logins')
-                            ->orderBy('created_at')
-                                ->limit($limit)
-                            ->get();
+                            ->orderBy('created_at', 'desc')
+                            ->limit($limit)
+                            ->get()
+                            ->reverse();
 
         $episodeWatchedStats = DB::table('stats')
                                 ->where('key', 'episode.watched')
-                                ->orderBy('created_at')
+                                ->orderBy('created_at', 'desc')
                                 ->limit($limit)
-                                ->get();
+                                ->get()
+                                ->reverse();
 
         $view->with('serieCountStats', collect($serieCountStats)->each(function($item){$item->created_at = '"'.$item->created_at.'"';return $item;}));
         $view->with('episodeCountStats', collect($episodeCountStats)->each(function($item){$item->created_at = '"'.$item->created_at.'"';return $item;}));
