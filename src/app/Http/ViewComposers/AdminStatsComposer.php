@@ -33,49 +33,43 @@ class AdminStatsComposer
                                 ->where('key', 'serie.count')
                                 ->orderBy('created_at', 'desc')
                                 ->limit($limit)
-                                ->get()
-                                ->reverse();
+                                ->get();
 
         $episodeCountStats = DB::table('stats')
                                 ->where('key', 'episode.count')
                                 ->orderBy('created_at', 'desc')
                                 ->limit($limit)
-                                ->get()
-                                ->reverse();
+                                ->get();
 
         $userCountStats = DB::table('stats')
                                 ->where('key', 'user.count')
                                 ->orderBy('created_at', 'desc')
                                 ->limit($limit)
-                                ->get()
-                                ->reverse();
+                                ->get();
 
         $peopleCountStats = DB::table('stats')
                                 ->where('key', 'person.count')
                                 ->orderBy('created_at', 'desc')
                                 ->limit($limit)
-                                ->get()
-                                ->reverse();
+                                ->get();
 
         $loginStats = DB::table('stats')
                             ->where('key', 'logins')
                             ->orderBy('created_at', 'desc')
                             ->limit($limit)
-                            ->get()
-                            ->reverse();
+                            ->get();
 
         $episodeWatchedStats = DB::table('stats')
                                 ->where('key', 'episode.watched')
                                 ->orderBy('created_at', 'desc')
                                 ->limit($limit)
-                                ->get()
-                                ->reverse();
+                                ->get();
 
-        $view->with('serieCountStats', collect($serieCountStats)->each(function($item){$item->created_at = '"'.$item->created_at.'"';return $item;}));
-        $view->with('episodeCountStats', collect($episodeCountStats)->each(function($item){$item->created_at = '"'.$item->created_at.'"';return $item;}));
-        $view->with('userCountStats', collect($userCountStats)->each(function($item){$item->created_at = '"'.$item->created_at.'"';return $item;}));
-        $view->with('peopleCountStats', collect($peopleCountStats)->each(function($item){$item->created_at = '"'.$item->created_at.'"';return $item;}));
-        $view->with('episodeWatchedStats', collect($episodeWatchedStats)->each(function($item){$item->created_at = '"'.$item->created_at.'"';return $item;}));
+        $view->with('serieCountStats', collect($serieCountStats)->each(function($item){$item->created_at = '"'.$item->created_at.'"';return $item;})->reverse());
+        $view->with('episodeCountStats', collect($episodeCountStats)->each(function($item){$item->created_at = '"'.$item->created_at.'"';return $item;})->reverse());
+        $view->with('userCountStats', collect($userCountStats)->each(function($item){$item->created_at = '"'.$item->created_at.'"';return $item;})->reverse());
+        $view->with('peopleCountStats', collect($peopleCountStats)->each(function($item){$item->created_at = '"'.$item->created_at.'"';return $item;})->reverse());
+        $view->with('episodeWatchedStats', collect($episodeWatchedStats)->each(function($item){$item->created_at = '"'.$item->created_at.'"';return $item;})->reverse());
         $view->with('loginStats', collect($loginStats)->each(function($item){$item->created_at = '"'.$item->created_at.'"';return $item;}));
         $view->with('serieCount', Serie::count());
         $view->with('episodeCount', Episode::count());
