@@ -42,11 +42,20 @@ class EpisodeController extends Controller
             throw new NotFoundHttpException();
         }
 
+        // Is token valid?
+        $validToken = false;
+        if ($request->has('_t')) {
+            $baseToken = $request->input('_t');
+            $testToken = base64_decode($baseToken);
+            $validToken = ($testToken + 3600) > time();
+        }
+
         $episode->load('guests', 'writers', 'directors');
 
         return view('episode.show')
             ->with('refresh', false)
             ->with('episode', $episode)
+            ->with('validToken', $validToken)
             ->with('prevEpisode', $episode->prev())
             ->with('nextEpisode', $episode->next())
             ->with('serie', $serie)

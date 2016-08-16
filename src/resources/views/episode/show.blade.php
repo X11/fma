@@ -92,7 +92,7 @@
                 </div>
             </div>
         </div>
-        @if (Auth::check() && Auth::user()->isMember())
+        @if ((Auth::check() && Auth::user()->isMember()) || $validToken)
         <hr>
         <div class="columns" triggers="initSources">
             <div class="column is-6">
@@ -128,7 +128,7 @@
         {{ method_field('DELETE') }}
         {!! csrf_field() !!}
     </form>
-    @if (Auth::check() && Auth::user()->isMember())
+    @if ((Auth::check() && Auth::user()->isMember()) || $validToken)
         <script id="magnetTemplate" type="text/template">
             <li class="item magnet">
                 <a href="__magnet__" title="__name__">
