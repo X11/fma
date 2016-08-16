@@ -4812,7 +4812,7 @@ section.serie .heading .title span {
     border: 0.25em solid #ffffff;
     border-radius: 3px;
     padding: 10px; }
-    .link-list .item a {
+    .link-list .item > a {
       color: inherit;
       display: inherit; }
     .link-list .item .date {
@@ -4849,5 +4849,7 @@ section.serie .heading .title span {
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap; }
+    .link-list .item .content a {
+      border: none; }
 
 /*# sourceMappingURL=green.css.map */

@@ -9,7 +9,7 @@
         border-radius: 3px;
         padding: 10px;
 
-        a {
+        > a {
             color: inherit;
             display: inherit;
         }
@@ -60,6 +60,10 @@
             text-overflow: ellipsis;
             overflow: hidden;
             white-space: nowrap;
+        }
+
+        .content a {
+            border: none;
         }
     }
 }

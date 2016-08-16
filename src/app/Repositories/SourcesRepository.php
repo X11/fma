@@ -25,6 +25,16 @@ Class SourcesRepository
 
                 $magnets = array_filter($magnets, $filter_function);
 
+                $magnets = array_map(function($magnet) {
+                    return [
+                        'seeds' => $magnet->getSeeds(),
+                        'peers' => $magnet->getPeers(),
+                        'name' => $magnet->getName(),
+                        'size' => $magnet->getSize(),
+                        'magnet' => $magnet->getMagnet()
+                    ];
+                }, $magnets);
+
                 Cache::put('magnets_'.$query, $magnets, 600);
             } catch (\Exception $e) {
                 // Fall throu, Nothing we can do.
@@ -45,6 +55,15 @@ Class SourcesRepository
             $links = [];
             try {
                 $links = ((new Sources())->search($serie, $season, $number));
+
+                $links = collect($links)->map(function($link){
+                                                $url = parse_url($link);
+                                                $url['href'] = $link;
+                                                return $url;
+                                            })
+                                            ->groupBy('host')
+                                            ->toArray();
+
                 Cache::put('links_'.$serie.$season.$number, $links, 600);
             } catch (\Exception $e) {
                 // Fall throu, Nothing we can do.

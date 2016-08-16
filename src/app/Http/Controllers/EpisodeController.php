@@ -42,32 +42,6 @@ class EpisodeController extends Controller
             throw new NotFoundHttpException();
         }
 
-        // Is token valid?
-        $validToken = false;
-        if ($request->has('_t')) {
-            $baseToken = $request->input('_t');
-            $testToken = base64_decode($baseToken);
-            $validToken = ($testToken + 3600) > time();
-        }
-
-        $search_query = preg_replace('/\([0-9]+\)/', '', $serie->name).' '.$episode->season_episode;
-
-        // Check for a valid user or a valid share token
-        if ((Auth::check() && Auth::user()->isMember()) || $validToken) {
-
-            // Get magnets from the cache else populate the cache 
-            $magnets = $this->sources->searchMagnets($search_query, function ($magnet) use ($episode) {
-                return preg_match("/$episode->season_episode/", $magnet->getName());
-            });
-
-            // Get links from cache
-            $links = $this->sources->searchLinks(strtolower($serie->name), $episode->episodeSeason, $episode->episodeNumber);
-
-        } else {
-            $links = [];
-            $magnets = [];
-        }
-
         $episode->load('guests', 'writers', 'directors');
 
         return view('episode.show')
@@ -76,9 +50,6 @@ class EpisodeController extends Controller
             ->with('prevEpisode', $episode->prev())
             ->with('nextEpisode', $episode->next())
             ->with('serie', $serie)
-            ->with('magnets', $magnets)
-            ->with('links', $links)
-            ->with('search_query', $search_query)
             ->with('breadcrumbs', [[
                 'name' => 'Series',
                 'url' => action('SerieController@index'),
@@ -89,6 +60,38 @@ class EpisodeController extends Controller
                 'name' => $episode->season_episode,
                 'url' => url($episode->url),
             ]]);
+    }
+
+    public function sources(Request $request, Episode $episode)
+    {
+        // Is token valid?
+        $validToken = false;
+        if ($request->has('_t')) {
+            $baseToken = $request->input('_t');
+            $testToken = base64_decode($baseToken);
+            $validToken = ($testToken + 3600) > time();
+        }
+
+        $search_query = preg_replace('/\([0-9]+\)/', '', $episode->serie->name).' '.$episode->season_episode;
+
+        // Check for a valid user or a valid share token
+        if ((Auth::check() && Auth::user()->isMember()) || $validToken) {
+
+            // Get magnets from the cache else populate the cache 
+            $magnets = $this->sources->searchMagnets($search_query, function ($magnet) use ($episode) {
+                return preg_match("/$episode->season_episode/", $magnet->getName());
+            });
+
+            // Get links from cache
+            $links = $this->sources->searchLinks(strtolower($episode->serie->name), $episode->episodeSeason, $episode->episodeNumber);
+        } else {
+            abort(403);
+        }
+
+        return response()->json([
+            'links' => $links,
+            'magnets' => $magnets
+        ], 200);
     }
 
     public function update(Request $request, Episode $episode)

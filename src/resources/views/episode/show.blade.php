@@ -92,60 +92,29 @@
                 </div>
             </div>
         </div>
+        @if (Auth::check() && Auth::user()->isMember())
         <hr>
-        <div class="columns">
+        <div class="columns" triggers="initSources">
             <div class="column is-6">
                 <div class="heading">
                     <h3><span class="icon"><i class="fa fa-magnet"></i></span> Magnets</h3>
                 </div>
-                @if (count($magnets) > 0)
-                    <ul class="link-list">
-                        @foreach ($magnets as $magnet)
-                        <li class="item magnet">
-                            <a href="{{ $magnet->getMagnet() }}" title="{{ $magnet->getName() }}">
-                                <label class="date fixed">
-                                    <span class="bottom text is-success">{{ $magnet->getSeeds() > 9999 ? round($magnet->getSeeds()/1000) . 'K' : $magnet->getSeeds() }}</span>
-                                    <span class="top text is-danger">{{ $magnet->getPeers() }}</span>
-                                </label>
-                                <h3>{{ $magnet->getSize() }}</h3>
-                                <p>{{ $magnet->getName() }}</p>
-                                
-                            </a>
-                        </li>
-                        @endforeach
-                    </ul>
-                @else
-                    <div class="content">
-                        <p>No magnets found</p>
-                    </div>
-                @endif
+                <ul class="link-list" id="magnetList">
+                </ul>
             </div>
             <div class="column is-6">
                 <div class="heading">
                     <h3><span class="icon"><i class="fa fa-youtube-play"></i></span> Sources</h3>
                 </div>
-                @if (count($links) > 0)
-                    <div class="content">
-                        <p>Stream {{ $serie->name }} directly by clicking on one of the links below</p>
-                    </div>
-                    <ul class="link-list">
-                        @foreach ($links as $link)
-                        <li class="item source">
-                            <?php $info = parse_url($link); ?>
-                            <a href="{{ $link }}" title="{{ $link }}">
-                                <h3><span class="text {{ $info['scheme'] == 'https' ? 'is-success' : 'is-danger' }}">{{ $info['scheme'] }}://</span>{{$info['host'] }} <span style="vertical-align:bottom;" class="is-small icon"><i class="fa fa-external-link"></i></span></h3>
-                                <p>{{ $info['path'] }}</p>
-                            </a>
-                        </li>
-                        @endforeach
-                    </ul>
-                @else
-                    <div class="content">
-                        <p>No sources found</p>
-                    </div>
-                @endif
+                <div class="content">
+                    <p>Stream {{ $serie->name }} directly by clicking on one of the links below</p>
+                </div>
+                <ul class="link-list" id="linkList">
+                </ul>
             </div>
         </div>
+        <div class="sources-loading has-text-centered"><i class="fa fa-refresh fa-spin fa-3x fa-fw" aria-hidden="true"></i></div>              
+        @endif
     </div>
 </section>
 @endsection
@@ -159,6 +128,35 @@
         {{ method_field('DELETE') }}
         {!! csrf_field() !!}
     </form>
+    @if (Auth::check() && Auth::user()->isMember())
+        <script id="magnetTemplate" type="text/template">
+            <li class="item magnet">
+                <a href="__magnet__" title="__name__">
+                    <label class="date fixed">
+                        <span class="bottom text is-success">__seeds__</span>
+                        <span class="top text is-danger">__peers__</span>
+                    </label>
+                    <h3>__size__</h3>
+                    <p>__name__</p>
+                </a>
+            </li>
+        </script>
+        <script id="linkTemplate" type="text/template">
+            <li class="item source">
+                <div>
+                    <h3>__key__</h3>
+                    <div class="content">
+                        <ul>
+                            __list__
+                        </ul>
+                    </div>
+                </div>
+            </li>
+        </script>
+        <script id="linkItemTemplate" type="text/template">
+            <li><a href="__href__" target="_blank">__path__ <span style="vertical-align:bottom;" class="is-small icon"><i class="fa fa-external-link"></i></span></a></li>
+        </script>
+    @endif
 @endpush
 
 @push('scripts')
@@ -167,4 +165,7 @@
             setTimeout(function(){location.reload()}, 5000);
         </script>
     @endif
+    <script type="text/javascript" charset="utf-8">
+        window.episodeId = {{$episode->id}}
+    </script>
 @endpush

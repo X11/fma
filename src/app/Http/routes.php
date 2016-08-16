@@ -87,6 +87,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('home', 'HomeController@index');
 
         // EPISODE
+        Route::get('episode/{episode}/sources', 'EpisodeController@sources');
         Route::post('episode/{episodeId}/watched', 'EpisodeController@markWatched');
         Route::delete('episode/{episodeId}/watched', 'EpisodeController@unmarkWatched');
         Route::put('episode/{episode}', 'EpisodeController@update');

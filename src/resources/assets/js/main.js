@@ -1,39 +1,46 @@
 (function() {
-    
+
     "use strict";
 
     Creator.trigger({
         id: 'initHeader',
-        on: function(){
+        on: function() {
             new Controllers.HeaderController();
         }
     });
 
     Creator.trigger({
         id: 'initSerie',
-        on: function(){
+        on: function() {
             new Controllers.SerieController();
         }
     });
 
     Creator.trigger({
         id: 'initEpisode',
-        on: function(){
+        on: function() {
 
         }
     });
 
     Creator.trigger({
         id: 'initSeries',
-        on: function(){
+        on: function() {
             new Controllers.SeriesController();
         }
     });
 
     Creator.trigger({
         id: 'initWatchlist',
-        on: function(){
+        on: function() {
             new Controllers.WatchlistController();
+        }
+    });
+
+    Creator.trigger({
+        id: 'initSources',
+        on: function() {
+            new Controllers.SourcesController();
         }
     });
 }());
