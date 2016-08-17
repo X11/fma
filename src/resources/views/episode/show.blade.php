@@ -109,6 +109,9 @@
                 <div class="content">
                     <p>Stream {{ $serie->name }} directly by clicking on one of the links below</p>
                 </div>
+                <div class="link-frame image is-16by9 is-hidden">
+                    <iframe allowfullscreen width="100%" src="" frameborder="0"></iframe>
+                </div>
                 <ul class="link-list" id="linkList">
                 </ul>
             </div>
@@ -154,7 +157,7 @@
             </li>
         </script>
         <script id="linkItemTemplate" type="text/template">
-            <li><a href="__href__" target="_blank">__path__ <span style="vertical-align:bottom;" class="is-small icon"><i class="fa fa-external-link"></i></span></a></li>
+            <li><a class="link-item" href="__href__" target="_blank">__path__ <span style="vertical-align:bottom;" class="is-small icon"><i class="fa fa-external-link"></i></span></a></li>
         </script>
     @endif
 @endpush

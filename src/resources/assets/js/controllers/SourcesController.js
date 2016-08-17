@@ -6,10 +6,16 @@ Controllers.SourcesController = new Creator.controller({
         "#magnetList": "$magnetList",
         "#magnetTemplate": "$magnetTemplate",
         ".sources-loading": "$sourcesLoading",
+        ".link-frame": "$linkFrame",
+        ".link-frame > iframe": "$linkIframe",
     },
 
     events: {
-
+        "$linkIframe": {
+            error: function(e){
+                console.log(e);
+            }
+        }
     },
 
     init: function() {
@@ -66,8 +72,21 @@ Controllers.SourcesController = new Creator.controller({
                     this.$linkList.append(item);
                 }.bind(this))(links[key], key);
             }
+            this.addListeners();
         } else {
             this.$linkList.html('No Links found');
         }
+    },
+
+    addListeners: function(){
+        this.$('.link-item').on('click', function(e){
+            var href = e.target.getAttribute('href');
+            if (href){
+                this.$linkFrame.removeClass('is-hidden');
+                this.$linkIframe.attr('src', href);
+                e.preventDefault();
+                return false;
+            }
+        }.bind(this));
     }
 });
