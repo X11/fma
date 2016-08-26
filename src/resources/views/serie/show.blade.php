@@ -16,12 +16,8 @@
     <div class="container">
         <div class="columns">
             <div class="column is-8">
-                <div class="heading">
-                    <h2 class="title">{!! str_replace(['(', ')'], ['<span>(', ')</span>'], $serie->name) !!}</h2>
-                </div>
-                <br>
                 <div class="columns is-mobile">
-                    <div class="column is-4">
+                    <div class="column is-3">
                         <figure class="has-text-centered serie-poster">
                             <img src="{{ asset('img/poster.png') }}" data-src="{{ $serie->poster }}" alt=""/>
                         </figure>
@@ -30,39 +26,28 @@
                         @endif
                     </div>
                     <div class="column">
-                        <div style="max-width:600px">
-                            <table class="serie-info">
-                                <tbody>
-                                    @if ($serie->imdbid)
-                                        <tr><th>IMDB:</th><td><a href="http://www.imdb.com/title/{{ $serie->imdbid }}" target="_blank">{{ $serie->imdbid }}</a></td></tr>
-                                    @endif
-                                    <tr><th>STATUS:</th><td>{{ $serie->status or 'N/A'}}</td></tr>
-                                    <tr><th>RATING:</th><td>{{ $serie->rating or '-' }}/10</td></tr>
-                                    @if ($serie->status == "Continuing")
-                                        <tr><th>NETWORK:</th><td>{{ $serie->network or 'N/A'}}</td></tr>
-                                        <tr><th>AIRDAY:</th><td>{{ $serie->airday or 'N/A'}}</td></tr>
-                                        <tr><th>AIRTIME:</th><td>{{ $serie->airtime or 'N/A'}}</td></tr>
-                                        <tr><th>RUNTIME:</th><td>{{ $serie->runtime or 'N/A'}} minutes</td></tr>
-                                    @endif
-                                    <tr><th>TVDB:</th><td>{{ $serie->tvdbid }}</td></tr>
-                                    @if ($serie->tmdbid)
-                                        <tr><th>TMDB:</th><td>{{ $serie->tmdbid }}</td></tr>
-                                    @endif
-                                    <tr>
-                                        <th>GENRE{{ $serie->genres->count() > 1 ? 'S' : '' }}:</th>
-                                        <td class="content">
-                                            @if ($serie->genres->count() > 0)
-                                            <ul>
-                                                @foreach($serie->genres as $genre)
-                                                    <li><a href="{{ url('/serie') }}?_genre={{ $genre->id }}" class="is-link" style="color:inherit;">{{ $genre->name }}</a></li>
-                                                @endforeach
-                                            </ul>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div class="heading">
+                            <h2 class="title">{{ str_replace(['(', ')'], '', $serie->name) }} <span>{{ $serie->year }}</span></h2>
+                            <p class="subtitle"><span class="icon text is-danger"><i class="fa fa-heart"></i></span> {{ $serie->rating }}% | {{ $serie->seasons }} Seasons | {{ $serie->status }}</p>
                         </div>
+                        <br>
+                        <table class="serie-info">
+                            <tbody>
+                                @if ($serie->imdbid)
+                                    <tr><th>IMDB:</th><td><a href="http://www.imdb.com/title/{{ $serie->imdbid }}" target="_blank">{{ $serie->imdbid }}</a></td></tr>
+                                @endif
+                                <tr><th>TVDB:</th><td>{{ $serie->tvdbid }}</td></tr>
+                                @if ($serie->tmdbid)
+                                    <tr><th>TMDB:</th><td>{{ $serie->tmdbid }}</td></tr>
+                                @endif
+                                @if ($serie->status == "Continuing")
+                                    <tr><th>NETWORK:</th><td>{{ $serie->network or 'N/A'}}</td></tr>
+                                    <tr><th>AIRDAY:</th><td>{{ $serie->airday or 'N/A'}}</td></tr>
+                                    <tr><th>AIRTIME:</th><td>{{ $serie->airtime or 'N/A'}}</td></tr>
+                                    <tr><th>RUNTIME:</th><td>{{ $serie->runtime or 'N/A'}} minutes</td></tr>
+                                @endif
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <br>
@@ -72,6 +57,7 @@
                 <div class="content">
                     <p>{{ $serie->overview }}</p>
                 </div>
+                <br>
                 @if ($serie->cast->count() > 0)
                     <br>
                     <div class="heading">

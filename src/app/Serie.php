@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class Serie extends Model
 {
@@ -80,6 +82,47 @@ class Serie extends Model
         return $this->belongsToMany('App\Person', 'serie_cast', 'serie_id', 'person_id')->withPivot('role', 'image', 'sort');
     }
     
+    /** 
+     * Get season count
+     *
+     * @return integer
+     */
+    public function getSeasonsAttribute()
+    {
+        return DB::table('episodes')
+                    ->select('episodeSeason')
+                    ->where('serie_id', $this->id)
+                    ->groupBy('episodeSeason')
+                    ->count();
+    }
+
+    /**
+     * Get series first aired year
+     *
+     */
+    public function getYearAttribute()
+    {
+        $episode = DB::table('episodes')
+                        ->select('aired')
+                        ->where('serie_id', $this->id)
+                        ->where('episodeSeason', 1)
+                        ->where('episodeNumber', 1)
+                        ->first();
+
+        $date = ($episode) ? Carbon::parse($episode->aired) : Carbon::now();
+
+        return $date->year;
+    }
+
+    /**
+     * Get serie rating in percent
+     *
+     * @return void
+     */
+    public function getRatingAttribute($value)
+    {
+        return $value ? $value * 10 : 0;
+    }
     
 
     /**

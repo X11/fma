@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.base')
 
-@section('content')
+@section('body')
 <section class="section landing-info">
     <div class="img-parent"><img src="{{ asset('img/fanart.png') }}" data-src="{{ $fanart }}" alt=""/></div>
     <div class="landing-column">

@@ -30,8 +30,6 @@ class WelcomeComposer
             '//thetvdb.com/banners/fanart/original/248835-3.jpg',
         ];
         $view->with('fanart', $fanarts[array_rand($fanarts)]);
-
-        $view->with('onlyContent', true);
     }
     
 }

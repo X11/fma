@@ -13,7 +13,7 @@ class CreatorServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->creator('layouts/app', 'App\Http\ViewCreators\LayoutCreator');
+        view()->creator('layouts/base', 'App\Http\ViewCreators\LayoutCreator');
 
         view()->creator('partial/header', 'App\Http\ViewCreators\HeaderCreator');
 
