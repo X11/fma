@@ -28,7 +28,7 @@
                     <div class="column">
                         <div class="heading">
                             <h2 class="title">{{ str_replace(['(', ')'], '', $serie->name) }} <span>{{ $serie->year }}</span></h2>
-                            <p class="subtitle"><span class="icon text is-danger"><i class="fa fa-heart"></i></span> {{ $serie->rating }}% | {{ $serie->seasons }} Seasons | {{ $serie->status }}</p>
+                            <p class="subtitle"><span class="icon text is-danger"><i class="fa fa-heart"></i></span> {{ $serie->rating }}% | {{ $serie->seasons }} Season{{ $serie->seasons > 1 ? 's' : '' }} | {{ $serie->status }}</p>
                         </div>
                         <br>
                         <table class="serie-info">
