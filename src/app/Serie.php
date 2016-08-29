@@ -92,6 +92,7 @@ class Serie extends Model
         return DB::table('episodes')
                     ->where('serie_id', $this->id)
                     ->where('episodeNumber', 1)
+                    ->where('episodeSeason', '>', 0)
                     ->count();
     }
 
