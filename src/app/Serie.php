@@ -90,10 +90,8 @@ class Serie extends Model
     public function getSeasonsAttribute()
     {
         return DB::table('episodes')
-                    ->select('episodeSeason')
                     ->where('serie_id', $this->id)
                     ->where('episodeNumber', 1)
-                    ->groupBy('episodeSeason')
                     ->count();
     }
 
