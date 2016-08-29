@@ -92,6 +92,7 @@ class Serie extends Model
         return DB::table('episodes')
                     ->select('episodeSeason')
                     ->where('serie_id', $this->id)
+                    ->where('episodeNumber', 1)
                     ->groupBy('episodeSeason')
                     ->count();
     }
