@@ -93,7 +93,6 @@ input[class="checkbox"] {
 }
 
 .text {
-
     &.is-danger {
         color: $danger;
     }
@@ -101,13 +100,21 @@ input[class="checkbox"] {
     &.is-success {
         color: $success;
     }
+
+    &.is-white {
+        color: $white;
+    }
 }
 
-.landing-info {
+a.button.is-primary {
+    color: $white
+}
+
+.img-section {
     padding: 0;
     overflow: hidden;
     background: black;
-    position: fixed;
+    position: relative;
     top: 0;
     left: 0;
     height: 100vh;
@@ -130,8 +137,66 @@ input[class="checkbox"] {
             margin: auto; 
             min-width: 50%;
             min-height: 50%;
+
+            &.blur {
+                filter: blur(10px);
+            }
         }
+
     }
+
+    .section-center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        width: 100%;
+        max-width: 780px;
+        display: flex;
+
+        .tag {
+            border-radius: 0;
+        }
+
+        > img {
+            flex: 0 0 30%;
+            box-shadow: 0 0 4px #333;
+            border-radius: 4px;
+        }
+
+        > div {
+            flex: 1 0 70%;
+            padding: 40px;
+            color: white;
+
+            h3 {
+                font-size: 40px;
+                color: inherit;
+                font-weight: bold;
+                text-shadow: 1px 1px black;
+
+                span {
+                    font-size: 20px;
+                }
+            }
+
+            p {
+                font-weight: bold;
+                color: inherit;
+                text-shadow: 1px 1px black;
+            }
+        }
+        @media (max-width: $tablet) {
+            > img {
+                display: none;
+            }
+        }
+
+    }
+
+}
+
+.landing-info {
 
     .landing-column {
         padding: 40px;

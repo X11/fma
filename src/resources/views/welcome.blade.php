@@ -1,7 +1,7 @@
 @extends('layouts.base')
 
 @section('body')
-<section class="section landing-info">
+<section class="section img-section landing-info">
     <div class="img-parent"><img src="{{ asset('img/fanart.png') }}" data-src="{{ $fanart }}" alt=""/></div>
     <div class="landing-column">
         <div class="heading">
@@ -102,17 +102,24 @@
             </form>
         @endif
     </div>
-    <footer>
-        <nav style="display:none;">
-            <a href="{{ url('/serie') }}">Series</a>
-            <a href="{{ url('/calendar') }}">Calendar</a>
-        </nav>
-        <div class="content has-text-right">
-            <p>Build to feed the addiction</p>
-        </div>
-        <div class="content has-text-right">
-            <p>&copy; {{ date('Y') }} Feed the addiction</p>
-        </div>
-    </footer>
 </section>
+<section class="section img-section">
+    <div class="img-parent"><img class="blur" src="{{ asset('img/fanart.png') }}" data-src="{{ $last_aired->serie->fanart}}" alt=""/></div>
+    <div class="section-center">
+        <img src="{{ asset('img/poster.png') }}" data-src="{{ $last_aired->serie->poster }}" alt=""/>
+        <div>
+            <div class="heading">
+                <h3 class="title">{{ str_replace(['(', ')'], '', $last_aired->serie->name) }} <span>{{ $last_aired->serie->year }}</span></h3>
+                <p class="subtitle"><span class="icon text is-danger"><i class="fa fa-heart"></i></span> {{ $last_aired->serie->rating }}% | {{ $last_aired->serie->seasons }} Season{{ $last_aired->serie->seasons > 1 ? 's' : '' }}</p>
+            </div>
+            <div class="content">
+                <p>{{ str_limit($last_aired->serie->overview, 250) }}</p>
+                <div class="is-clearfix">
+                    <a class="button is-white is-outlined is-medium is-pulled-right" href="{{ $last_aired->serie->url }}">Read more</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@include('partial.footer')
 @endsection
