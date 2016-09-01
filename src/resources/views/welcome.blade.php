@@ -103,6 +103,7 @@
         @endif
     </div>
 </section>
+@if ($last_aired)
 <section class="section img-section">
     <div class="img-parent"><img class="blur" src="{{ asset('img/fanart.png') }}" data-src="{{ $last_aired->serie->fanart}}" alt=""/></div>
     <div class="section-center">
@@ -121,5 +122,6 @@
         </div>
     </div>
 </section>
+@endif
 @include('partial.footer')
 @endsection
