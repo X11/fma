@@ -20,7 +20,7 @@
                         </div>
                         <table class="profile-info">
                             <tbody>
-                                @if (Auth::user()->isModerator())
+                                @if (Auth::check() && Auth::user()->isModerator())
                                     <tr><th>Email:</th><td>{{ $profile->email}}</td></tr>
                                 @endif
                                 <tr><th>Last login:</th><td>{{ $profile->last_login->diffForHumans()}}</td></tr>
@@ -100,25 +100,27 @@
         </div>
     </div>
 </section>
-@if (Auth::user()->isAdmin() && $profile->role_index < Auth::user()->role_index)
+@if (Auth::check() && Auth::user()->isAdmin() && $profile->role_index < Auth::user()->role_index)
     <section class="section">
-        <div class="heading">
-            <h2 class="title">Admin CP</h2>
+        <div class="container">
+            <div class="heading">
+                <h2 class="title">Admin CP</h2>
+            </div>
+            <form role="form" method="POST" action="{{ url('/admin/user', [$profile->id, 'role']) }}">
+                {!! csrf_field() !!}
+                <label class="label">User role</label>
+                <p class="control has-addons">
+                    <span class="select">
+                        <select name="role">
+                            @foreach ($profile->USER_ROLES as $i => $role)
+                                <option {{ $i < Auth::user()->role_index ? '' : 'disabled' }} {{ $role == $profile->role ? 'selected' : '' }} value="{{$i}}">{{ $role }}</option>
+                            @endforeach
+                        </select>
+                    </span>
+                    <button class="button is-primary" type="submit"><span class="icon"><i class="fa fa-edit"></i></span></button>
+                </p>
+            </form>
         </div>
-        <form role="form" method="POST" action="{{ url('/admin/user', [$profile->id, 'role']) }}">
-            {!! csrf_field() !!}
-            <label class="label">User role</label>
-            <p class="control has-addons">
-                <span class="select">
-                    <select name="role">
-                        @foreach ($profile->USER_ROLES as $i => $role)
-                            <option {{ $i < Auth::user()->role_index ? '' : 'disabled' }} {{ $role == $profile->role ? 'selected' : '' }} value="{{$i}}">{{ $role }}</option>
-                        @endforeach
-                    </select>
-                </span>
-                <button class="button is-primary" type="submit"><span class="icon"><i class="fa fa-edit"></i></span></button>
-            </p>
-        </form>
     </section>
 @endif
 @endsection

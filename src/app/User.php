@@ -52,7 +52,7 @@ class User extends Authenticatable
         2 => 'Moderator',
         3 => 'SuperModerator',
         4 => 'Admin',
-        5 => 'Owner',
+        5 => 'Sadmin',
     ];
 
     /**
@@ -125,7 +125,7 @@ class User extends Authenticatable
         return $this->attributes['role'];
     }
 
-    public function isOwner()
+    public function isSadmin()
     {
         return $this->attributes['role'] >= 5;
     }
