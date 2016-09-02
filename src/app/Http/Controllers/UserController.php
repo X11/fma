@@ -92,7 +92,7 @@ class UserController extends Controller
                 'Moderator' => 'is-success',
                 'SuperModerator' => 'is-warning',
                 'Admin' => 'is-danger',
-                'Owner' => 'is-dark',
+                'Sadmin' => 'is-dark',
             ])
             ->with('breadcrumbs', [[
                 'name' => 'Account',
