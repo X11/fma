@@ -76,8 +76,9 @@
                     @if (Auth::check())
                         <div class="is-clearfix">
                             <p class="is-pulled-right">
-                                @if (Auth::user()->isModerator())
+                                @if (Auth::user()->isMember())
                                     <a class="button is-link is-small" href="?_t={{ base64_encode(time()) }}">Share</a>
+                                    <button class="button is-link is-small" type="submit" form="purgeEpisodeCache">Purge</button>
                                 @endif
                                 <button class="button is-link is-small" type="submit" form="updateEpisode">Update</button>
                                 @if (Auth::user()->isAdmin())
@@ -125,6 +126,10 @@
 @push('post-footer')
     <form id="updateEpisode" action="{{ url('/episode', [$episode->id]) }}" method="POST">
         {{ method_field('PUT') }}
+        {!! csrf_field() !!}
+    </form>
+    <form id="purgeEpisodeCache" action="{{ url('/episode', [$episode->id, 'sources']) }}" method="POST">
+        {{ method_field('DELETE') }}
         {!! csrf_field() !!}
     </form>
     <form id="deleteEpisode" action="{{ url('/episode', [$episode->id]) }}" method="POST">

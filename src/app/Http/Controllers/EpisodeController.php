@@ -10,6 +10,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use App\Activity;
 use App\Jobs\UpdateEpisode;
 use App\Repositories\SourcesRepository;
+use Cache;
 
 class EpisodeController extends Controller
 {
@@ -101,6 +102,16 @@ class EpisodeController extends Controller
             'links' => $links,
             'magnets' => $magnets
         ], 200);
+    }
+
+    public function purgeSources(Request $request, Episode $episode)
+    {
+        $search_query = preg_replace('/\([0-9]+\)/', '', $episode->serie->name).' '.$episode->season_episode;
+
+        Cache::forget('magnets_'.$search_query);
+        Cache::forget('links_'.strtolower($episode->serie->name).$episode->episodeSeason.$episode->episodeNumber);
+
+        return back();
     }
 
     public function update(Request $request, Episode $episode)

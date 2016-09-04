@@ -72,6 +72,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('serie/{serie}/episode/{EpisodeSlug}', 'EpisodeController@show');
     Route::get('serie/{serie}/{EpisodeSlug}', 'EpisodeController@show');
     Route::get('episode/{episode}/sources', 'EpisodeController@sources');
+    Route::delete('episode/{episode}/sources', 'EpisodeController@purgeSources');
 
     // CALENDAR
     Route::get('calendar', 'CalendarController@index');
