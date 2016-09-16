@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => "no-reply@fma.io", 'name' => "FMA"],
+    'from' => ['address' => "no-reply@feedmyaddiction.xyz", 'name' => "FMA"],
 
     /*
     |--------------------------------------------------------------------------

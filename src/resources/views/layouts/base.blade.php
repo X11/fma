@@ -7,6 +7,9 @@
     <meta name="csrf-token" content="{!! csrf_token() !!}">
     <meta name="description" content="FMA Provides a platform to track TV shows and series. Discover new TV shows and keep track of when new episodes are about to air." />
     <meta http-equiv="content-type" content="text/html;charset=UTF-8">
+    <meta name="application-name" content="Feed my addiction">
+    <meta name="robots" content="index,follow,noodp"><!-- All Search Engines -->
+    <meta name="googlebot" content="index,follow"><!-- Google Specific -->
     @yield('meta')
 
     <title>@yield('title', 'Feeding my addiction')</title>
