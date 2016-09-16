@@ -6,8 +6,7 @@ Homestead.json
 composer.lock
 composer.phar
 phpunit.xml
-tags
-tags.vendors
+.tags
 public/data/*
 public/build/*
 npm-debug.log
