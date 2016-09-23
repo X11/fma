@@ -8,7 +8,7 @@
 <div class="box">
     <div class="columns">
         <div class="column is-narrow has-text-centered">
-            <img style="width: 100%; max-width:150px" src="http://www.gravatar.com/avatar/{{ md5(strtolower(trim($user->email))) }}?s=300&default=mm" alt="Image">
+            <img style="width: 100%; max-width:150px" src="https://www.gravatar.com/avatar/{{ md5(strtolower(trim($user->email))) }}?s=300&default=mm" alt="Image">
             <div class="has-text-centered">
                 <hr>
                 <p class="tag is-medium {{ $role_tags[$user->role] }}"> {{ $user->role  }}</p>
