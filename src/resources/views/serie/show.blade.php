@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('description', str_limit($serie->overview, 250))
+@section('description', str_limit($serie->overview, 150))
 @section('title', $serie->name . ' - FMA')
 @section('hero.display', 'none')
 
