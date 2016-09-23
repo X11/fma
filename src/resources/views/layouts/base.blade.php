@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{!! csrf_token() !!}">
-    <meta name="description" content="FMA Provides a platform to track TV shows and series. Discover new TV shows and keep track of when new episodes are about to air." />
+    <meta name="description" content="@yield('description', 'FMA Provides a platform to track TV shows and series. Discover new TV shows and keep track of when new episodes are about to air.')" />
     <meta http-equiv="content-type" content="text/html;charset=UTF-8">
     <meta name="application-name" content="Feed my addiction">
     <meta name="robots" content="index,follow,noodp"><!-- All Search Engines -->
