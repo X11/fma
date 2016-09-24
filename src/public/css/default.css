@@ -4997,6 +4997,22 @@ section.serie .heading .title span {
     padding: 20px;
     color: #fff;
     background: rgba(0, 0, 0, 0.2); }
+    .episode-card .card-body .heading .tag {
+      margin-bottom: 10px;
+      border-radius: 0;
+      position: relative; }
+      .episode-card .card-body .heading .tag.is-premier {
+        background: #ed6c63;
+        color: #fff; }
+      .episode-card .card-body .heading .tag.is-returning {
+        background: #f68b39;
+        color: #fff; }
+      .episode-card .card-body .heading .tag.is-final {
+        background: #97cd76;
+        color: #fff; }
+      .episode-card .card-body .heading .tag.is-tracking {
+        background: #1fc8db;
+        color: #fff; }
     .episode-card .card-body h3 {
       font-size: 30px;
       color: inherit;

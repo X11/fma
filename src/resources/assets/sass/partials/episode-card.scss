@@ -54,6 +54,32 @@
         color: $white;
         background: rgba(0,0,0,0.2);
 
+        .heading .tag {
+            margin-bottom: 10px;
+            border-radius: 0;
+            position: relative;
+
+            &.is-premier {
+                background: $red;
+                color: $white;
+            }
+
+            &.is-returning {
+                background: $orange;
+                color: $white;
+            }
+
+            &.is-final {
+                background: $green;
+                color: $white;
+            }
+
+            &.is-tracking {
+                background: $primary;
+                color: $white;
+            }
+        }
+
         h3 {
             font-size: 30px;
             color: inherit;

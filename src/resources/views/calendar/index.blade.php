@@ -83,8 +83,20 @@
             </div>           
             <div class="card-body">
                 <div class="heading">
+                    @if ($episode->serie_premier)
+                        <span class="tag is-premier">Premier</span>
+                    @elseif ($episode->season_premier)
+                        <span class="tag is-returning">Returning</span>
+                    @elseif ($episode->season_finale)
+                        <span class="tag is-final">Season final</span>
+                    @endif
+                    @if(in_array($episode->serie->id, $watching_ids))
+                        <span class="tag is-tracking">Tracking</span>
+                    @endif
                     <h3 class="title">{{ $episode->name }}</h3>
-                    <p class="subtitle">{{ $episode->serie->name }} | <span class="icon text is-danger"><i class="fa fa-heart"></i></span> {{ $episode->serie->rating }}%</p>
+                    <p class="subtitle"> 
+                        {{ $episode->season_episode }} | {{ $episode->serie->name }} | <span class="icon text is-danger"><i class="fa fa-heart"></i></span> {{ $episode->serie->rating }}%
+                    </p>
                 </div>
                 <div class="content">
                     <p>{{ str_limit($episode->overview, 250) }}</p>
