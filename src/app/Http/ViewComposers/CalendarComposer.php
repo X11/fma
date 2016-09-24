@@ -31,25 +31,24 @@ class CalendarComposer
                                             : User::$BASE_SETTINGS['calendar_overview']);
 
         // Create dates
-        $start = Carbon::parse('monday a week ago');
+        $start = Carbon::parse('first day of this month')->modify('first monday of this week');
+        $stop = Carbon::parse('last day of this month')->modify('sunday');
 
-        $dates = collect();
-        for ($k = 0; $k < 4; ++$k) {
+        $weeks = collect();
+        $l = ($stop->weekOfYear - $start->weekOfYear);
+        for ($k = 0; $k < $l+1; ++$k) {
             $week = collect();
             for ($i = 0; $i < 7; ++$i) {
-                $week->put($start->toDateString(), ($i * 4) + ($k + 1));
+                $week->put($start->toDateString(), $start->copy());
                 $start->modify('+1 day');
             }
-            $dates->push($week);
+            $weeks->push($week);
         }
 
-        $view->with('dates', $dates);
-
+        $view->with('weeks', $weeks);
 
         // Add todays date
-        $view->with('today', Carbon::now()->toDateString());
-
-
+        $view->with('today', request('date') ? Carbon::parse(request('date')) : Carbon::now());
 
         // User watching IDs
         $watching_ids = Auth::check()

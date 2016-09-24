@@ -28,14 +28,13 @@ class CalendarController extends Controller
      */
     public function index(Request $request)
     {
-        $start = Carbon::parse('monday a week ago');
-        $stop = clone $start;
-        $stop->addDays(28);
+        $start = Carbon::parse('first day of this month')->modify('first monday of this week');
+        $stop = Carbon::parse('last day of this month')->modify('sunday');
 
-        $episodes = $this->episodes->getEpisodesBetween($start, $stop);
+        $meta = $this->episodes->getEpisodesMetaDataBetween($start, $stop);
 
         return view('calendar.index')
-            ->with('episodes', $episodes)
+            ->with('meta', $meta)
             ->with('breadcrumbs', [[
                 'name' => 'Calendar',
                 'url' => action('CalendarController@index'),

@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use DB;
 
 class Episode extends Model
 {
@@ -139,6 +140,43 @@ class Episode extends Model
     }
 
     /**
+     * Weather the episode is the season premier
+     *
+     * @return boolean
+     */
+    public function getSeasonPremierAttribute()
+    {
+        return $this->attributes['episodeNumber'] == 1;
+    }
+    
+    /**
+     * Weather the episode is the serie premier
+     *
+     * @return boolean
+     */
+    public function getSeriePremierAttribute()
+    {
+        return $this->season_premier && $this->attributes['episodeSeason'] == 1;
+    }
+
+    /**
+     * Weather the episode is the season finale
+     *
+     * @return void
+     */
+    public function getSeasonFinaleAttribute()
+    {
+        return DB::table('episodes')
+                    ->where([
+                        ['serie_id', $this->serie_id],
+                        ['episodeSeason', $this->episodeSeason],
+                        ['episodeNumber', $this->episodeNumber + 1]
+                    ])
+                    ->count() == 0;
+    }
+    
+
+    /**
      * undocumented function.
      *
      * @return Episode
@@ -149,9 +187,9 @@ class Episode extends Model
                                         ['episodeSeason', $this->episodeSeason],
                                         ['episodeNumber', $this->episodeNumber - 1],
                                     ])->first()
-                                ?: self::where([['serie_id', $this->serie_id],
-                                                    ['episodeSeason', $this->episodeSeason - 1],
-                                                ])->orderBy('episodeNumber', 'desc')->first();
+                ?: self::where([['serie_id', $this->serie_id],
+                                    ['episodeSeason', $this->episodeSeason - 1],
+                                ])->orderBy('episodeNumber', 'desc')->first();
     }
 
     /**
@@ -165,8 +203,8 @@ class Episode extends Model
                                         ['episodeSeason', $this->episodeSeason],
                                         ['episodeNumber', $this->episodeNumber + 1],
                                     ])->first()
-                                ?: self::where([['serie_id', $this->serie_id],
-                                                    ['episodeSeason', $this->episodeSeason + 1],
-                                                ])->orderBy('episodeNumber', 'asc')->first();
+                ?: self::where([['serie_id', $this->serie_id],
+                                    ['episodeSeason', $this->episodeSeason + 1],
+                                ])->orderBy('episodeNumber', 'asc')->first();
     }
 }

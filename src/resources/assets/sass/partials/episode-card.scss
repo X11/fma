@@ -1,0 +1,75 @@
+
+.episode-card {
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 2px #333;
+    border-radius: 4px;
+    margin-bottom: 10px;
+
+    .card-background {
+        position: absolute; 
+        top: -50%; 
+        left: -50%; 
+        width: 200%; 
+        height: 200%;
+
+        img {
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            right: 0; 
+            bottom: 0; 
+            margin: auto; 
+            min-width: 50%;
+            min-height: 50%;
+            filter: blur(10px);
+        }
+
+    }
+
+    display: flex;
+
+    .card-left {
+        flex: 0 0 20%;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: rgba(0,0,0,0.2);
+
+        img {
+            box-shadow: 0 0 4px #333;
+            border-radius: 4px;
+        }
+    }
+
+    .card-body {
+        z-index: 2;
+
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        padding: 20px;
+        color: $white;
+        background: rgba(0,0,0,0.2);
+
+        h3 {
+            font-size: 30px;
+            color: inherit;
+            font-weight: bold;
+            text-shadow: 1px 1px black;
+
+            span {
+                font-size: 20px;
+            }
+        }
+
+        p {
+            font-weight: bold;
+            color: inherit;
+            text-shadow: 1px 1px black;
+            max-width: 500px;
+        }
+    }
+}

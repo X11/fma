@@ -1,93 +1,131 @@
+.calendar {
+    display: flex;   
 
-.calendar-column {
-    
-    h2 {
-        margin: 1.875em 0 0 0;
-        font-weight: 500;
-        color: #919FAF;
-    }
-
-    &.is-active h2 {
-        color: $danger;
-        font-weight: 700;
+    @media (max-width: 768px) {
+        flex-direction: column;
     }
 }
 
-.calendar-item {
-    margin: 4px 0;
-    box-shadow: 0 2px 3px rgba($black, 0.2);
-    border: 0.25em solid #ffffff;
-    border-radius: 3px;
-    padding: 10px;
+.calendar-side {
+    flex: 0 0 20%;
 
-    a {
-        color: inherit;
-        display: inherit;
-    }
+    background: $primary;
 
-    .date {
-        float: left;
-        padding: 0.125em 0.75em 0 0;
-        margin-left: 0.25em;
-        margin-right: 0.75em;
+    > div {
+        color: $white;
         font-weight: bold;
+        padding: 10px;
+
+        p {
+            color: $grey-lighter;
+            font-size: 20px;
+        }
+
+        h2 {
+            font-size: 30px;
+        }
+
+        h2 span {
+            display: block;
+        }
+    }
+}
+
+.calendar-heading .calendar-row > div {
+    text-align: right;
+
+    &.month {
         text-align: center;
-        border-right: 2px solid #919FAF;
+        padding: 10px 0;
+        font-weight: bold;
     }
+}
 
-    .date .bottom,
-    .date .top {
-      display: block;
-    }
-
-    .date .top {
-      font-size: 0.75em;
-    }
-
-    .date .bottom {
-      margin-top: -2px;
-      font-size: 1.3em;
-    }
+.calendar-data .calendar-row > div,
+.calendar-data .calendar-row > .calendar-col {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    min-height: 110px;
+    color: inherit;
 
     h3 {
-        font-weight: bold;
-        margin-top: 3px;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
+        font-size: 20px;           
+        text-align: right;
     }
 
-    p {
-        font-size: 0.875em;
-        color: #919FAF;
-        -webkit-font-smoothing: antialiased;
-        margin-right: 0.25em;
-        padding-left: 0.1em;
-        padding-right: 0.5em;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
+    .counts {
+        li {
+            position: relative;
+            left: -5px;
+            padding: 2px;
+            font-size: 12px;
+
+            &.premiers {
+                background: $red;
+                color: $white;
+            }
+
+            &.returning {
+                background: $orange;
+                color: $white;
+            }
+
+            &.finale {
+                background: $green;
+                color :$white;
+            }
+
+            &.tracking {
+                background: $primary;
+                color: $white;
+            }
+
+        }
     }
 
-    &.is-premier .date,
-    &.is-returning .date {
-        border-width: 0.25em;
-        margin-right: 0.75em;
-        padding-right: 0.625em;
+    &.is-active {
+        background: darken($primary, 10%);
+        color: $white;
     }
 
-    &.is-watching {
-        border-left-color: $primary;
-
-    }
-    &.is-premier .date {
-        border-right-color: $danger;
-    }
-    &.is-returning .date {
-        border-right-color: $warning;
+    &.is-inactive {
+        background: $grey-light;
     }
 
-    &:first-child {
-        margin-top: 2px;
+    &:hover {
+        background: $grey-lighter;
+    }
+
+    @media (max-width: 768px) {
+
+        h3 {
+            font-size: 15px;           
+        }
+    }
+}
+
+.calendar-body {
+    flex: 1;
+}
+
+.calendar-row {
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid $grey;
+
+    &:nth-child(1) {
+        border-top: 1px solid $grey;
+    }
+
+    > div,
+    .calendar-col {
+        flex: 1;
+        padding: 5px;
+        border-right: 1px solid $grey;
+
+        &:nth-child(1) {
+            border-left: 1px solid $grey;
+        }
     }
 }

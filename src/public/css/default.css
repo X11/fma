@@ -4670,69 +4670,111 @@ section.serie .heading .title span {
       right: 0;
       top: 0; }
 
-.calendar-column h2 {
-  margin: 1.875em 0 0 0;
-  font-weight: 500;
-  color: #919FAF; }
+.calendar {
+  display: -webkit-box;
+  display: flex; }
+  @media (max-width: 768px) {
+    .calendar {
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      flex-direction: column; } }
 
-.calendar-column.is-active h2 {
-  color: #ed6c63;
-  font-weight: 700; }
-
-.calendar-item {
-  margin: 4px 0;
-  box-shadow: 0 2px 3px rgba(17, 17, 17, 0.2);
-  border: 0.25em solid #ffffff;
-  border-radius: 3px;
-  padding: 10px; }
-  .calendar-item a {
-    color: inherit;
-    display: inherit; }
-  .calendar-item .date {
-    float: left;
-    padding: 0.125em 0.75em 0 0;
-    margin-left: 0.25em;
-    margin-right: 0.75em;
+.calendar-side {
+  -webkit-box-flex: 0;
+  flex: 0 0 20%;
+  background: #1fc8db; }
+  .calendar-side > div {
+    color: #fff;
     font-weight: bold;
+    padding: 10px; }
+    .calendar-side > div p {
+      color: #f5f7fa;
+      font-size: 20px; }
+    .calendar-side > div h2 {
+      font-size: 30px; }
+    .calendar-side > div h2 span {
+      display: block; }
+
+.calendar-heading .calendar-row > div {
+  text-align: right; }
+  .calendar-heading .calendar-row > div.month {
     text-align: center;
-    border-right: 2px solid #919FAF; }
-  .calendar-item .date .bottom,
-  .calendar-item .date .top {
-    display: block; }
-  .calendar-item .date .top {
-    font-size: 0.75em; }
-  .calendar-item .date .bottom {
-    margin-top: -2px;
-    font-size: 1.3em; }
-  .calendar-item h3 {
-    font-weight: bold;
-    margin-top: 3px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap; }
-  .calendar-item p {
-    font-size: 0.875em;
-    color: #919FAF;
-    -webkit-font-smoothing: antialiased;
-    margin-right: 0.25em;
-    padding-left: 0.1em;
-    padding-right: 0.5em;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap; }
-  .calendar-item.is-premier .date,
-  .calendar-item.is-returning .date {
-    border-width: 0.25em;
-    margin-right: 0.75em;
-    padding-right: 0.625em; }
-  .calendar-item.is-watching {
-    border-left-color: #1fc8db; }
-  .calendar-item.is-premier .date {
-    border-right-color: #ed6c63; }
-  .calendar-item.is-returning .date {
-    border-right-color: #fce473; }
-  .calendar-item:first-child {
-    margin-top: 2px; }
+    padding: 10px 0;
+    font-weight: bold; }
+
+.calendar-data .calendar-row > div,
+.calendar-data .calendar-row > .calendar-col {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  min-height: 110px;
+  color: inherit; }
+  .calendar-data .calendar-row > div h3,
+  .calendar-data .calendar-row > .calendar-col h3 {
+    font-size: 20px;
+    text-align: right; }
+  .calendar-data .calendar-row > div .counts li,
+  .calendar-data .calendar-row > .calendar-col .counts li {
+    position: relative;
+    left: -5px;
+    padding: 2px;
+    font-size: 12px; }
+    .calendar-data .calendar-row > div .counts li.premiers,
+    .calendar-data .calendar-row > .calendar-col .counts li.premiers {
+      background: #ed6c63;
+      color: #fff; }
+    .calendar-data .calendar-row > div .counts li.returning,
+    .calendar-data .calendar-row > .calendar-col .counts li.returning {
+      background: #f68b39;
+      color: #fff; }
+    .calendar-data .calendar-row > div .counts li.finale,
+    .calendar-data .calendar-row > .calendar-col .counts li.finale {
+      background: #97cd76;
+      color: #fff; }
+    .calendar-data .calendar-row > div .counts li.tracking,
+    .calendar-data .calendar-row > .calendar-col .counts li.tracking {
+      background: #1fc8db;
+      color: #fff; }
+  .calendar-data .calendar-row > div.is-active,
+  .calendar-data .calendar-row > .calendar-col.is-active {
+    background: #199fae;
+    color: #fff; }
+  .calendar-data .calendar-row > div.is-inactive,
+  .calendar-data .calendar-row > .calendar-col.is-inactive {
+    background: #d3d6db; }
+  .calendar-data .calendar-row > div:hover,
+  .calendar-data .calendar-row > .calendar-col:hover {
+    background: #f5f7fa; }
+  @media (max-width: 768px) {
+    .calendar-data .calendar-row > div h3,
+    .calendar-data .calendar-row > .calendar-col h3 {
+      font-size: 15px; } }
+
+.calendar-body {
+  -webkit-box-flex: 1;
+  flex: 1; }
+
+.calendar-row {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  border-bottom: 1px solid #aeb1b5; }
+  .calendar-row:nth-child(1) {
+    border-top: 1px solid #aeb1b5; }
+  .calendar-row > div,
+  .calendar-row .calendar-col {
+    -webkit-box-flex: 1;
+    flex: 1;
+    padding: 5px;
+    border-right: 1px solid #aeb1b5; }
+    .calendar-row > div:nth-child(1),
+    .calendar-row .calendar-col:nth-child(1) {
+      border-left: 1px solid #aeb1b5; }
 
 .seasons .watched {
   color: #ed6c63; }
@@ -4898,5 +4940,72 @@ section.serie .heading .title span {
       white-space: nowrap; }
     .link-list .item .content a {
       border: none; }
+
+.episode-card {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 2px #333;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  display: -webkit-box;
+  display: flex; }
+  .episode-card .card-background {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%; }
+    .episode-card .card-background img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+      min-width: 50%;
+      min-height: 50%;
+      -webkit-filter: blur(10px);
+      filter: blur(10px); }
+  .episode-card .card-left {
+    -webkit-box-flex: 0;
+    flex: 0 0 20%;
+    z-index: 2;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.2); }
+    .episode-card .card-left img {
+      box-shadow: 0 0 4px #333;
+      border-radius: 4px; }
+  .episode-card .card-body {
+    z-index: 2;
+    -webkit-box-flex: 1;
+    flex: 1;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    padding: 20px;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.2); }
+    .episode-card .card-body h3 {
+      font-size: 30px;
+      color: inherit;
+      font-weight: bold;
+      text-shadow: 1px 1px black; }
+      .episode-card .card-body h3 span {
+        font-size: 20px; }
+    .episode-card .card-body p {
+      font-weight: bold;
+      color: inherit;
+      text-shadow: 1px 1px black;
+      max-width: 500px; }
 
 /*# sourceMappingURL=default.css.map */
