@@ -4701,6 +4701,8 @@ section.serie .heading .title span {
     text-align: center;
     padding: 10px 0;
     font-weight: bold; }
+    .calendar-heading .calendar-row > div.month span {
+      padding: 0 10px; }
 
 .calendar-data .calendar-row > div,
 .calendar-data .calendar-row > .calendar-col {
@@ -4739,6 +4741,9 @@ section.serie .heading .title span {
     .calendar-data .calendar-row > .calendar-col .counts li.tracking {
       background: #48cfad;
       color: #fff; }
+  .calendar-data .calendar-row > div:hover,
+  .calendar-data .calendar-row > .calendar-col:hover {
+    background: #f5f7fa; }
   .calendar-data .calendar-row > div.is-active,
   .calendar-data .calendar-row > .calendar-col.is-active {
     background: #2fb593;
@@ -4746,9 +4751,6 @@ section.serie .heading .title span {
   .calendar-data .calendar-row > div.is-inactive,
   .calendar-data .calendar-row > .calendar-col.is-inactive {
     background: #d3d6db; }
-  .calendar-data .calendar-row > div:hover,
-  .calendar-data .calendar-row > .calendar-col:hover {
-    background: #f5f7fa; }
   @media (max-width: 768px) {
     .calendar-data .calendar-row > div h3,
     .calendar-data .calendar-row > .calendar-col h3 {

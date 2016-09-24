@@ -22,7 +22,11 @@
             <div class="calendar-body">
                 <div class="calendar-heading">
                     <div class="calendar-row">
-                        <div class="month">{{ $today->format('F') }}</div>
+                        <div class="month">
+                            <a href="?date={{ $today->copy()->modify('first day of last month')->toDateString() }}"><i class="fa fa-angle-left"></i></a>
+                            <span>{{ $today->format('F') }}</span>
+                            <a href="?date={{ $today->copy()->modify('first day of next month')->toDateString() }}"><i class="fa fa-angle-right"></i></a>
+                        </div>
                     </div>
                     <div class="calendar-row">
                         <div>Mon</div>

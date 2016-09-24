@@ -38,6 +38,10 @@
         text-align: center;
         padding: 10px 0;
         font-weight: bold;
+
+        span {
+            padding: 0 10px;
+        }
     }
 }
 
@@ -84,6 +88,10 @@
         }
     }
 
+    &:hover {
+        background: $grey-lighter;
+    }
+
     &.is-active {
         background: darken($primary, 10%);
         color: $white;
@@ -91,10 +99,6 @@
 
     &.is-inactive {
         background: $grey-light;
-    }
-
-    &:hover {
-        background: $grey-lighter;
     }
 
     @media (max-width: 768px) {

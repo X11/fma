@@ -28,8 +28,10 @@ class CalendarController extends Controller
      */
     public function index(Request $request)
     {
-        $start = Carbon::parse('first day of this month')->modify('first monday of this week');
-        $stop = Carbon::parse('last day of this month')->modify('sunday');
+        $start = request('date') ? Carbon::parse(request('date')) : Carbon::now();
+        $stop = $start->copy();
+        $start = $start->modify('first day of this month')->modify('first monday of this week');
+        $stop = $stop->modify('last day of this month')->modify('sunday');
 
         $meta = $this->episodes->getEpisodesMetaDataBetween($start, $stop);
 
