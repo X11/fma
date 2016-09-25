@@ -28,7 +28,7 @@
                             <a href="?date={{ $today->copy()->modify('first day of next month')->toDateString() }}"><i class="fa fa-angle-right"></i></a>
                         </div>
                     </div>
-                    <div class="calendar-row">
+                    <div class="calendar-row is-hidden-mobile">
                         <div>Mon</div>
                         <div>Tue</div>
                         <div>Wed</div>
@@ -43,7 +43,7 @@
                     <div class="calendar-row">
                         @foreach($week as $day => $date)
                         <a href="?date={{ $date->toDateString() }}" class="calendar-col {{ $date->toDateString() == $today->toDateString() ? 'is-active' : '' }} {{ $date->month == $today->month ? '' : 'is-inactive' }}">
-                            <h3>{{ $date->day }} <small>{{ $date->format('M') }}</small></h3>                   
+                            <h3><span class="is-hidden-tablet">{{ $date->format('D') }}, </span><small>{{ $date->format('M') }}</small> {{ $date->day }}</h3>                   
                             @if (isset($meta[$day]))
                             <ul class="counts">
                                 <li class="series">{{ $meta[$day]['series'] }} {{ $meta[$day]['series'] > 1 ? 'series' : 'serie' }}</li>
@@ -78,7 +78,7 @@
             <div class="card-background">
                 <img src="{{ asset('img/fanart.png') }}" data-src="{{ $episode->serie->fanart }}" alt=""/>
             </div>
-            <div class="card-left">
+            <div class="card-left is-hidden-mobile">
                 <img src="{{ asset('img/poster.png') }}" data-src="{{ $episode->serie->poster }}" alt=""/>
             </div>           
             <div class="card-body">

@@ -56,6 +56,10 @@
     h3 {
         font-size: 20px;           
         text-align: right;
+
+        @media (max-width: 768px) {
+            font-size: 15px;           
+        }
     }
 
     .counts {
@@ -100,13 +104,6 @@
     &.is-inactive {
         background: $grey-light;
     }
-
-    @media (max-width: 768px) {
-
-        h3 {
-            font-size: 15px;           
-        }
-    }
 }
 
 .calendar-body {
@@ -129,6 +126,19 @@
         border-right: 1px solid $grey;
 
         &:nth-child(1) {
+            border-left: 1px solid $grey;
+        }
+    }
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        border-bottom: none;
+
+        > div,
+        .calendar-col {
+            flex: 1;
+            padding: 5px;
+            border-bottom: 1px solid $grey;
             border-left: 1px solid $grey;
         }
     }

@@ -4719,6 +4719,10 @@ section.serie .heading .title span {
   .calendar-data .calendar-row > .calendar-col h3 {
     font-size: 20px;
     text-align: right; }
+    @media (max-width: 768px) {
+      .calendar-data .calendar-row > div h3,
+      .calendar-data .calendar-row > .calendar-col h3 {
+        font-size: 15px; } }
   .calendar-data .calendar-row > div .counts li,
   .calendar-data .calendar-row > .calendar-col .counts li {
     position: relative;
@@ -4751,10 +4755,6 @@ section.serie .heading .title span {
   .calendar-data .calendar-row > div.is-inactive,
   .calendar-data .calendar-row > .calendar-col.is-inactive {
     background: #d3d6db; }
-  @media (max-width: 768px) {
-    .calendar-data .calendar-row > div h3,
-    .calendar-data .calendar-row > .calendar-col h3 {
-      font-size: 15px; } }
 
 .calendar-body {
   -webkit-box-flex: 1;
@@ -4777,6 +4777,19 @@ section.serie .heading .title span {
     .calendar-row > div:nth-child(1),
     .calendar-row .calendar-col:nth-child(1) {
       border-left: 1px solid #aeb1b5; }
+  @media (max-width: 768px) {
+    .calendar-row {
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      flex-direction: column;
+      border-bottom: none; }
+      .calendar-row > div,
+      .calendar-row .calendar-col {
+        -webkit-box-flex: 1;
+        flex: 1;
+        padding: 5px;
+        border-bottom: 1px solid #aeb1b5;
+        border-left: 1px solid #aeb1b5; } }
 
 .seasons .watched {
   color: #ed6c63; }
