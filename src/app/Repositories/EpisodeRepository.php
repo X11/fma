@@ -62,11 +62,14 @@ class EpisodeRepository
     public function getEpisodesMetaDataBetween($start, $stop)
     {
         $user = Auth::user();
-
-        $serie_ids = $user->watching()
-                            ->get()
-                            ->pluck('id')
-                            ->toArray();
+        if ($user){
+            $serie_ids = $user->watching()
+                                ->get()
+                                ->pluck('id')
+                                ->toArray();
+        } else {
+            $serie_ids = [];
+        }
 
         $days = Episode::whereBetween('aired', [
                 $start->toDateString(),

@@ -46,7 +46,7 @@
                             <h3><span class="is-hidden-tablet">{{ $date->format('D') }}, </span><small>{{ $date->format('M') }}</small> {{ $date->day }}</h3>                   
                             @if (isset($meta[$day]))
                             <ul class="counts">
-                                <li class="series">{{ $meta[$day]['series'] }} {{ $meta[$day]['series'] > 1 ? 'series' : 'serie' }}</li>
+                                <li class="series">{{ $meta[$day]['series'] }} {{ $meta[$day]['series'] > 1 ? 'episodes' : 'episode' }}</li>
                                 @if ($meta[$day]['premiers'] > 0)
                                 <li class="premiers">{{ $meta[$day]['premiers'] }} {{ $meta[$day]['premiers'] > 1 ? 'premiers' : 'premier' }}</li>
                                 @endif
