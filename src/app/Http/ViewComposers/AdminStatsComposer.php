@@ -28,55 +28,125 @@ class AdminStatsComposer
     public function compose(View $view)
     {
         $limit = 14;
+        $chars = [];
 
-        $serieCountStats = DB::table('stats')
-                                ->where('key', 'serie.count')
+        /**
+         * Create an char for the serie counts
+         *
+         */
+        $serieCountStats = collect(DB::table('stats')
+                                        ->where('key', 'serie.count')
+                                        ->orderBy('created_at', 'desc')
+                                        ->limit($limit)
+                                        ->get()
+                                    )->each(function($item){$item->created_at = '"'.$item->created_at.'"';return $item;})
+                                    ->reverse();
+
+        $chars['series'] = [
+            'title' => "Series",
+            'current' => Serie::count(),
+            'labels' => $serieCountStats->implode('created_at', ','),
+            'data' => $serieCountStats->implode('value', ','),
+        ];
+
+        /**
+         * Create an char for episodes count
+         *
+         */
+        $episodeCountStats = collect(DB::table('stats')
+                                        ->where('key', 'episode.count')
+                                        ->orderBy('created_at', 'desc')
+                                        ->limit($limit)
+                                        ->get()
+                                )->each(function($item){$item->created_at = '"'.$item->created_at.'"';return $item;})
+                                ->reverse();
+
+        $chars['episodes'] = [
+            'title' => "Episodes",
+            'current' => Episode::count(),
+            'labels' => $episodeCountStats->implode('created_at', ','),
+            'data' => $episodeCountStats->implode('value', ','),
+        ];
+
+        /**
+         * Create an char for user count
+         *
+         */
+        $userCountStats = collect(DB::table('stats')
+                                    ->where('key', 'user.count')
+                                    ->orderBy('created_at', 'desc')
+                                    ->limit($limit)
+                                    ->get()
+                                )->each(function($item){$item->created_at = '"'.$item->created_at.'"';return $item;})
+                                ->reverse();
+
+        $chars['users'] = [
+            'title' => "Users",
+            'current' => User::count(),
+            'labels' => $userCountStats->implode('created_at', ','),
+            'data' => $userCountStats->implode('value', ','),
+        ];
+
+        /**
+         * Create an char for the people count
+         *
+         */
+        $peopleCountStats = collect(DB::table('stats')
+                                        ->where('key', 'person.count')
+                                        ->orderBy('created_at', 'desc')
+                                        ->limit($limit)
+                                        ->get()
+                                )->each(function($item){$item->created_at = '"'.$item->created_at.'"';return $item;})
+                                ->reverse();
+
+        $chars['people'] = [
+            'title' => "People",
+            'current' => Person::count(),
+            'labels' => $peopleCountStats->implode('created_at', ','),
+            'data' => $peopleCountStats->implode('value', ','),
+        ];
+
+        /**
+         * Create an char for the logins
+         *
+         */
+        $loginStats = collect(DB::table('stats')
+                                ->where('key', 'logins')
                                 ->orderBy('created_at', 'desc')
                                 ->limit($limit)
-                                ->get();
+                                ->get()
+                            )->each(function($item){$item->created_at = '"'.$item->created_at.'"';return $item;})
+                            ->reverse();
 
-        $episodeCountStats = DB::table('stats')
-                                ->where('key', 'episode.count')
-                                ->orderBy('created_at', 'desc')
-                                ->limit($limit)
-                                ->get();
+        $chars['logins'] = [
+            'title' => "Logins",
+            'current' => null,
+            'labels' => $loginStats->implode('created_at', ','),
+            'data' => $loginStats->implode('value', ','),
+        ];
 
-        $userCountStats = DB::table('stats')
-                                ->where('key', 'user.count')
-                                ->orderBy('created_at', 'desc')
-                                ->limit($limit)
-                                ->get();
+        /**
+         * Create an char for the episodes watched
+         *
+         */
+        $episodeWatchedStats = collect(DB::table('stats')
+                                            ->where('key', 'episode.watched')
+                                            ->orderBy('created_at', 'desc')
+                                            ->limit($limit)
+                                            ->get()
+                                )->each(function($item){$item->created_at = '"'.$item->created_at.'"';return $item;})
+                                ->reverse();
 
-        $peopleCountStats = DB::table('stats')
-                                ->where('key', 'person.count')
-                                ->orderBy('created_at', 'desc')
-                                ->limit($limit)
-                                ->get();
+        $chars['watched'] = [
+            'title' => 'Watched episodes',
+            'current' => null,
+            'labels' => $episodeWatchedStats->implode('created_at', ','),
+            'data' => $episodeWatchedStats->implode('value', ','),
+        ];
 
-        $loginStats = DB::table('stats')
-                            ->where('key', 'logins')
-                            ->orderBy('created_at', 'desc')
-                            ->limit($limit)
-                            ->get();
-
-        $episodeWatchedStats = DB::table('stats')
-                                ->where('key', 'episode.watched')
-                                ->orderBy('created_at', 'desc')
-                                ->limit($limit)
-                                ->get();
-
-        $view->with('serieCountStats', collect($serieCountStats)->each(function($item){$item->created_at = '"'.$item->created_at.'"';return $item;})->reverse());
-        $view->with('episodeCountStats', collect($episodeCountStats)->each(function($item){$item->created_at = '"'.$item->created_at.'"';return $item;})->reverse());
-        $view->with('userCountStats', collect($userCountStats)->each(function($item){$item->created_at = '"'.$item->created_at.'"';return $item;})->reverse());
-        $view->with('peopleCountStats', collect($peopleCountStats)->each(function($item){$item->created_at = '"'.$item->created_at.'"';return $item;})->reverse());
-        $view->with('episodeWatchedStats', collect($episodeWatchedStats)->each(function($item){$item->created_at = '"'.$item->created_at.'"';return $item;})->reverse());
-        $view->with('loginStats', collect($loginStats)->each(function($item){$item->created_at = '"'.$item->created_at.'"';return $item;}));
-        $view->with('serieCount', Serie::count());
-        $view->with('episodeCount', Episode::count());
-        $view->with('userCount', User::count());
-        $view->with('peopleCount', Person::count());
         $view->with('jobCount', DB::table('jobs')->selectRaw('COUNT(*) as aggregate')->first()->aggregate);
         $view->with('failedJobCount', DB::table('failed_jobs')->selectRaw('COUNT(*) as aggregate')->first()->aggregate);
+        $view->with('chars', $chars);
     }
     
 }
