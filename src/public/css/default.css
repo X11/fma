@@ -4541,26 +4541,42 @@ section.serie .heading .title span {
       border-right-color: #ed6c63; }
 
 .poster {
+  display: block;
   position: relative;
   padding: 0;
   border-radius: 0; }
-  .poster > a {
-    display: inherit; }
-    .poster > a:hover .subtitle {
-      padding-right: 30px; }
   .poster img {
     display: inherit; }
-  .poster .subtitle {
+  .poster .poster-tag {
+    margin-bottom: 10px;
+    border-radius: 0;
     position: absolute;
-    bottom: 10%;
     right: 0;
-    padding: 5px 10px;
-    background: #1fc8db;
-    color: white;
-    font-size: 16px;
-    -webkit-transition: .4s all;
-    transition: .4s all;
-    font-weight: normal; }
+    top: 10%; }
+    .poster .poster-tag.is-premier {
+      background: #ed6c63;
+      color: #fff; }
+    .poster .poster-tag.is-returning {
+      background: #f68b39;
+      color: #fff; }
+    .poster .poster-tag.is-final {
+      background: #97cd76;
+      color: #fff; }
+    .poster .poster-tag.is-tracking {
+      background: #1fc8db;
+      color: #fff; }
+  .poster .poster-content {
+    position: absolute;
+    right: 0;
+    bottom: 5%; }
+    .poster .poster-content .season-episode {
+      margin-bottom: 20px;
+      border-radius: 0;
+      background: #1fc8db;
+      color: #fff;
+      padding: 4px 15px;
+      font-size: 16px;
+      font-weight: bold; }
 
 .file-download .status {
   font-size: 30px; }

@@ -1,33 +1,55 @@
 
 .poster {
+    display: block;
     position: relative;
     padding: 0;
     border-radius: 0;
-
-    & > a {
-        display: inherit;
-
-        &:hover {
-            .subtitle {
-                padding-right: 30px;
-            }
-        }
-    }
 
     img {
         display: inherit;
     }
 
-
-    .subtitle {
+    .poster-tag {
+        margin-bottom: 10px;
+        border-radius: 0;
         position: absolute;
-        bottom: 10%;
         right: 0;
-        padding: 5px 10px;
-        background: $primary;
-        color: white;
-        font-size: 16px;
-        transition: .4s all;
-        font-weight: normal;
+        top: 10%;
+
+        &.is-premier {
+            background: $red;
+            color: $white;
+        }
+
+        &.is-returning {
+            background: $orange;
+            color: $white;
+        }
+
+        &.is-final {
+            background: $green;
+            color: $white;
+        }
+
+        &.is-tracking {
+            background: $primary;
+            color: $white;
+        }
+    }
+
+    .poster-content {
+        position: absolute;
+        right: 0;
+        bottom: 5%;
+
+        .season-episode {
+            margin-bottom: 20px;
+            border-radius: 0;
+            background: $primary;
+            color: $white;
+            padding: 4px 15px;
+            font-size: 16px;
+            font-weight: bold;
+        }
     }
 }
